@@ -13,11 +13,11 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [🏠](https://github.com/conda/conda-libmamba-solver) | conda-libmamba-solver | The fast mamba solver, now in conda | 216 |
 | [🏠](https://github.com/conda-incubator/conda-pypi) | conda-pypi | Better PyPI interoperability for the conda ecosystem. | 17 |
 | [🏠](https://github.com/conda/conda-plugin-template) | ascii-graph | My ascii graph subcommand plugin | 11 |
+| [🏠](https://github.com/conda-incubator/conda-protect) | conda-protect | Protects conda environments to avoid mistakenly modifying them | 11 |
 | [🏠](https://github.com/conda/conda-index) | conda_index | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | multiply | A subcommand written in Rust that multiplies two integers | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | package-counter | Displays the number of packages in the environment | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | temp-converter | A custom subcommand written in C that converts Celsius to Fahrenheit | 11 |
-| [🏠](https://github.com/conda-incubator/conda-protect) | conda-protect | Protects conda environments to avoid mistakenly modifying them | 10 |
 | [🏠](https://github.com/jaimergp/conda-rattler-solver) | conda-rattler-solver | The fast pixi solver, now in conda | 5 |
 | [🏠](https://github.com/kelvinou01/conda-which) | conda-which | What package does this file belong to? | 5 |
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | chord-cli | A subcommand that displays guitar chords | 4 |
@@ -33,7 +33,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [🏠](https://github.com/anaconda/assistant-sdk) | anaconda-assistant-conda | The Anaconda Assistant conda plugin | 3 |
 | [🏠](https://github.com/anaconda/anaconda-auth) | anaconda-auth | A client auth library for Anaconda APIs | 3 |
 | [🏠](https://github.com/anaconda/conda-anaconda-telemetry) | conda-anaconda-telemetry | A conda plugin for Anaconda Telemetry | 3 |
-| [🏠](https://github.com/conda-incubator/conda-tui) | conda-tui | A Text User Interface for conda | 2 |
+| [🏠](https://github.com/conda-incubator/conda-tui) | conda-tui | A Text User Interface for conda | 3 |
 | [🏠](https://github.com/kalawac/simple-bash-plugin) | captain-planet | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [🏠](https://github.com/conda-incubator/conda-checkpoints) | conda-checkpoints | conda plugin to save lockfiles to your environment after each environment modification | 1 |
 | [🏠](https://github.com/conda/conda-classic-solver) | conda-classic-solver | The `classic` solver used in `conda` | 1 |
