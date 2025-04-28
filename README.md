@@ -9,8 +9,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 <!-- PLUGIN_LIST -->
 | 🔗 | Name | Description | ⭐ |
 |---|------|-------------|--:|
-| [🏠](https://github.com/conda/conda-build) | conda-build | tools for building conda packages | 392 |
-| [🏠](https://github.com/conda/conda-libmamba-solver) | conda-libmamba-solver | The fast mamba solver, now in conda | 216 |
+| [🏠](https://github.com/conda/conda-build) | conda-build | tools for building conda packages | 394 |
+| [🏠](https://github.com/conda/conda-libmamba-solver) | conda-libmamba-solver | The fast mamba solver, now in conda | 217 |
 | [🏠](https://github.com/conda-incubator/conda-pypi) | conda-pypi | Better PyPI interoperability for the conda ecosystem. | 17 |
 | [🏠](https://github.com/conda/conda-plugin-template) | ascii-graph | My ascii graph subcommand plugin | 11 |
 | [🏠](https://github.com/conda-incubator/conda-protect) | conda-protect | Protects conda environments to avoid mistakenly modifying them | 11 |
@@ -18,8 +18,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [🏠](https://github.com/conda/conda-plugin-template) | multiply | A subcommand written in Rust that multiplies two integers | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | package-counter | Displays the number of packages in the environment | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | temp-converter | A custom subcommand written in C that converts Celsius to Fahrenheit | 11 |
+| [🏠](https://github.com/kelvinou01/conda-which) | conda-which | What package does this file belong to? | 6 |
 | [🏠](https://github.com/jaimergp/conda-rattler-solver) | conda-rattler-solver | The fast pixi solver, now in conda | 5 |
-| [🏠](https://github.com/kelvinou01/conda-which) | conda-which | What package does this file belong to? | 5 |
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | chord-cli | A subcommand that displays guitar chords | 4 |
 | [🏠](https://github.com/conda-incubator/conda-auth) | conda-auth | A conda plugin for handling multiple authentication schemes | 4 |
 | [🏠](https://github.com/conda-incubator/conda-spawn) | conda-spawn | Activate conda environments in new shell processes. | 4 |
