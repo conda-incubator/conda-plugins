@@ -10,16 +10,17 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | 🔗 | Name | Description | ⭐ |
 |---|------|-------------|--:|
 | [🏠](https://github.com/conda/conda-build) | conda-build | tools for building conda packages | 394 |
-| [🏠](https://github.com/conda/conda-libmamba-solver) | conda-libmamba-solver | The fast mamba solver, now in conda | 217 |
-| [🏠](https://github.com/conda-incubator/conda-pypi) | conda-pypi | Better PyPI interoperability for the conda ecosystem. | 17 |
+| [🏠](https://github.com/conda/conda-libmamba-solver) | conda-libmamba-solver | The fast mamba solver, now in conda | 218 |
+| [🏠](https://github.com/conda-incubator/conda-pypi) | conda-pypi | Better PyPI interoperability for the conda ecosystem. | 16 |
+| [🏠](https://github.com/conda/conda-index) | conda_index | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
 | [🏠](https://github.com/conda/conda-plugin-template) | ascii-graph | My ascii graph subcommand plugin | 11 |
 | [🏠](https://github.com/conda-incubator/conda-protect) | conda-protect | Protects conda environments to avoid mistakenly modifying them | 11 |
-| [🏠](https://github.com/conda/conda-index) | conda_index | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | multiply | A subcommand written in Rust that multiplies two integers | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | package-counter | Displays the number of packages in the environment | 11 |
 | [🏠](https://github.com/conda/conda-plugin-template) | temp-converter | A custom subcommand written in C that converts Celsius to Fahrenheit | 11 |
 | [🏠](https://github.com/kelvinou01/conda-which) | conda-which | What package does this file belong to? | 6 |
 | [🏠](https://github.com/jaimergp/conda-rattler-solver) | conda-rattler-solver | The fast pixi solver, now in conda | 5 |
+| [🏠](https://github.com/anaconda/assistant-sdk) | anaconda-assistant-conda | The Anaconda Assistant conda plugin | 4 |
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | chord-cli | A subcommand that displays guitar chords | 4 |
 | [🏠](https://github.com/conda-incubator/conda-auth) | conda-auth | A conda plugin for handling multiple authentication schemes | 4 |
 | [🏠](https://github.com/conda-incubator/conda-spawn) | conda-spawn | Activate conda environments in new shell processes. | 4 |
@@ -30,7 +31,6 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | random-walk | My random walk subcommand plugin | 4 |
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | string-art | My string art subcommand plugin | 4 |
 | [🏠](https://github.com/beeankha/SimplePythonStuff) | temp-converter | A subcommand that multiplies two ints using Rust | 4 |
-| [🏠](https://github.com/anaconda/assistant-sdk) | anaconda-assistant-conda | The Anaconda Assistant conda plugin | 3 |
 | [🏠](https://github.com/anaconda/anaconda-auth) | anaconda-auth | A client auth library for Anaconda APIs | 3 |
 | [🏠](https://github.com/anaconda/conda-anaconda-telemetry) | conda-anaconda-telemetry | A conda plugin for Anaconda Telemetry | 3 |
 | [🏠](https://github.com/conda-incubator/conda-tui) | conda-tui | A Text User Interface for conda | 3 |
@@ -44,6 +44,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [🏠](https://github.com/TMK04/conda-plugin) | ascii-graph | My ascii graph subcommand plugin | 0 |
 | [🏠](https://github.com/jennan/conda_disable_init) | conda-disable-init | Disable conda init command | 0 |
 | [🏠](https://github.com/regro/conda-forge-conda-plugins) | conda-forge-conda-plugins | conda plugins for the conda-forge ecosystem | 0 |
+| [🏠](https://github.com/jjhelmus/conda-history-d) | conda-history-d | conda plugin which records a detailed history of environments in a history.d directory. | 0 |
+| [🏠](https://github.com/jaimergp/conda-lockfiles) | conda-lockfiles | Support different lockfiles in conda. | 0 |
 | [🏠](https://github.com/costrouc/conda-random-solver) | conda-random-solver | A random conda solver | 0 |
 | [🏠](https://github.com/costrouc/conda-random-subcomand) | conda-random-subcommand | A random conda subcommand | 0 |
 | [🏠](https://github.com/jezdez/conda-restricted) | conda-restricted | A conda plugin to restrict the SEARCH_PATH for conda configuration files | 0 |
