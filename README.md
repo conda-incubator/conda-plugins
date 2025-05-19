@@ -10,7 +10,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 394 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 218 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 220 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 11 |
@@ -34,10 +34,10 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 3 |
 | [conda-anaconda-telemetry](https://github.com/anaconda/conda-anaconda-telemetry) | A conda plugin for Anaconda Telemetry | 3 |
 | [conda-tui](https://github.com/conda-incubator/conda-tui) | A Text User Interface for conda | 3 |
+| [conda-lockfiles](https://github.com/conda-incubator/conda-lockfiles) | Support different lockfiles in conda. | 2 |
 | [captain-planet](https://github.com/kalawac/simple-bash-plugin) | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [conda-checkpoints](https://github.com/conda-incubator/conda-checkpoints) | conda plugin to save lockfiles to your environment after each environment modification | 1 |
 | [conda-classic-solver](https://github.com/conda/conda-classic-solver) | The `classic` solver used in `conda` | 1 |
-| [conda-lockfiles](https://github.com/conda-incubator/conda-lockfiles) | Support different lockfiles in conda. | 1 |
 | [conda-npm](https://github.com/aterrel/conda-npm) | conda-npm | 1 |
 | [conda-ops](https://github.com/acwooding/conda-ops) | Conda plugin to maintain environments and projects reproducibly. | 1 |
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
