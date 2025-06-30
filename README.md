@@ -10,7 +10,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 395 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 228 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 229 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 11 |
@@ -19,11 +19,12 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 10 |
 | [temp-converter](https://github.com/conda/conda-plugin-template) | A custom subcommand written in C that converts Celsius to Fahrenheit | 10 |
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 7 |
+| [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 6 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 6 |
-| [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 5 |
+| [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
+| [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
 | [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 4 |
-| [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 4 |
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 4 |
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
 | [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 4 |
@@ -45,6 +46,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-self](https://github.com/jaimergp/conda-self) | A self command for conda | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
 | [ascii-graph](https://github.com/TMK04/conda-plugin) | My ascii graph subcommand plugin | 0 |
+| [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS). | 0 |
 | [conda-declarative](https://github.com/jaimergp/conda-declarative) | Declarative workflows for conda environment handling. | 0 |
 | [conda-disable-init](https://github.com/jennan/conda_disable_init) | Disable conda init command | 0 |
 | [conda-env-spec-v2](https://github.com/peytondmurray/conda-env-spec-v2) | A V2 environment spec for conda. | 0 |
