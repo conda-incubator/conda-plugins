@@ -9,7 +9,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 <!-- PLUGIN_LIST -->
 | Name | Description | ⭐ |
 |------|-------------|--:|
-| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 395 |
+| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 229 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
@@ -18,7 +18,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [multiply](https://github.com/conda/conda-plugin-template) | A subcommand written in Rust that multiplies two integers | 10 |
 | [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 10 |
 | [temp-converter](https://github.com/conda/conda-plugin-template) | A custom subcommand written in C that converts Celsius to Fahrenheit | 10 |
-| [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 7 |
+| [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 8 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 6 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
