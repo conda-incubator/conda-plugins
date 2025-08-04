@@ -10,9 +10,9 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 231 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 232 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
-| [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 13 |
+| [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 14 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 10 |
 | [multiply](https://github.com/conda/conda-plugin-template) | A subcommand written in Rust that multiplies two integers | 10 |
@@ -21,9 +21,9 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 9 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 6 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 6 |
+| [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 5 |
-| [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
 | [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
 | [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 4 |
