@@ -13,7 +13,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 233 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 14 |
-| [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 12 |
+| [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 10 |
 | [multiply](https://github.com/conda/conda-plugin-template) | A subcommand written in Rust that multiplies two integers | 10 |
 | [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 10 |
