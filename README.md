@@ -9,8 +9,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 <!-- PLUGIN_LIST -->
 | Name | Description | ⭐ |
 |------|-------------|--:|
-| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 234 |
+| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 397 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 236 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 14 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
@@ -21,11 +21,12 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 9 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 6 |
+| [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
 | [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
-| [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
 | [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
+| [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS). | 4 |
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
 | [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 3 |
 | [conda-anaconda-telemetry](https://github.com/anaconda/conda-anaconda-telemetry) | A conda plugin for Anaconda Telemetry | 3 |
@@ -35,7 +36,6 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [random-walk](https://github.com/beeankha/SimplePythonStuff) | My random walk subcommand plugin | 3 |
 | [string-art](https://github.com/beeankha/SimplePythonStuff) | My string art subcommand plugin | 3 |
 | [temp-converter](https://github.com/beeankha/SimplePythonStuff) | A subcommand that multiplies two ints using Rust | 3 |
-| [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS). | 2 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
 | [conda-lockfiles](https://github.com/conda-incubator/conda-lockfiles) | Support different lockfiles in conda. | 2 |
