@@ -19,8 +19,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 10 |
 | [temp-converter](https://github.com/conda/conda-plugin-template) | A custom subcommand written in C that converts Celsius to Fahrenheit | 10 |
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 9 |
+| [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
-| [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 6 |
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
 | [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
@@ -53,6 +53,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-disable-init](https://github.com/jennan/conda_disable_init) | Disable conda init command | 0 |
 | [conda-env-spec-v2](https://github.com/peytondmurray/conda-env-spec-v2) | A V2 environment spec for conda. | 0 |
 | [conda-forge-conda-plugins](https://github.com/regro/conda-forge-conda-plugins) | conda plugins for the conda-forge ecosystem | 0 |
+| [conda-pypi-channel](https://github.com/jaimergp/conda-pypi-channel) | Expose a PyPI index as a conda channel, on the fly. | 0 |
 | [conda-random-solver](https://github.com/costrouc/conda-random-solver) | A random conda solver | 0 |
 | [conda-random-subcommand](https://github.com/costrouc/conda-random-subcomand) | A random conda subcommand | 0 |
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH_PATH for conda configuration files | 0 |
