@@ -12,7 +12,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 237 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 46 |
-| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 16 |
+| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 17 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 15 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 11 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
@@ -60,6 +60,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH_PATH for conda configuration files | 0 |
 | [conda-rich](https://github.com/conda-incubator/conda-rich) | Conda plugin which uses rich components for its display | 0 |
 | [conda-toml-spec](https://github.com/peytondmurray/conda-toml-spec) | Toml environment specification for conda | 0 |
+| [conda-whl-support](https://github.com/anaconda/conda-whl-support) | Conda plugin to add support for installing Python wheels (whl). | 0 |
 | [multiply](https://github.com/TMK04/conda-plugin) | A subcommand written in Rust that multiplies two integers | 0 |
 | [package-counter](https://github.com/TMK04/conda-plugin) | Displays the number of packages in the environment | 0 |
 | [temp-converter](https://github.com/TMK04/conda-plugin) | A custom subcommand written in C that converts Celsius to Fahrenheit | 0 |
