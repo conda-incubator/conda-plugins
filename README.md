@@ -12,7 +12,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 237 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 46 |
-| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 17 |
+| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 18 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 15 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 11 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
@@ -25,6 +25,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
 | [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
+| [nvidia-virtual-packages](https://github.com/NVIDIA/nvidia-virtual-packages) | Provides conda virtual packages for NVIDIA hardware. | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
 | [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
 | [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS). | 4 |
