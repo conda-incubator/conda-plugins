@@ -10,16 +10,16 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 396 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 237 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 236 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 46 |
-| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 18 |
+| [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 19 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 15 |
 | [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 11 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
 | [multiply](https://github.com/conda/conda-plugin-template) | A subcommand written in Rust that multiplies two integers | 11 |
 | [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 11 |
 | [temp-converter](https://github.com/conda/conda-plugin-template) | A custom subcommand written in C that converts Celsius to Fahrenheit | 11 |
-| [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 9 |
+| [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 10 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
