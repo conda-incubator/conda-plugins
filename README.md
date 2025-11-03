@@ -22,8 +22,8 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 10 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
+| [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 7 |
 | [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
-| [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
 | [nvidia-virtual-packages](https://github.com/NVIDIA/nvidia-virtual-packages) | Provides conda virtual packages for NVIDIA hardware. | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
