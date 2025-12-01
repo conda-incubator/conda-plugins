@@ -10,7 +10,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 395 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 236 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 237 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 46 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 19 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 15 |
