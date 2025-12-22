@@ -61,6 +61,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-random-subcommand](https://github.com/costrouc/conda-random-subcomand) | A random conda subcommand | 0 |
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH_PATH for conda configuration files | 0 |
 | [conda-rich](https://github.com/conda-incubator/conda-rich) | Conda plugin which uses rich components for its display | 0 |
+| [conda-test-header-plugin](https://github.com/Anaconda-Sandbox/authenticated-docker-examples) | A plugin for injecting headers (just for testing) | 0 |
 | [conda-toml-spec](https://github.com/peytondmurray/conda-toml-spec) | Toml environment specification for conda | 0 |
 | [multiply](https://github.com/TMK04/conda-plugin) | A subcommand written in Rust that multiplies two integers | 0 |
 | [package-counter](https://github.com/TMK04/conda-plugin) | Displays the number of packages in the environment | 0 |
