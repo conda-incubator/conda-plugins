@@ -51,6 +51,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
 | [anaconda-auth](https://github.com/vehere-ccu1405/qna) | A client auth library for Anaconda APIs | 0 |
+| [anaconda-auth](https://github.com/xun04/ai3625-18) | A client auth library for Anaconda APIs | 0 |
 | [ascii-graph](https://github.com/TMK04/conda-plugin) | My ascii graph subcommand plugin | 0 |
 | [conda-declarative](https://github.com/jaimergp/conda-declarative) | Declarative workflows for conda environment handling. | 0 |
 | [conda-disable-init](https://github.com/jennan/conda_disable_init) | Disable conda init command | 0 |
