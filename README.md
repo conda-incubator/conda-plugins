@@ -10,7 +10,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 397 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 237 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 238 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 47 |
 | [conda-pypi](https://github.com/conda-incubator/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 19 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 15 |
@@ -21,9 +21,9 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [temp-converter](https://github.com/conda/conda-plugin-template) | A custom subcommand written in C that converts Celsius to Fahrenheit | 11 |
 | [conda-rattler-solver](https://github.com/conda-incubator/conda-rattler-solver) | The fast pixi solver, now in conda | 10 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 8 |
+| [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
 | [conda_pupa](https://github.com/dholth/conda-pupa) | Convert Python packages to .conda | 7 |
-| [conda-spawn](https://github.com/conda-incubator/conda-spawn) | Activate conda environments in new shell processes. | 6 |
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 5 |
 | [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
 | [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
@@ -32,6 +32,7 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
 | [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 3 |
 | [conda-anaconda-telemetry](https://github.com/anaconda/conda-anaconda-telemetry) | A conda plugin for Anaconda Telemetry | 3 |
+| [conda-self](https://github.com/conda-incubator/conda-self) | A self command for conda | 3 |
 | [conda-tui](https://github.com/conda-incubator/conda-tui) | A Text User Interface for conda | 3 |
 | [guessing-game](https://github.com/beeankha/SimplePythonStuff) | A subcommand that invokes a guessing game | 3 |
 | [multiply](https://github.com/beeankha/SimplePythonStuff) | A subcommand that multiplies two integers | 3 |
@@ -40,7 +41,6 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [temp-converter](https://github.com/beeankha/SimplePythonStuff) | A subcommand that multiplies two ints using Rust | 3 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
-| [conda-self](https://github.com/conda-incubator/conda-self) | A self command for conda | 2 |
 | [nvidia-virtual-packages](https://github.com/conda-incubator/nvidia-virtual-packages) | Provides conda virtual packages for NVIDIA hardware. | 2 |
 | [captain-planet](https://github.com/kalawac/simple-bash-plugin) | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [conda-checkpoints](https://github.com/conda-incubator/conda-checkpoints) | conda plugin to save lockfiles to your environment after each environment modification | 1 |
@@ -50,7 +50,6 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-ops](https://github.com/acwooding/conda-ops) | Conda plugin to maintain environments and projects reproducibly. | 1 |
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
-| [anaconda-auth](https://github.com/vehere-ccu1405/qna) | A client auth library for Anaconda APIs | 0 |
 | [anaconda-auth](https://github.com/xun04/ai3625-18) | A client auth library for Anaconda APIs | 0 |
 | [ascii-graph](https://github.com/TMK04/conda-plugin) | My ascii graph subcommand plugin | 0 |
 | [conda-declarative](https://github.com/jaimergp/conda-declarative) | Declarative workflows for conda environment handling. | 0 |
