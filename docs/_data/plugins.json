@@ -1,0 +1,577 @@
+{
+  "generated_at": "2026-04-01T14:49:39.418188+00:00",
+  "categories": [
+    "Solvers",
+    "Subcommands",
+    "Channels",
+    "Authentication",
+    "Environment management",
+    "Build tools",
+    "UI and display",
+    "Other"
+  ],
+  "plugins": [
+    {
+      "name": "conda-build",
+      "description": "tools for building conda packages",
+      "repo_url": "https://github.com/conda/conda-build",
+      "repo_full_name": "conda/conda-build",
+      "stars": 395,
+      "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
+      "topics": [
+        "conda",
+        "conda-build",
+        "package-management"
+      ],
+      "entry_points": {
+        "conda-build": "conda_build.plugin"
+      },
+      "category": "Build tools",
+      "readme": "[tests-badge]: https://img.shields.io/github/actions/workflow/status/conda/conda-build/tests.yml?branch=main&event=schedule&logo=github&label=tests\n[codecov-badge]: https://img.shields.io/codecov/c/github/conda/conda-build/main?logo=codecov\n[codspeed-badge]: https://img.shields.io/endpoint?url=https://codspeed.io/badge.json\n[release-badge]: https://img.shields.io/github/v/release/conda/conda?logo=github\n[anaconda-badge]: https://img.shields.io/conda/vn/anaconda/conda-build?logo=anaconda\n[conda-forge-badge]: https://img.shields.io/conda/vn/conda-forge/conda-build?logo=conda-forge\n[calver-badge]: https://img.shields.io/badge/calver-YY.MM.MICRO-22bfda.svg\n\n# `conda-build`\n\n[![GitHub Scheduled Tests][tests-badge]](https://github.com/conda/conda-build/actions/workflows/tests.yml?query=branch%3Amain+event%3Aschedule)\n[![Codecov Status][codecov-badge]](https://codecov.io/gh/conda/conda-build/branch/main)\n[![CodSpeed Performance Benchmarks][codspeed-badge]](https://codspeed.io/conda/conda-build)\n[![CalVer Versioning][calver-badge]](https://calver.org)\n<br>\n[![GitHub Release][release-badge]](https://github.com/conda/conda-build/releases)\n[![Anaconda Package][anaconda-badge]](https://anaconda.org/anaconda/conda-build)\n[![conda-forge Package][conda-forge-badge]](https://anaconda.org/conda-forge/conda-build)\n\n## Installation\n\n```bash\n# Display information about current conda install\n$ conda info\n\n# Install conda-build in the base env\n$ conda install -n base conda-build\n```\n\n## Building Your Own Packages\n\nYou can easily build your own packages for `conda`, and upload them to\n[anaconda.org](https://anaconda.org), a free service for hosting packages for `conda`, as\nwell as other package managers. To build a package, create a recipe. See\n[AnacondaRecipes](https://github.com/AnacondaRecipes) and [conda-forge](https://github.com/conda-forge) for many example recipes, and\n[`conda-build` documentation](https://docs.conda.io/projects/conda-build/en/latest/index.html) on how to build\nrecipes.\n\nTo upload to [anaconda.org](https://anaconda.org), create an account.  Then, install the `anaconda-client`\nand login\n\n```bash\n$ conda install anaconda-client\n$ anaconda login\n```\n\nThen, after you build your recipe\n\n```bash\n$ conda build <RECIPE_DIR>\n```\n\nyou will be prompted to upload to [anaconda.org](https://anaconda.org).\n\nTo add your [anaconda.org](https://anaconda.org) channel, or the channel of others to `conda` so that `conda install`\nwill find and install their packages, run\n\n```bash\n$ conda config --add channels https://conda.anaconda.org/<USERNAME>\n```\n\n(replacing `USERNAME` with the user name of the person whose channel you want\nto add).\n\n## Gotchas/FAQ\n\n* `OSError: [Errno 36] File name too long:` - This error has been seen on Linux computers with encrypted folders. The solution is to install `miniconda` or `anaconda` to a location that is not encrypted. This error occurs because the encrypted form of the path that `conda-build` creates can be too long.\n\n## Getting Help\n\n- [Documentation](https://docs.conda.io/projects/conda-build/en/latest)\n- [Twitter](https://twitter.com/condaproject)\n- [Slack](https://conda.slack.com)\n- [Bug Reports/Feature Requests](https://github.com/conda/conda-build/issues)\n- [Installer/Package Issues](https://github.com/ContinuumIO/anaconda-issues/issues)\n\n## Contributing\n\nContributions to conda-build are welcome. See the [contributing](CONTRIBUTING.md) documentation\nfor instructions on setting up a development environment.\n"
+    },
+    {
+      "name": "conda-libmamba-solver",
+      "description": "The fast mamba solver, now in conda",
+      "repo_url": "https://github.com/conda/conda-libmamba-solver",
+      "repo_full_name": "conda/conda-libmamba-solver",
+      "stars": 242,
+      "docs": null,
+      "topics": [
+        "conda",
+        "mamba",
+        "solver",
+        "libmamba"
+      ],
+      "entry_points": {
+        "conda-libmamba-solver": "conda_libmamba_solver.plugin"
+      },
+      "category": "Solvers",
+      "readme": "# conda-libmamba-solver\n\nThe fast mamba solver, now in conda!\n\n## What is this exactly?\n\nconda-libmamba-solver is a new solver for the\n[conda package manager](https://docs.conda.io/) which uses the solver from the\n[mamba project](https://mamba.readthedocs.io/) behind the scenes, while\ncarefully implementing conda's functionality and expected behaviors on top.\nThe library used by mamba to do the heavy-lifting is called [libsolv](https://github.com/openSUSE/libsolv).\n\nAdditional information about the project can be found in the blog post on Anaconda's weblog:\n[A Faster Solver for Conda: Libmamba](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community).\n\n## Documentation\n\nCheck the [documentation](https://conda.github.io/conda-libmamba-solver/) for\ninstructions on how to install, use and make the most out the new conda solver!\n\n\n## Build status\n\n| [![Build status](https://github.com/conda/conda-libmamba-solver/actions/workflows/tests.yml/badge.svg)](https://github.com/conda/conda-libmamba-solver/actions/workflows/tests.yml?query=branch%3Amain) [![Docs status](https://github.com/conda/conda-libmamba-solver/actions/workflows/docs.yml/badge.svg)](https://github.com/conda/conda-libmamba-solver/actions/workflows/docs.yml?query=branch%3Amain) [![codecov](https://codecov.io/gh/conda/conda-libmamba-solver/branch/main/graph/badge.svg)](https://codecov.io/gh/conda/conda-libmamba-solver) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/conda/conda-libmamba-solver/main.svg)](https://results.pre-commit.ci/latest/github/conda/conda-libmamba-solver/main) [![CalVer version used YY.MM.MICRO](https://img.shields.io/badge/calver-YY.MM.MICRO-22bfda.svg?style=flat-square)](https://calver.org) | [![Anaconda-Server Badge](https://anaconda.org/conda-canary/conda-libmamba-solver/badges/latest_release_date.svg)](https://anaconda.org/conda-canary/conda-libmamba-solver) |\n| --- | :-: |\n| [`conda install defaults::conda-libmamba-solver`](https://anaconda.org/anaconda/conda-libmamba-solver) | [![Anaconda-Server Badge](https://anaconda.org/anaconda/conda-libmamba-solver/badges/version.svg)](https://anaconda.org/anaconda/conda-libmamba-solver) |\n| [`conda install conda-forge::conda-libmamba-solver`](https://anaconda.org/conda-forge/conda-libmamba-solver) | [![Anaconda-Server Badge](https://anaconda.org/conda-forge/conda-libmamba-solver/badges/version.svg)](https://anaconda.org/conda-forge/conda-libmamba-solver) |\n| [`conda install conda-canary/label/dev::conda-libmamba-solver`](https://anaconda.org/conda-canary/conda-libmamba-solver) | [![Anaconda-Server Badge](https://anaconda.org/conda-canary/conda-libmamba-solver/badges/version.svg)](https://anaconda.org/conda-canary/conda-libmamba-solver) |\n"
+    },
+    {
+      "name": "menuinst",
+      "description": "cross platform install of menu items",
+      "repo_url": "https://github.com/conda/menuinst",
+      "repo_full_name": "conda/menuinst",
+      "stars": 48,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "menuinst": "menuinst.conda_plugin"
+      },
+      "category": "Environment management",
+      "readme": "# menuinst: cross platform menu item installation\n\nThis package provides cross platform menu item installation for `conda` packages.\n\nIf a conda package ships a [menuinst JSON document][reference] under `$PREFIX/Menu`, `conda` will invoke\n`menuinst` to process the JSON file and install the menu items in your operating system.\nThe menu items are removed when the package is uninstalled.\n\nThe following formats are supported:\n\n- Windows: `.lnk` files in the Start menu. Optionally, also in the Desktop and Quick Launch.\n- macOS: `.app` bundles in the Applications folder.\n- Linux: `.desktop` files as defined in the XDG standard.\n\n## Documentation\n\nDocumentation is available at https://conda.github.io/menuinst/.\n\n## History\n\nThis package was originally developed and maintained by Enthought under the name AppInst. The name\nappinst is a rename of what used to be called 'wininst'.\n\n`menuinst` v1 was only supported on Windows.  Legacy code existed in v1 for Linux and OS X - use at your own risk.  It may mess up your menus.\n\n`menuinst` v2 is a backwards-compatible rewrite to address cross-platform compatibility under a\nunified JSON schema, as discussed in [CEP-11][CEP-11]. The Windows bits of the v1 code are still\navailable under the `menuinst._legacy` subpackage.\n\n## Build status\n\n| [![Build status](https://github.com/conda/menuinst/actions/workflows/tests.yml/badge.svg)](https://github.com/conda/menuinst/actions/workflows/tests.yml) [![Docs status](https://github.com/conda/menuinst/actions/workflows/docs.yml/badge.svg)](https://github.com/conda/menuinst/actions/workflows/docs.yml) [![codecov](https://codecov.io/gh/conda/menuinst/branch/main/graph/badge.svg)](https://codecov.io/gh/conda/menuinst) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/conda/menuinst/main.svg)](https://results.pre-commit.ci/latest/github/conda/menuinst/main)  | [![Anaconda-Server Badge](https://anaconda.org/conda-canary/menuinst/badges/latest_release_date.svg)](https://anaconda.org/conda-canary/menuinst) |\n| --- | :-: |\n| [`conda install defaults::menuinst`](https://anaconda.org/anaconda/menuinst) | [![Anaconda-Server Badge](https://anaconda.org/anaconda/menuinst/badges/version.svg)](https://anaconda.org/anaconda/menuinst) |\n| [`conda install conda-forge::menuinst`](https://anaconda.org/conda-forge/menuinst) | [![Anaconda-Server Badge](https://anaconda.org/conda-forge/menuinst/badges/version.svg)](https://anaconda.org/conda-forge/menuinst) |\n| [`conda install conda-canary/label/dev::menuinst`](https://anaconda.org/conda-canary/menuinst) | [![Anaconda-Server Badge](https://anaconda.org/conda-canary/menuinst/badges/version.svg)](https://anaconda.org/conda-canary/menuinst) |\n\n[CEP-11]: https://github.com/conda-incubator/ceps/blob/3da0fb0ece/cep-11.md\n[reference]: https://conda.github.io/menuinst/reference/\n"
+    },
+    {
+      "name": "conda-pypi",
+      "description": "Better PyPI interoperability for the conda ecosystem.",
+      "repo_url": "https://github.com/conda/conda-pypi",
+      "repo_full_name": "conda/conda-pypi",
+      "stars": 25,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-pypi": "conda_pypi.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-pypi\n\nBetter PyPI interoperability for the conda ecosystem.\n\n> [!IMPORTANT]\n> This project is still in early stages of development. Don't use it in production (yet).\n> We do welcome feedback on what the expected behaviour should have been if something doesn't work!\n\n## Project Status\n\nThis is a **community-maintained** project under the [conda](https://github.com/conda) organization.\n\n### Getting Help\n\n- **Bug reports & feature requests**: [GitHub Issues](https://github.com/conda/conda-pypi/issues)\n- **Real-time chat**: [conda Zulip](https://conda.zulipchat.com/)\n\n## What is this?\n\nIncludes:\n\n- `conda pypi install`: Converts PyPI packages to `.conda` format for safer installation.\n- `conda pypi install -e .`: Converts a path to an editable `.conda` format package.\n- `conda pypi convert`: Convert PyPI packages to `.conda` format without installing them.\n- `conda install` from wheel channels (experimental): channels can serve pure Python wheels directly in `repodata.json`.\n- Adds `EXTERNALLY-MANAGED` to your environments.\n\n## Why?\n\nMixing conda and PyPI is often discouraged in the conda ecosystem.\nThere are only a handful patterns that are safe to run. This tool\naims to provide a safer way of keeping your conda environments functional\nwhile mixing it with PyPI dependencies. Refer to the [documentation](docs/)\nfor more details.\n\n## Attribution\n\nThis project now incorporates [conda-pupa](https://github.com/dholth/conda-pupa)\nby Daniel Holth, which provides the core PyPI-to-conda conversion functionality.\n\n## Contributing\n\nPlease refer to [`CONTRIBUTING.md`](/CONTRIBUTING.md).\n"
+    },
+    {
+      "name": "conda-protect",
+      "description": "Protects conda environments to avoid mistakenly modifying them",
+      "repo_url": "https://github.com/conda-incubator/conda-protect",
+      "repo_full_name": "conda-incubator/conda-protect",
+      "stars": 16,
+      "docs": null,
+      "topics": [
+        "conda-plugin"
+      ],
+      "entry_points": {
+        "conda-protect": "conda_protect.main"
+      },
+      "category": "Environment management",
+      "readme": "# conda-protect \ud83d\udd10\n\nProtect conda environments to avoid mistakenly modifying them.\n\nIn conda, it's sometimes nice to set certain environments as \"off-limits\". This can especially\nbe true for the base environment. This plugin that allows you to protect arbitrary environments,\nand it will cause conda to exit early on the following commands if an environment is protected:\n\n- install\n- create\n- update\n- remove\n- env remove\n- env update (*still not fully supported*)\n\n## Install\n\nYou can install this plugin by running the following command:\n\n```\nconda install -c conda-forge conda-protect\n```\n\n## Usage\n\nConda protect installs several new subcommands for conda: one for protecting environments `protect`\nand one for listing guarded environments `plist`. These commands are explained in further\ndetail below:\n\n### Protecting environments\n\nTo guard an environment, run the `protect` subcommand:\n\n```commandline\n$ conda protect base\nbase is \ud83d\udd10 protected\n```\n\nNow, when you try to run a command against this environment, conda will exit early:\n\n```commandline\n$ conda install -n base python\n\nCondaProtectError: Environment \"base\" is currently protected. Run `conda protect 'base'` to remove protection.\n```\n\nIf you want to remove a protection to add/modify anything, just run the `protect` subcommand again:\n\n```commandline\n$ conda protect base\nbase is unprotected \ud83d\udd13\n```\n\n### Listing environments and showing protection status\n\nConda protect also installs a `plist` subcommand that comes in handy when you've forgotten which\nenvironments are protected:\n\n```commandline\n$ conda protect --list\n                        Conda Environments\n\u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n\u2503 Name      \u2503 Prefix                                \u2503 Status       \u2503\n\u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n\u2502 -         \u2502 /tmp/user1-test-env-one               \u2502 \ud83d\udd10 protected \u2502\n\u2502 base      \u2502 /home/user1/opt/conda/                \u2502 \ud83d\udd10 protected \u2502\n\u2502 test_env1 \u2502 /home/user1/opt/conda/envs/test_env1  \u2502 \ud83d\udd10 protected \u2502\n\u2502 test_env2 \u2502 /home/user1/opt/conda/envs/test_env2  \u2502              \u2502\n\u2502 test_env3 \u2502 /home/user1/opt/conda/envs/test_env3  \u2502              \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\nYou can also list just the protected environments with the `--protected` option:\n\n```commandline\n$ conda protect --list --protected\n                        Conda Environments\n\u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n\u2503 Name      \u2503 Prefix                                \u2503 Status       \u2503\n\u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n\u2502 -         \u2502 /tmp/user1-test-env-one               \u2502 \ud83d\udd10 protected \u2502\n\u2502 base      \u2502 /home/user1/opt/conda/                \u2502 \ud83d\udd10 protected \u2502\n\u2502 test_env1 \u2502 /home/user1/opt/conda/envs/test_env1  \u2502 \ud83d\udd10 protected \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n"
+    },
+    {
+      "name": "conda_index",
+      "description": "conda index, formerly part of conda-build. Create channels from collections of packages.",
+      "repo_url": "https://github.com/conda/conda-index",
+      "repo_full_name": "conda/conda-index",
+      "stars": 11,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "index": "conda_index.plugin"
+      },
+      "category": "Build tools",
+      "readme": "# conda-index\n\n`conda-index` creates conda channels from a collection of conda packages.\n\nThe `conda_index` command operates on a channel directory. A channel directory\ncan't be named after a supported platform and must contain a `noarch`\nsubdirectory. It will usually contain other subdirectories named for conda's\nsupported platforms `linux-64`, `win-64`, `osx-64`, etc. Place packages into\ntheir corresponding subdirectories. Then run conda-index to extract metadata\nfrom these packages to generate `index.html`, `repodata.json` etc. with\nsummaries of the packages' metadata. `conda` uses the metadata to solve\ndependencies before doing an install.\n\nBy default the metadata is output to the same directory tree as the channel\ndirectory but it can be output to a separate tree with the `--output <output>`\nparameter. The metadata cache is placed with the packages, in `.cache` folders\nunder each platform subdirectory.\n\nAfter `conda-index` has finished, its output can be used as a channel `conda\ninstall -c file:///path/to/output ...` or would typically be placed on a web\nserver.\n\n## Run normally\n\n```sh\npython -m conda_index <path to channel directory>\n```\nAn equivalent `conda` subcommand, `conda index`, is also available.\n\n## Run for debugging\n\n```sh\npython -m conda_index --verbose --threads=1 <path to channel directory>\n```\n\n## Contributing\n\n```sh\nconda create -n conda-index \"python >=3.9\" conda conda-build \"pip >=22\"\n\ngit clone https://github.com/conda/conda-index.git\npip install -e conda-index[test]\n\ncd conda-index\npytest\n```\n\n## Parallelism\n\nThis version of conda-index continues indexing packages from other subdirs while\nthe main thread is writing `repodata.json`.\n\nAll `current_repodata.json` are generated in parallel. This may use a lot of ram\nif `repodata.json` has tens of thousands of entries.\n"
+    },
+    {
+      "name": "multiply",
+      "description": "A subcommand written in Rust that multiplies two integers",
+      "repo_url": "https://github.com/conda/conda-plugin-template",
+      "repo_full_name": "conda/conda-plugin-template",
+      "stars": 11,
+      "docs": null,
+      "topics": [
+        "conda-plugin"
+      ],
+      "entry_points": {
+        "multiply": "rust_plugin"
+      },
+      "category": "Subcommands",
+      "readme": "# conda-plugin-template\n\nThis repository contains a mix of templates and tutorials related to conda plugins.\n\n\n## Tutorials\n\nTo take a look at the tutorials, head over to [tutorials](./tutorials).\n\n\n## Templates\n\nWe currently have a [cookiecutter](https://cookiecutter.io) template you can use to\nstart a new conda plugin project. To use it, run the following command:\n\n```\ncookiecutter gh:conda/conda-plugin-template --directory=\"cookiecutter-template\"\n```\n\nor\n\n```\ncookiecutter https://github.com/conda/conda-plugin-template.git --directory=\"cookiecutter-template\"\n```\n\nIf you do not currently have cookiecutter installed, please refer to their \n[installation guide](https://cookiecutter.readthedocs.io/en/stable/installation.html).\n\n## Share Your Plugins\n\nPlease consider submitting a pull request with a link to your conda plugin to the [conda-incubator/plugins](https://github.com/conda-incubator/plugins) repository. This will help others find your plugin and use it.\n"
+    },
+    {
+      "name": "conda-rattler-solver",
+      "description": "The fast pixi solver, now in conda",
+      "repo_url": "https://github.com/conda-incubator/conda-rattler-solver",
+      "repo_full_name": "conda-incubator/conda-rattler-solver",
+      "stars": 10,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-rattler-solver": "conda_rattler_solver.plugin"
+      },
+      "category": "Solvers",
+      "readme": "# conda-rattler-solver\n\nThe fast pixi solver, now in conda!\n\n## What is this exactly?\n\nIf `conda-libmamba-solver` brought the `mamba` solver to `conda`, `conda-rattler-solver` tries to integrate the `pixi` solver (called `resolvo`, as provided in `rattler`) in `conda`.\n\nThis is an experiment to see how easy it would be to integrate new solves in `conda` after the initial work done in `conda-libmamba-solver`.\n\nNot meant for production use.\n"
+    },
+    {
+      "name": "conda-spawn",
+      "description": "Activate conda environments in new shell processes.",
+      "repo_url": "https://github.com/conda-incubator/conda-spawn",
+      "repo_full_name": "conda-incubator/conda-spawn",
+      "stars": 7,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-spawn": "conda_spawn.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-spawn\n\nActivate conda environments in new shell processes.\n\n> [!IMPORTANT]\n> This project is still in early stages of development. Don't use it in production (yet).\n> We do welcome feedback on what the expected behaviour should have been if something doesn't work!\n\n## What is this?\n\n`conda spawn` is a replacement subcommand for the `conda activate` and `conda deactivate` workflow\n\nInstead of writing state to your current shell session, `conda spawn ENV-NAME` will start a new shell with your activated environment. To deactivate, exit the process with <kbd>Ctrl</kbd>+<kbd>D</kbd>, or run the command `exit`.\n\n## Installation\n\nThis is a `conda` plugin and goes in the `base` environment:\n\n```bash\nconda install -n base conda-forge::conda-spawn\n```\n\nMore information is available on our [documentation](https://conda-incubator.github.io/conda-spawn).\n\n## Contributing\n\nPlease refer to [`CONTRIBUTING.md`](/CONTRIBUTING.md).\n"
+    },
+    {
+      "name": "anaconda-env-log",
+      "description": "Log conda environments to Anaconda.cloud",
+      "repo_url": "https://github.com/anaconda/anaconda-cloud-tools",
+      "repo_full_name": "anaconda/anaconda-cloud-tools",
+      "stars": 5,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-env-log": "anaconda_env_log.hooks"
+      },
+      "category": "Authentication",
+      "readme": "# Anaconda Cloud Tools\n\nThis monorepo contains client libraries and a CLI for working with Anaconda Cloud.\nWe aim to integrate the existing `anaconda-client` as a fallback, such that all subcommands are available under the `anaconda` application, and we can safely plan a deprecation of the older functionality as we move services from anaconda.org to anaconda.cloud.\n\n### Components\n\n* [`anaconda-cloud-cli`](./libs/anaconda-cloud-cli) provides a core CLI entry point (currently called `acli` until we can integrate `anaconda-client`) and a plugin mechanism such that other libraries can implement CLI subcommands\n* [`anaconda-cloud-auth`](./libs/anaconda-cloud-auth) provides core authentication functionality and an `auth` subcommand\n"
+    },
+    {
+      "name": "anaconda-assistant-conda",
+      "description": "The Anaconda Assistant conda plugin",
+      "repo_url": "https://github.com/anaconda/assistant-sdk",
+      "repo_full_name": "anaconda/assistant-sdk",
+      "stars": 4,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "anaconda-assistant": "anaconda_assistant_conda.plugin"
+      },
+      "category": "Other",
+      "readme": "# Anaconda Assistant SDK and integrations\n\nHere you will find the SDK for the Anaconda Assistant API the powers the [Anaconda Assistant\nJupyter Notebook extension](https://docs.anaconda.com/anaconda-notebooks/anaconda-assistant/).\nAdditional plugin or integration packages are also in this repo.\n\n## Packages\n\n- [anaconda-assistant-sdk](https://github.com/anaconda/assistant-sdk/tree/main/libs/anaconda-assistant-sdk)\n  - This is the main Python SDK that provides clients for the API to send messages and receive replies.\n  - Included here are integrations for many AI toolkit libraries, like [langchain](https://github.com/langchain-ai/langchain), [llm](https://github.com/simonw/llm), [ell](https://github.com/MadcowD/ell), and [Panel ChatInterface](https://panel.holoviz.org/reference/chat/ChatInterface.html).\n  - See the [README](https://github.com/anaconda/assistant-sdk/blob/main/libs/anaconda-assistant-sdk/README.md) for more details\n- [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk/tree/main/libs/anaconda-assistant-conda)\n  - A [conda](https://github.com/conda/conda) plugin that provides AI assistance to conda workflows.\n  - Error summarization and suggestions for corrections for all conda commands.\n- [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk/tree/main/libs/anaconda-assistant-mcp)\n  - A [conda](https://github.com/conda/conda) plugin that provides an MCP server and tools to interact with conda\n  - See the [README](https://github.com/anaconda/assistant-sdk/blob/main/libs/anaconda-assistant-mcp/README.md) for more details\n"
+    },
+    {
+      "name": "conda-anaconda-tos",
+      "description": "Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS).",
+      "repo_url": "https://github.com/anaconda/conda-anaconda-tos",
+      "repo_full_name": "anaconda/conda-anaconda-tos",
+      "stars": 4,
+      "docs": null,
+      "topics": [
+        "anaconda",
+        "conda"
+      ],
+      "entry_points": {
+        "conda-anaconda-tos": "conda_anaconda_tos.plugin"
+      },
+      "category": "Subcommands",
+      "readme": "# conda-anaconda-tos\n\n[![Conda Version](https://img.shields.io/conda/vn/main/conda-anaconda-tos.svg)](https://anaconda.org/main/conda-anaconda-tos)\n[![License](https://img.shields.io/github/license/anaconda/conda-anaconda-tos.svg)](LICENSE)\n\nA conda plugin for handling Terms of Service (ToS) acceptance in commercial software repositories, providing auditable consent management and GDPR compliance.\n\n> [!NOTE]\n> If you have an enterprise license agreement with Anaconda, that agreement governs your use of the applicable Anaconda products and supersedes any terms presented to your licensed users through the plugin during your subscription term.\n\n## What is conda-anaconda-tos?\n\nThe `conda-anaconda-tos` plugin enables conda to automatically detect and manage Terms of Service acceptance when accessing commercial repositories. It provides auditable records of user consent, handles ToS updates transparently, and ensures compliance with legal requirements for commercial software distribution.\n\nThis plugin solves the critical need for verifiable Anaconda ToS acceptance in enterprise environments while maintaining a smooth user experience for conda package installation.\n\n## Installation\n\nThe plugin must be installed in the base environment to function properly with all conda operations:\n\n```bash\n# From Anaconda's \"main\" channel\nconda install --name=base conda-anaconda-tos\n```\n\n> [!NOTE]\n> With the plugin installed into a non-`base` environment, use `$CONDA_PREFIX/bin/conda` instead of `conda` for the usage instructions below.\n\n## Usage\n\n### Basic Commands\n\n| Basic Commands |\n|----------------|\n| ![Basic Commands Demo](demos/conda_tos.gif) |\n\n```bash\nconda tos --help\n\n# see the status of all Terms of Service\nconda tos\n\n# conda command intercepted with Terms of Service checks\nconda create --name=scratch\n\n# clear cache & acceptance/rejection files\nconda tos clean --all\n\n# other commands for managing Terms of Service\nconda tos view    # Display full Terms of Service text\nconda tos accept  # Accept Terms of Service\nconda tos reject  # Reject Terms of Service\nconda tos interactive  # Interactive ToS management\n```\n\n### Interactive ToS Acceptance\n\nWhen accessing a commercial repository for the first time or after ToS updates, you'll see an interactive prompt:\n\n```text\nDo you accept the Terms of Service (ToS) for https://repo.anaconda.com/pkgs/main? [(a)ccept/(r)eject/(v)iew]:\nDo you accept the Terms of Service (ToS) for https://repo.anaconda.com/pkgs/msys2? [(a)ccept/(r)eject/(v)iew]:\nDo you accept the Terms of Service (ToS) for https://repo.anaconda.com/pkgs/r? [(a)ccept/(r)eject/(v)iew]:\n```\n\n| Interactive Accept | Interactive Reject |\n|--------------------|--------------------|\n| ![Interactive Accept Demo](demos/interactive_accept.gif) | ![Interactive Reject Demo](demos/interactive_reject.gif) |\n\n## Auto Acceptance\n\nConfigure ToS auto acceptance in your `.condarc` file\n\n```yaml\nplugins:\n  auto_accept_tos: true\n```\n\nOr use the command-line flag (conda >= 25.5.0):\n\n```bash\nconda config --set plugins.auto_accept_tos yes\n```\n\nOr set the environment variable:\n\n```bash\nexport CONDA_PLUGINS_AUTO_ACCEPT_TOS=yes\n```\n\n## Jupyter Environments\n\nIn Jupyter notebook environments, interactive prompts are disabled. Users must explicitly accept or reject Terms of Service by running:\n\n```bash\nconda tos <accept|reject>\n```\n\n> [!NOTE]\n> `conda tos` can be run using either the `%` or `!` magic commands within a Jupyter Notebook.\n\n## CI/CD Environments\n\nIn CI/CD environments (detected via `CI=true`), the plugin will automatically accept Terms of Service and print a warning message. This ensures automated builds don't get blocked waiting for user input.\n\n### Docker in CI/CD Environments\n\nWhen using Anaconda's Docker images in continuous integration systems, the `CI` environment variable might not be automatically passed to the container, which can lead to unexpected ToS prompts during your CI/CD workflows.\n\nWe recommend passing the `CONDA_PLUGINS_AUTO_ACCEPT_TOS` e"
+    },
+    {
+      "name": "conda-emscripten",
+      "description": "Emscripten-specific conda plugins: solver (resolvo via cx-wasm), package extractor, and virtual packages",
+      "repo_url": "https://github.com/jezdez/conda-express",
+      "repo_full_name": "jezdez/conda-express",
+      "stars": 4,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-emscripten": "conda_emscripten.plugin"
+      },
+      "category": "Solvers",
+      "readme": "# conda-express (cx)\n\n[![CI](https://github.com/jezdez/conda-express/actions/workflows/ci.yml/badge.svg)](https://github.com/jezdez/conda-express/actions/workflows/ci.yml)\n[![Docs](https://github.com/jezdez/conda-express/actions/workflows/docs.yml/badge.svg)](https://jezdez.github.io/conda-express/)\n[![codecov](https://codecov.io/gh/jezdez/conda-express/graph/badge.svg)](https://codecov.io/gh/jezdez/conda-express)\n[![License](https://img.shields.io/github/license/jezdez/conda-express)](https://github.com/jezdez/conda-express/blob/main/LICENSE)\n[![Crates.io](https://img.shields.io/crates/v/conda-express)](https://crates.io/crates/conda-express)\n[![PyPI](https://img.shields.io/pypi/v/conda-express)](https://pypi.org/project/conda-express/)\n\nA lightweight, single-binary bootstrapper for [conda](https://github.com/conda/conda), powered by [rattler](https://github.com/conda/rattler). The `cx` binary is short for **c**onda e**x**press.\n\ncx replaces the miniconda/constructor installation pattern with a 7-11 MB static binary that bootstraps a fully functional conda environment in seconds.\n\n## Quick start\n\n![Bootstrap conda, create an environment, and activate it](demos/quickstart.gif)\n\n```bash\n# Bootstrap a conda installation (first run only, ~3\u20135 s)\ncx bootstrap\n\n# Use conda normally \u2014 cx delegates transparently\ncx install -n myenv numpy pandas\ncx create -n science python=3.12 scipy\n\n# Activate environments using conda-spawn (no shell init needed)\ncx shell myenv\n```\n\nOn first use, cx automatically installs conda and its plugins into `~/.cx` from an embedded lockfile. Subsequent invocations hand off directly to the installed `conda` binary with no overhead.\n\n## What gets installed\n\ncx installs a minimal conda stack from conda-forge:\n\n| Package | Role |\n|---|---|\n| python >= 3.12 | Runtime |\n| conda >= 25.1 | Package manager |\n| conda-rattler-solver | Rust-based solver (replaces libmamba) |\n| conda-spawn | Subprocess-based environment activation |\n| conda-pypi | PyPI interoperability |\n| conda-self | Base environment self-management |\n| [conda-workspaces](https://conda-incubator.github.io/conda-workspaces/) | Multi-environment workspace and task management |\n\nThe `conda-libmamba-solver` and its 27 exclusive native dependencies (libsolv, libarchive, libcurl, spdlog, etc.) are excluded by default, reducing the install size significantly.\n\n## Installation\n\n### Homebrew (recommended)\n\nThe easiest way to install on macOS and Linux:\n\n```bash\nbrew tap jezdez/conda-express https://github.com/jezdez/conda-express\nbrew install jezdez/conda-express/cx\n```\n\nUpdate later with `brew upgrade cx`.\n\n### Shell script\n\n**macOS / Linux:**\n\n```bash\ncurl -fsSL https://jezdez.github.io/conda-express/get-cx.sh | sh\n```\n\n**Windows (PowerShell):**\n\n```powershell\npowershell -ExecutionPolicy ByPass -c \"irm https://jezdez.github.io/conda-express/get-cx.ps1 | iex\"\n```\n\nThe script detects your platform, downloads the right binary, verifies the checksum, updates your shell profile / PATH, and runs `cx bootstrap`. Customize with environment variables:\n\n- `CX_INSTALL_DIR` \u2014 where to place the binary (default: `~/.local/bin` or `%USERPROFILE%\\.local\\bin`)\n- `CX_VERSION` \u2014 specific version to install (default: `latest`)\n- `CX_NO_PATH_UPDATE` \u2014 set to skip shell profile / PATH modification\n- `CX_NO_BOOTSTRAP` \u2014 set to skip running `cx bootstrap`\n\n### From GitHub Releases\n\nDownload the binary for your platform from the\n[latest release](https://github.com/jezdez/conda-express/releases/latest):\n\n| Platform | File |\n|---|---|\n| Linux x86_64 | `cx-x86_64-unknown-linux-gnu` |\n| Linux ARM64 | `cx-aarch64-unknown-linux-gnu` |\n| macOS x86_64 (Intel) | `cx-x86_64-apple-darwin` |\n| macOS ARM64 (Apple Silicon) | `cx-aarch64-apple-darwin` |\n| Windows x86_64 | `cx-x86_64-pc-windows-msvc.exe` |\n\nEach file has a matching `.sha256` checksum.\n\n### Docker\n\nA minimal, hardened multi-arch image (~37 MB) is published to GHCR on every release:\n\n```bash\ndocker run --rm -v cx-data:/home/nonroot/."
+    },
+    {
+      "name": "conda-self",
+      "description": "A self command for conda",
+      "repo_url": "https://github.com/conda-incubator/conda-self",
+      "repo_full_name": "conda-incubator/conda-self",
+      "stars": 4,
+      "docs": "https://conda-incubator.github.io/conda-self",
+      "topics": [],
+      "entry_points": {
+        "conda-self": "conda_self.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-self\n\nA `self` command to manage your `base` environment safely.\n\n```\n$ conda self\nusage: conda self [-V] [-h] {install,remove,reset,update} ...\n\nManage your conda 'base' environment safely.\n\noptions:\n  -V, --version         Show the 'conda-self' version number and exit.\n  -h, --help            Show this help message and exit.\n\nsubcommands:\n  {install,remove,reset,update}\n    install             Add conda plugins to the 'base' environment.\n    remove              Remove conda plugins from the 'base' environment.\n    reset               Reset 'base' environment to essential packages only.\n    update              Update 'conda' and/or its plugins in the 'base' environment.\n```\n## Installation\n\n1. `conda install -n base conda-self`\n2. `conda self --help`\n\n## Contributing\n\nSee [CONTRIBUTING.md](./CONTRIBUTING.md)\n"
+    },
+    {
+      "name": "conda-subchannel",
+      "description": "Create subsets of conda channels thanks to CEP-15 metadata.",
+      "repo_url": "https://github.com/conda-incubator/conda-subchannel",
+      "repo_full_name": "conda-incubator/conda-subchannel",
+      "stars": 4,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-subchannel": "conda_subchannel.plugin"
+      },
+      "category": "Channels",
+      "readme": "# conda-subchannel\n\nCreate subsets of conda channels thanks to CEP-15 metadata\n\n## conda plugin\n\n```bash\n$ conda install -n base conda-subchannel\n$ conda subchannel --channel=conda-forge --keep-tree python=3.9\n$ python -m http.serve --directory subchannel/\n```\n\n## Github Actions action\n\n```yaml\nname: Create conda subchannel\n\non:\n  push:\n    branches:\n      - main\n  pull_request:\n\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: write  # to deploy to GH Pages automatically\n    concurrency:\n      group: ${{ github.workflow }}-${{ github.ref }}\n    steps:\n      - uses: jaimergp/conda-subchannel@main\n        with:\n          channel: conda-forge\n          keep-trees: python=3.9\n```"
+    },
+    {
+      "name": "conda-anaconda-telemetry",
+      "description": "A conda plugin for Anaconda Telemetry",
+      "repo_url": "https://github.com/anaconda/conda-anaconda-telemetry",
+      "repo_full_name": "anaconda/conda-anaconda-telemetry",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-anaconda-telemetry": "conda_anaconda_telemetry.hooks"
+      },
+      "category": "Other",
+      "readme": "# Conda Anaconda Telemetry\n\nWelcome to the Conda Anaconda Telemetry project! This project is a plugin that\nsubmits data about conda's usage to Anaconda. This helps Anaconda learn more about\nthose using conda. This plugin is also an example of how others can leverage conda's\nplugin system to begin collecting more information about their conda users too.\n\n## Installation\n\nTo begin using this plugin, install it in your base environment with the following command:\n\n```commandline\nconda install --name base conda-anaconda-telemetry\n```\n\n## Disabling\n\nTo disable this plugin, you can either use the `conda config` command:\n\n```\nconda config --set plugins.anaconda_telemetry false\n```\n\nOr remove this plugin from your base environment:\n\n```commandline\nconda remove --name base conda-anaconda-telemetry\n```\n\n## Contributing to this repository\n\nContributions are very welcome \ud83d\ude04\n\nFeel free to:\n1. File bug reports\n2. Create feature requests\n3. Open pull requests to resolve issues available in the [Github issues queue](https://github.com/anaconda/conda-anaconda-telemetry/issues).\n4. Review open pull requests\n5. Report any typos, wrong/outdated information on the [documentation website](https://anaconda.github.io/conda-anaconda-telemetry/).\n6. Engage in ongoing discussions in this project and add new ideas.\n"
+    },
+    {
+      "name": "conda-repo-cli",
+      "description": "A command line interface for Anaconda Platform repository",
+      "repo_url": "https://github.com/anaconda/conda-repo-cli",
+      "repo_full_name": "anaconda/conda-repo-cli",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-repo-cli": "_conda_repo_cli.plugin"
+      },
+      "category": "Authentication",
+      "readme": "[ci-tests-badge]: https://github.com/anaconda/conda-repo-cli/actions/workflows/test-and-build-dev.yml/badge.svg\n[ci-release-badge]: https://github.com/anaconda/conda-repo-cli/actions/workflows/release.yml/badge.svg\n\n# Conda Repo CLI\n[![CI Tests (GitHub Actions)][ci-tests-badge]](https://github.com/anaconda/conda-repo-cli/actions/workflows/test-and-build-dev.yml)\n[![CI Release (GitHub Actions)][ci-release-badge]](https://github.com/anaconda/conda-repo-cli/actions/workflows/release.yml)\n\n\n[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/PyCQA/pylint)\n[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)\n[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)\n[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)\n\nCLI tool for working with Anaconda\n\n[Package Security Manager CLI Documentation](https://www.anaconda.com/docs/psm/on-prem/latest/user/cli)\n\n## Features\n\nconda-repo-cli is a tool for console, the key features are as follows:\n\n- `admin` - Package Security Manager admin settings\n- `auth` - Manage Authorization Tokens\n- `channel` - Manage your Anaconda repository channels\n- `config` - Anaconda Repo Client Configuration\n- `copy` - Copy packages from one channel to another\n- `cves` - Access Anaconda Repository cvess\n- `login` - Authenticate a user\n- `logout` - Log out from your Anaconda repository\n- `mirror` - Manage your Anaconda repository mirrors\n- `move` - Move packages from one channel to another.\n- `sbom` - Get SBOM files\n- `remove` - Remove an object from your Package Security Manager repository. Must refer to the formal package name as it appears\n  in the URL of the package. Also use anaconda show <USERNAME> to see list of package names. Example: anaconda remove\n  continuumio/empty-example-notebook\n- `search` - Search in your Anaconda repository\n- `upload` - Upload packages to your Package Security Manager repository\n- `whoami` - Return information about logged user\n- `wizard` - Configure Conda to use Package Security Manager\n\n## Installation\n\nPython installing:\n\n```console\n$ python setup.py install\n```\n\nConda:\n\n```console\n$ conda install conda-repo-cli\n```\n\n## Usage\n\nconda-repo-cli can do all what you need without access to UI. You can following options/arguments:\n\n```\n$ conda repo -h\nusage: conda-repo [-h] [--disable-ssl-warnings] [-k] [--show-traceback] [-v] [-q] [-V] [-t TOKEN] [-s SITE]\n                  {admin,auth,channel,config,copy,cves,login,logout,mirror,move,remove,search,upload,whoami} ...\n\npositional arguments:\n  {admin,auth,channel,config,copy,cves,login,logout,mirror,move,remove,search,upload,whoami}\n                        sub-command help\n    admin               Package Security Manager admin settings\n    auth                Manage Authorization Tokens\n    channel             Manage your Anaconda repository channels\n    config              Anaconda Repo Client Configuration\n    copy                Copy packages from one channel to another\n    cves                Access Anaconda Repository cvess\n    login               Authenticate a user\n    logout              Log out from your Anaconda repository\n    mirror              Manage your Anaconda repository mirrors\n    move                Move packages from one channel to another.\n    remove              Remove an object from your Package Security Manager repository. Must refer to the formal package name as it appears in the URL of the package. Also use anaconda show <USERNAME> to\n                        see list of package names. Example: anaconda remove continuumio/empty-example-notebook\n    sbom                Get SBOM files\n    search              Search in your Anaconda repository\n    upload              Upload packages to your Package Security Manager repository\n    "
+    },
+    {
+      "name": "conda-tui",
+      "description": "A Text User Interface for conda",
+      "repo_url": "https://github.com/conda-incubator/conda-tui",
+      "repo_full_name": "conda-incubator/conda-tui",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "tui": "conda_tui.app"
+      },
+      "category": "UI and display",
+      "readme": "# A conda Text User Interface (TUI) built with Textual\n\n![logo](etc/logos/conda-tui-color-background.png)\n\n> This is a project that was originally developed during [@anaconda](https://github.com/anaconda) hackdays.\n> It is currently in its infancy, and we welcome any contributions or suggestions from the community!\n>\n> Due to its stage of development, it is recommended to try it out and provide feedback.\n\n`conda-tui` is a snake-chef that follows and creates recipes to deliver delicious homemade packages.\n\n`conda-tui` is also an experimental Text User Interface (TUI) for conda built with [Textual](https://github.com/Textualize/textual).\nIt aims to provide a clean and easy interface centered around common interactive use cases, wrapped around the conda CLI.\n\n<img width=\"1194\" alt=\"image\" src=\"https://github.com/anaconda-hackdays/conda-tui/assets/11037737/3c4d273c-bb0e-4c0b-bf9b-34f816478760\">\n\n# Installation\n\n1. Ensure you have `conda` or `miniconda` installed\n2. Install the package into a test environment:\n   * `conda create -n tui -c conda-forge -c mattkram/label/dev conda-tui conda`\n   * `conda activate tui`\n3. Run it! `conda tui`\n\n# Features\n\n> This is very likely to change. Have an idea? Create an issue!\n\n* Display a list of all `conda` environments (`conda env list`)\n* Navigate to any environment to view all packages installed (`conda list`)\n* Display packages that can be updated (`conda update --all --dry-run`)\n\n  <img width=\"858\" alt=\"image\" src=\"https://github.com/anaconda-hackdays/conda-tui/assets/11037737/d3c133c8-c074-4a24-a5f1-bbda271f028c\">\n  <img width=\"1727\" alt=\"image\" src=\"https://github.com/anaconda-hackdays/conda-tui/assets/11037737/1314947f-de3a-461e-982a-6e01b49fe456\">\n\n# Dev setup\n\n1. Ensure you have `conda` or `miniconda` installed\n1. Setup a new conda dev environment: `make setup`\n1. Activate the environment: `conda activate ./env`\n1. Install `pre-commit`: `pre-commit install`\n1. Run the application: `make run`\n1. Run the type checks: `make type-check`\n1. Run the tests: `make test`\n\n# Resources\n\n* [Textual Repo](https://github.com/willmcgugan/textual)\n* [Rich Repo](https://github.com/willmcgugan/rich)\n* [Rich Docs](https://rich.readthedocs.io/en/latest)\n* [ASCII Art Generator](https://www.text-image.com/convert/ascii.html)\n\n# Icon sources\n\nThe logo was constructed from free icons, which require attribution:\n\n* [Snake] made by [Freepik]\n* [Chef hat] made by [Those Icons]\n\n[Snake]: https://www.flaticon.com/free-icon/snake_194210?term=snake&related_id=194210\n[Freepik]: https://www.flaticon.com/authors/freepik\n[Chef hat]: https://www.flaticon.com/free-icon/chef_481486?term=chef%20hat&related_id=481486\n[Those Icons]: https://www.flaticon.com/authors/those-icons\n"
+    },
+    {
+      "name": "string-art",
+      "description": "My string art subcommand plugin",
+      "repo_url": "https://github.com/beeankha/SimplePythonStuff",
+      "repo_full_name": "beeankha/SimplePythonStuff",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "string-art": "string_art"
+      },
+      "category": "Subcommands",
+      "readme": "# Simple Stuff\n\n## Misc. simple Python 3 projects for teaching myself basic concepts.\n\n\n### **DrawCircle**\n\nDraws a circle.\n\n\n### **TempConverter**\n\nA very simple temperature converter script.\n\n\n### **FizzBuzz**\n\nA much famous test.\n\n\n### **Lunch Randomizer**\n\nHelps select where to go to lunch in downtown Durham, NC.\n\n\n### **Magic 8 Ball**\n\nAsk a yes or no question and get an answer!\n\n\n### **PrimeNumberGenerator**\n\nFind all prime numbers within a specified range.\n\n\n### **Image Changer**\n\nRun `image_changer.py` on any JPEG image to stylize it like so:\n\n_Before:_\n\n![Original Photo](images/august_marshmallows.jpg)\n\n_After:_\n\n![Altered Photo](images/cartoonized_august_marshmallows.jpg)\n\n> When the stylized image pops up, press any key to activate the `Save the image? [y]/[n]` prompt\n\nDependencies include [`cv2`](https://pypi.org/project/opencv-python/) and `numpy`. Based on the excellent tutorial found [here](https://dev.to/stokry/how-to-cartoonize-an-image-with-python-1e01)\n"
+    },
+    {
+      "name": "captain-planet",
+      "description": "Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command",
+      "repo_url": "https://github.com/kalawac/simple-bash-plugin",
+      "repo_full_name": "kalawac/simple-bash-plugin",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "captain-planet": "captain_planet"
+      },
+      "category": "Subcommands",
+      "readme": "# About the project\nThis project was built using the template provided at the [conda plugin template repo](https://github.com/conda/conda-plugin-template/tree/main) which includes a [tutorial](https://github.com/conda/conda-plugin-template/tree/main/tutorials/subcommands/python) for generating plugins that contain conda subcommands written in Python.\n\nThis project is an intermediate step in the process of creating a plugin that can handle the activate, deactivate, and reactivate processes for POSIX shells and possibly also hook and command, depending on whether it seems prudent to keep all functionality together.\n\nThis particular intermediate step helps to demonstrate my practical understanding of the code and its entry points. It also helped me to understand what options might be most sensible and effective for moving forward with plugin development.\n\n# Packaging and using this plugin\nThis plugin can be installed as an editable install using `pyproject.toml`:\n```\n$ pip install -e .\n```\n\nThe included `meta.yaml` file in the `recipe` folder can also be used to package this plugin as a conda package using `conda build`. However, there are no plans to distribute this plugin.\n\n## Recommendations for use\n- Create and activate a new conda environment, replacing `newenv` in the commands below with your preferred environment name\n  - `conda create -n newenv`\n  - `conda activate newenv`\n- install conda into that environment: `conda install conda`\n- Ensure that you are in the directory containing this plugin\n- Install this plugin as an editable install: `pip install -e .`\n- Run the provided shell script: `. shell_script/conda.sh`\n  - This will change the conda executable being used to the conda installed in this environment.\n  - In addition, this changes the activate, deactivate and reactivate commands to run through the plugin.\n- Check that the plugin is installed by running `conda -h` and confirming that `captain-planet` is listed under the section titled `conda commands available from other packages`\n- Create a new environment and activate that environment, replacing `scratch1` in the commands below with your preferred environment name\n  - `conda create -n scratch1`\n  - `conda activate scratch1`\n  - \"The power is yours!\" should print to the terminal and the new environment should be active.\n- You can also try deactivating the new environment with `conda deactivate`\n  - \"The power is yours!\" should print to the terminal and the base environment should be active.\n- Exit the terminal window to return to your initial conda settings."
+    },
+    {
+      "name": "conda-checkpoints",
+      "description": "conda plugin to save lockfiles to your environment after each environment modification",
+      "repo_url": "https://github.com/conda-incubator/conda-checkpoints",
+      "repo_full_name": "conda-incubator/conda-checkpoints",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-checkpoints": "conda_checkpoints.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-checkpoints\n\nconda plugin to save lockfiles to your environment after each environment modification\n"
+    },
+    {
+      "name": "conda-npm",
+      "description": "conda-npm",
+      "repo_url": "https://github.com/aterrel/conda-npm",
+      "repo_full_name": "aterrel/conda-npm",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-npm": "conda_npm.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-npm\nrun conda like npm\n\n## Use case:\n- you want to use conda to manage your python environment\n- you want to add packages as you develop\n- you want to save your packages without having to run `conda env export > environment.yml` every time you add a package\n- you want to use `conda install` to install packages from your `environment.yml` file\n- you want to share your environment with others\n\n## Plan:\n\n```shell\nconda npm install <package>\n```\n- add package to environment.yml\n- resolve dependencies with noarch or your platform\n- rewrite conda lock file\n- install in environment"
+    },
+    {
+      "name": "conda-ops",
+      "description": "Conda plugin to maintain environments and projects reproducibly.",
+      "repo_url": "https://github.com/acwooding/conda-ops",
+      "repo_full_name": "acwooding/conda-ops",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-ops": "conda_ops.conda_ops_parser"
+      },
+      "category": "Environment management",
+      "readme": "# conda-ops\nCreating, maintaining and not breaking conda-based python environments can be messy and complicated. Sharing environments (or creating environments to run a notebook or project that's been handed to you) is even harder. `conda-ops` provides a simple, easy-to-use solution to the often confusing, complex, and complicated python+conda packaging and environment nightmare that \"just works\". Think of it like \"poetry for conda\". It helps keep track of and integrate pip installed packages with conda, which is [notoriously fraught with peril](https://www.anaconda.com/blog/using-pip-in-a-conda-environment) but impossible to avoid in an everyday development environment (`pip install -e .`).\n\n`conda ops` is a command line tool, in fact, a conda plugin, that manages your project's conda environment and transparently keeps track of:\n\n* what you asked for (requirements file)\n* what you needed (lock file)\n* your shareable conda settings (project-based .condarc file)\n\nIt gives you the ability to run status checks on your environment and lets you know what you should or can do next (`conda ops`) to keep everything working and in sync.\n\n## Installation\n\nRequirements: Note that `conda-ops` requires modern conda with plugin support (and python/pip). e.g.\n\n```\n>>> conda install -n base -c defaults conda>=23.5.0\n>>> conda install -n base -c defaults python>=3.11\n```\n\n`conda-ops` is still under significant development and is changing rapidly. We recommend updating it regularly no matter which version you choose to install.\n\nFor the latest development version:\n\n`conda run -n base pip install git+https://github.com/acwooding/conda-ops`\n\nFor the latest alpha release available via PyPI:\n\n`conda run -n base pip install conda-ops`\n\n\nTo install the plugin locally in development mode, clone the repo and then run `pip install -e .` from your base `conda` install (e.g. `conda run -n base pip install -e .`.\n\nPlease make sure that you install `conda-ops` into your `base` conda environment for the plugin for work properly. (If you install it into a conda environment, you will have to use that environment's `conda` installation to pick up the plugin; that is, installing conda into that environment and running `path/to/environment/conda/bin ops` instead of `conda ops`).\n\nTo uninstall, `pip uninstall conda-ops` from your within your `base` conda environment.\n\n## Basic Usage\n\n### Initialization\nTo set up a conda ops managed project environment in the current working directory (similar to `git init`):\n```\nconda ops init\n```\nThis creates a `.conda-ops` directory that contains the conda ops configuration files and lock files, and an `environment.yml` file if it doesn't already exist.\n\nSimilar to `git` you can always check the status of your conda ops managed environment via `conda ops status` or simply, `conda ops`. This will prompt you for what you may need to next do if anything ever gets out of sync.\n\n### Package Management\nBeyond `conda ops init` and `conda ops`, there are only 3 commands that you need to regularly:\n* `conda ops add`: Add packages to the requirements file.\n* `conda ops remove`: Remove packages from the requirements file. Removes all versions of the packages from any channel they are found in.\n* `conda ops sync`: Sync the environment and lock file with the requirements file.\n\nTo add packages from conda channels other than the default conda channel, you can use `-c` or `--channel`:\n```\nconda ops add -c channel1 package1 package2 -c channel2 package3\n```\nThis adds the entries `channel1::package1`, `channel1::package2` and `channel2::package3` to the requirements file and is shorthand for\n```\nconda ops add channel1::package1 channel1::package2 channel2::package3\n```\n\nFor anything using `pip` instead of `conda`, you can use `--pip` or `-e` depending on the circumstance:\n```\nconda ops add --pip package1\n```\nwill add `package1` under the `pip` section of the requirements file.\n\nWe also support VCS and editable installs via pip. For example, the"
+    },
+    {
+      "name": "conda-pypi-channel",
+      "description": "Expose a PyPI index as a conda channel, on the fly.",
+      "repo_url": "https://github.com/jaimergp/conda-pypi-channel",
+      "repo_full_name": "jaimergp/conda-pypi-channel",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-pypi-channel": "conda_pypi_channel.plugin"
+      },
+      "category": "Channels",
+      "readme": "# conda-pypi-channel\n\nEXPERIMENTAL.\n\nSets an ephemeral channel that knows how to fetch PyPI wheels and generate `repodata.json` files on the fly.\n\nNeeds the magic URL `http://localhost:8000/conda-pypi-channel` to be enabled.\nPyPI wheels need to be prefixed with `:pypi:`. Example:\n\n```\n$ pixi run conda create -d -c http://localhost:8000/conda-pypi-channel python :pypi:niquests\nDetected conda-pypi-channel! Starting server...\nINFO:     Started server process [94261]\nINFO:     Waiting for application startup.\nINFO:     Application startup complete.\nINFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)\nChannels:\n - http://localhost:8000/conda-pypi-channel\n - defaults\nPlatform: osx-arm64\nniquests:   0%|                       00:00, ? wheels/s]\njh2: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 6/6 [00:06<00:00,  1.16s/it, version=5.0.4]\ndone\nSolving environment: done\n\n## Package Plan ##\n\n  environment location: /var/folders/1b/z374sygs1s96t_xxxv0hr3lr0000gn/T/tmpq7_8h8t2/unused-env-name\n\n  added / updated specs:\n    - niquests\n    - python\n\n\nThe following packages will be downloaded:\n\n    package                    |               build\n    ---------------------------|--------------------\n    bzip2-1.0.8                |        h80987f9_6      129 KB  defaults\n    ca-certificates-2025.9.9   |        hca03da5_0      127 KB  defaults\n    charset-normalizer-3.4.3   | pypi_py3_none_any_0     52 KB  http://localhost:8000/conda-pypi-channel\n    expat-2.7.1                |        h313beb8_0      156 KB  defaults\n    h11-0.16.0                 | pypi_py3_none_any_0     37 KB  http://localhost:8000/conda-pypi-channel\n    jh2-5.0.9                  | pypi_py3_none_any_0     96 KB  http://localhost:8000/conda-pypi-channel\n    libcxx-20.1.8              |        h8869778_0      351 KB  defaults\n    libffi-3.4.4               |        hca03da5_1      120 KB  defaults\n    libmpdec-4.0.0             |        h80987f9_0       69 KB  defaults\n    libzlib-1.3.1              |        h5f15de7_0       47 KB  defaults\n    ncurses-6.5                |        hee39554_0      886 KB  defaults\n    niquests-3.15.2            | pypi_py3_none_any_0    163 KB  http://localhost:8000/conda-pypi-channel\n    openssl-3.0.17             |        h4ee41c1_0      4.3 MB  defaults\n    pip-25.2                   |      pyhc872135_0      1.2 MB  defaults\n    python-3.13.7              | hc28b8d9_100_cp313    12.7 MB  defaults\n    python_abi-3.13            |           1_cp313        6 KB  defaults\n    readline-8.3               |        h0b18652_0      464 KB  defaults\n    setuptools-78.1.1          |   py313hca03da5_0      2.2 MB  defaults\n    sqlite-3.50.2              |        h79febb2_1      1.0 MB  defaults\n    tk-8.6.15                  |        hcd8a7d5_0      3.3 MB  defaults\n    tzdata-2025b               |        h04d1e81_0      116 KB  defaults\n    urllib3-future-2.13.909    | pypi_py3_none_any_0    659 KB  http://localhost:8000/conda-pypi-channel\n    wassima-2.0.1              | pypi_py3_none_any_0    142 KB  http://localhost:8000/conda-pypi-channel\n    wheel-0.45.1               |   py313hca03da5_0      145 KB  defaults\n    xz-5.6.4                   |        h80987f9_1      289 KB  defaults\n    zlib-1.3.1                 |        h5f15de7_0       77 KB  defaults\n    ----------------------------------------------------------\n                                           Total:      28.7 MB\n\nThe following NEW packages will be INSTALLED:\n\n  bzip2              pkgs/main/osx-arm64::bzip2-1.0.8-h80987f9_6\n  ca-certificates    pkgs/main/osx-arm64::ca-certificates-2025.9.9-hca03da5_0\n  charset-normalizer conda-pypi-channel/noarch::charset-normalizer-3.4.3-pypi_py3_none_any_0\n  expat              pkgs/main/osx-arm64::expat-2.7.1-h313beb8_0\n  h11                conda-pypi-channel/noarch::h11-0.16.0-pypi_py3_none_any_0\n  jh2                conda-pypi-channel/noarch::jh2-5.0.9-pypi_py3_none_any_0\n  libcxx             pkgs/main/osx-arm64::libcxx-20.1.8-h88697"
+    },
+    {
+      "name": "conda-repodata",
+      "description": "Conda plugin to locally manipulate or inspect the repodata.json.",
+      "repo_url": "https://github.com/kenodegard/conda-repodata",
+      "repo_full_name": "kenodegard/conda-repodata",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-repodata": "conda_repodata.repodata"
+      },
+      "category": "Channels",
+      "readme": "# conda-repodata\n\nEver wanted to modify the `repodata.json` (or even just look at it) before downloading the packages? This is the tool for you!\n\nConda-repodata adds the ability to apply transformations to any `repodata.json` file before downloading the packages. This is useful for things like:\n\n* debugging `repodata.json` issues\n* testing hotfix patches to `repodata.json`\n* any other `repodata.json` manipulation you can think of!\n\n## Installation\n\n> [!WARNING]\n> This relies on an unreleased version of conda.\n\n```bash\nconda install kenodegard::conda-repodata\n```\n\n## Usage\n\n### View `repodata.json`\n\n```bash\nconda repodata --channel pkgs/main --subdir linux-64\n```\n\n### Write `repodata.json` to a file\n\n```bash\nconda repodata --channel pkgs/main --subdir linux-64 --output path/to/repodata.json\n```\n\n### Transform `repodata.json`\n\nTo apply a transformation to the `repodata.json` file, set the `CONDA_TRANSFORMATIONS` environment variable to a Python script containing a function called `transformation` that accepts the parsed repodata object and returns the patched object.\n\n```python\n# transformation.py\ndef transformation(repodata):\n    # do something to repodata\n    return repodata\n```\n\n```bash\nCONDA_TRANSFORMATIONS=tranfromation.py conda repodata ...\n```\n\nSee [example_transformations](./example_transformations) for additional inspiration.\n"
+    },
+    {
+      "name": "condact",
+      "description": "Conda shell hook and subcommand for shell plugins",
+      "repo_url": "https://github.com/conda-incubator/conda-shell",
+      "repo_full_name": "conda-incubator/conda-shell",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "condact": "condact.cli"
+      },
+      "category": "Environment management",
+      "readme": "# conda-shell-hook\nConda shell hook is a library that can be used to activate, deactivate and reactivate conda environments through the use of plugins.\n\nUsing plugins for activation allows conda to be used with shells that are not currently covered by conda's default activation logic. It also allows for the use of plugins that activate environments using different logic than the method currently in use.\n\nPlugins ending in `_cl` use logic that is compatible with conda's current activation logic. Plugins ending in `_ose` use logic that differs from conda's current activation logic in two key ways:\n- Environment activation is achieved by updating the environment mapping and replacing the Python process using an `os.exec*` function, instead of printing commands to `stdout` or evaluating them from a temporary file. This means that the newly activated conda environment is in a different shell process than the former environment; this is evidenced by an increased value of the `SHLVL` environment variable.\n- Because environment activation takes place in a new shell process, only exported environment variables and functions will be carried forward to the new environment. Environment variables and functions that have been set but not exported will be lost during the environment activation/deactivation process.\n\n\n## Installation\n```conda install kalawac::condact```\n\n## Usage\nCurrently, plugins are available for POSIX shells, with one plugin specifically intended for use only with Bash. Please read the plugin-specific usage instructions for each plugin (as applicable) prior to attempted use.\n\nThe names of the available plugins are listed below, alongside the shells they work with:\n| Plugin Name | Shell(s) | Usage Instructions |\n| ----------- | ----------- | ----------- |\n| `posix_cl` | POSIX shells: `ash`, `bash`, `dash`, `ksh`, `sh`, `zsh` | [section] |\n| `posix_ose` | POSIX shells: `ash`, `bash`, `dash`, `ksh`, `sh`, `zsh` | [section] |\n| `bash_ose` | `bash` | None |\n\nFor the commands below, the following are placeholders:<br />\n*`<ENVNAME>`* = conda environment name<br />\n*`<PLUGIN>`* = shell plugin name<br />\n*`<PREFIX>`* = conda environment path\n\n\n### Activate an environment\nUse either option below:\n- ```conda shell -n <PLUGIN> activate <ENVNAME>```\n- ```conda shell -n <PLUGIN> activate <PREFIX>```\n\n### Deactivate an environment\n```conda shell -n <PLUGIN> deactivate```\n\nIf an `os.exec*` plugin was used to activate the current environment, you may also exit the environment by using `ctrl + D` or your shell's `exit` command. However, deactivate scripts will not be run if you use this method.\n\n### Reactivate an environment\n```conda shell -n <PLUGIN> reactivate```\n\n## Plugin-Specific Usage Instructions\n"
+    },
+    {
+      "name": "anaconda-auth",
+      "description": "A client auth library for Anaconda APIs",
+      "repo_url": "https://github.com/testifysec/anaconda-auth",
+      "repo_full_name": "testifysec/anaconda-auth",
+      "stars": 0,
+      "docs": "https://anaconda.github.io/anaconda-auth",
+      "topics": [],
+      "entry_points": {
+        "anaconda-auth": "anaconda_auth._conda.entrypoint"
+      },
+      "category": "Authentication",
+      "readme": "# anaconda-auth\n\nA client library for Anaconda APIs to authenticate and securely store API keys.\nThis library is used by other client packages to provide a centralized auth\ncapability for the ecosystem. You will need to use this package to log in to anaconda.com\nbefore utilizing many of the other client packages.\n\nThis package provides a [requests](https://requests.readthedocs.io/en/latest/)\nclient class that handles loading the API key for requests made to Anaconda services.\n\nThis package provides a [Panel OAuth plugin](https://panel.holoviz.org/how_to/authentication/configuration.html)\ncalled `anaconda_auth`.\n\n## Installation\n\n```text\nconda install anaconda-auth\n```\n\n## Usage\n\nThe primary usage of this package is to provide CLI actions for login, logout, user information, and api-keys\nto Anaconda API Services.\n\n```text\n\u276f anaconda auth\n\n Usage: anaconda auth [OPTIONS] COMMAND [ARGS]...\n\n Anaconda auth commands\n\n\u256d\u2500 Options \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 --version  -V                                                                              \u2502\n\u2502 --help               Show this message and exit.                                           \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n\u256d\u2500 Commands \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 api-key   Display API Key for signed-in user                                               \u2502\n\u2502 login     Login                                                                            \u2502\n\u2502 logout    Logout                                                                           \u2502\n\u2502 whoami    Display information about the currently signed-in user                           \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n```\n\n## Configuration\n\nYou can configure `anaconda-auth` by either:\n\n1. Setting parameters in the `plugin.auth` section of the `~/.anaconda/config.toml` file.\n1. Setting one or more `ANACONDA_AUTH_` environment variables or using a `.env` file in your working directory.\n\n`ANACONDA_AUTH_` env vars or a `.env` file take precedence over the `~/.anaconda/config.toml` file.\n\n### Anaconda parameters\n\nThe following parameters in the `plugin.auth` section control the login actions and API requests to Anaconda Services.\n\n| Parameter | Env variable | Description | Default value |\n|-|-|-|-|\n| `domain` | `ANACONDA_AUTH_DOMAIN` | Authentication and API request domain | `\"anaconda.com\"` |\n| `ssl_verify` | `ANACONDA_AUTH_SSL_VERIFY` | SSL verification for all requests | `True` |\n| `preferred_token_storage` | `ANACONDA_AUTH_PREFERRED_TOKEN_STORAGE` | Where to store the login token; can be `\"anaconda-keyring\"` or `\"system\"` | `\"anaconda-keyring\"` |\n| `api_key` | `ANACONDA_AUTH_API_KEY` | API key; if `None`, defaults to keyring storage | `None` |\n| `extra_headers` | `ANACONDA_AUTH_EXTRA_HEADERS` | Extra request headers in JSON format | `None` |\n\n### Example\n\nHere's an example `~/.anaconda/config.toml` where SSL verification is turned\noff for login and API requests and where the preferred token storage is `anaconda-keyring`.\n\n```toml\n[plugin.auth]\nssl_verify = false\npreferred_token_storage = \"system\"\n```\n\n## API Keys and tokens\n\nWhen you `login` with `anaconda-auth`, an auth token is stored in the preferred keyring storage location and is\ndeleted when you run `logout`. The auth token will need to be renewed once a year.\n\nThe `preferred_storage` configuration parameter in the `plugin.auth` section of the `config.toml` file takes two\npossible values:\n\n| Storage location | Description |\n|-|-|\n| `\"system\"` | Use the system keyring, if available. Otherwise, use `anaconda-keyring` |\n| `\"anaconda-keyring\"` | A file-based keyring at `~/.anaconda/keyring` |\n\n`\"anaconda-keyring\"` is the default value.\n\n### Non-interactive use\n\nIf you want to utilize Anaconda Services on a system where you do not have interactive acc"
+    },
+    {
+      "name": "anaconda-time-machine",
+      "description": "",
+      "repo_url": "https://github.com/anaconda/anaconda-time-machine",
+      "repo_full_name": "anaconda/anaconda-time-machine",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-time-machine": "anaconda_time_machine.plugin"
+      },
+      "category": "Channels",
+      "readme": "# anaconda-time-machine\n\nConda plugin that travels back in time. It allows to create environments from the past.\n\nThe plugin supports passing a `--time` argument to the `build`, `create`, `install` and\n`search` commands. You need to pass an ISO8601 formatted date.\n\nFor now, this plugin is considered highly experimental. It was developed to support our work on\ncreating a proof of concept for LTS channels where we need to re-build packages using\nold versions of `repodata.json`.\n\n## Notes\n\n* The plugin relies on the [anaconda-time-machine-service](https://github.com/anaconda-distribution/anaconda-time-machine-service)\nservice to work (when the `--time` argument is given). If `--time` is not passed,\nthe plugin won't have any effect.\n* We monkeypatch conda internals... We should talk to the conda team to see if what we do could\n  be made simpler by adding some features to conda.\n* It could be adapted to support \"dumb\" channels (like filesystem based channels, or channels served from a static website).\n\n## Limitations\n\n* Only works with conda>=23.7.0\n* Doesn't work if `conda-build` is called as a subcommand.\n* Only works with channels hosted on https://repo.anaconda.com/pkgs/ S3 bucket (`main`, `msys2`, `r`, etc). https://anaconda.org or https://anaconda.cloud channels are not supported (because they don't expose a way to get an older version of repodata.json AFAIK).\n"
+    },
+    {
+      "name": "conda-brew",
+      "description": "Better Homebrew interoperability for the conda ecosystem.",
+      "repo_url": "https://github.com/Anaconda-Sandbox/conda-brew",
+      "repo_full_name": "Anaconda-Sandbox/conda-brew",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-brew": "conda_brew.plugin"
+      },
+      "category": "Solvers",
+      "readme": "# conda-brew\n\nInstall Homebrew packages as conda packages - bringing Homebrew's extensive ecosystem of CLI tools and libraries to conda environments.\n\n> [!NOTE]\n> **Status**: v0.1.0 - Initial release ready! Core functionality is stable and tested on macOS ARM64.\n\n## What is this?\n\n`conda-brew` enables you to install Homebrew packages (bottles) as conda packages, seamlessly integrating Homebrew's ecosystem into your conda workflow.\n\n**Key Features:**\n- \ud83d\udd27 Install Homebrew packages directly into conda environments\n- \ud83d\udd10 No root privileges or system-wide Homebrew installation required\n- \ud83d\udd04 Automatic dependency resolution using conda's solver\n- \ud83d\udce6 Converts Homebrew bottles to `.conda` format for safe installation\n- \ud83d\udd01 Binary relocation using conda's proven infrastructure\n- \ud83d\udc0d Intelligent Python filtering - always uses conda's Python\n- \ud83d\udd12 Unified crypto library management - prevents symbol mismatches\n\n## Quick Start\n\n```bash\n# Install conda-brew\npip install conda-brew\n\n# Install Homebrew packages\nconda brew install wget curl jq tree\nconda brew install azure-cli node\n\n# Search for packages\nconda brew search node\n\n# Show package information\nconda brew info wget\n\n# Reactivate environment to load new environment variables\nconda deactivate && conda activate <your-env>\n```\n\n**\u26a0\ufe0f Important**: CLI flags must come **after `brew`** but **before** the subcommand:\n```bash\nconda brew -v install node        # \u2713 Correct\nconda brew install -v node        # \u2717 Wrong\n```\n\n## Why conda-brew?\n\n**For conda users**: Access Homebrew's 7000+ packages without leaving your conda environment.\n\n**For Homebrew users**: Isolate packages per-project using conda's environment system.\n\n**Benefits:**\n- \u2705 **No root required**: Install packages in isolated conda environments\n- \u2705 **Environment isolation**: Different environments can have different package versions\n- \u2705 **Conda integration**: Leverages conda's dependency resolution and binary relocation\n- \u2705 **Hybrid approach**: Mix conda-forge and Homebrew packages seamlessly\n- \u2705 **Python protection**: Always uses conda's Python to prevent environment breakage\n\n## How it works\n\n1. **Synthetic channel**: Generates a conda channel index from Homebrew's API\n2. **Dependency resolution**: Conda's solver handles dependencies from both ecosystems\n3. **On-demand conversion**: Downloads and converts bottles only when needed\n4. **Binary post-processing**:\n   - Fixes RPATH/install_name using `install_name_tool` (macOS) or `patchelf` (Linux)\n   - Relocates libraries to `brew-lib/` for ecosystem isolation\n   - Adds prefix placeholders for conda's relocation system\n   - Creates symlinks for shared crypto libraries\n5. **Standard installation**: Uses conda's normal installation mechanisms\n\n## Architecture\n\n### Isolated Library Strategy\n\nconda-brew uses an **isolated brew-lib architecture** to prevent conflicts:\n\n```\n$CONDA_PREFIX/\n\u251c\u2500\u2500 bin/              # Shared binaries (both conda and brew)\n\u251c\u2500\u2500 lib/              # Conda libraries ONLY\n\u251c\u2500\u2500 brew-lib/         # Brew libraries ONLY (isolated)\n\u251c\u2500\u2500 libexec/          # Brew Python virtualenvs (azure-cli, etc.)\n\u251c\u2500\u2500 etc/              # Configs (namespaced)\n\u2514\u2500\u2500 ssl/              # Unified certificate store (conda's)\n```\n\n### Hybrid Naming Convention\n\n- **With @version**: Keep as-is (e.g., `openssl@3`, `python@3.13`)\n- **Without @version**: Add `brew-` prefix (e.g., `brew-node`, `brew-wget`)\n\nThis prevents naming conflicts with conda packages while maintaining compatibility.\n\n### Crypto Library Unification\n\nTo prevent symbol mismatches (e.g., `_OSSL_get_max_threads not found`):\n\n1. Conda's solver chooses the best OpenSSL version (brew's or conda's)\n2. After installation, `lib_unify.py` creates symlinks\n3. Both ecosystems access the same physical library files\n4. No symbol mismatches, no version conflicts\n\n## Usage\n\n### Basic Installation\n\n```bash\n# Install single package\nconda brew install wget\n\n# Install multiple packages\nconda brew install azure-cli node wget tree jq\n\n# Install into specific environmen"
+    },
+    {
+      "name": "conda-declarative",
+      "description": "Declarative workflows for conda environment handling.",
+      "repo_url": "https://github.com/jaimergp/conda-declarative",
+      "repo_full_name": "jaimergp/conda-declarative",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-declarative": "conda_declarative.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-declarative\n\nDeclarative workflows for conda environment handling.\n\n> [!IMPORTANT] This project is still in early stages of development. Don't use\n> it in production (yet). We do welcome feedback on what the expected behaviour\n> should have been if something doesn't work!\n\n## What is this?\n\n`conda declarative` proposes an alternative workflow for the lifecycle of\n`conda` environments. It is based around the idea of having a \"manifest file\"\nwhere all the user input for the environment is declared and stored. This is\nexposed via two new subcommands:\n\n- `conda edit`: opens an editor to perform modifications on the active\n  environment manifest file.\n- `conda apply`: renders the manifest file as a history checkpoint and links the\n  solved packages to disk.\n\n### Manifest\n\nThe manifest is a file that lives at `conda-meta/conda.toml`; its format follows\n[a proposal for a TOML-based environment\nspecification](https://docs.google.com/document/d/1Q_M66kFGCYLuaqAqez_jlsqxnQEQh5tSUBtvEz3ixdA/edit?tab=t.styv1cfnnyqy#heading=h.5yxwasl3gb67)\nwhich is implemented using [environment specifier\nhooks](https://docs.conda.io/projects/conda/en/stable/dev-guide/plugins/environment_specifiers.html).\n\nUnder the hood, the `TomlSpec` class provides the interface required of a valid\nenvironment specifier, acting as a converter between\n\n- TOML files\n- dictionaries of parsed environments\n- `conda.models.environment.Environment` instances\n\nThe TomlSpec class can be instantiated with any of these and can be used to\ngenerate the others. To do this the `TomlSpec` class employs a\n`TomlSingleEnvironment` Pydantic model which carries out serialization,\ndeserialization, and validation.\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502TOML\u2502\u25c4\u2500\u2500\u2500\u25ba\u2502dict\u2502\u25c4\u2500\u2500\u2500\u25ba\u2502TomlSingleEnvironment\u2502\u25c4\u2500\u2500\u2500\u25ba\u2502TomlSpec\u2502\u25c4\u2500\u2500\u2500\u25ba\u2502Environment\u2502\u25c4\u2500\u2500\u2500\u25ba\u2502conda\u2502\n\u2514\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n### Caveats\n\n- If the user doesn't have an existing `conda-meta/conda.toml` in their prefix,\n  one will be generated for them when `conda edit` is run. To do this, the\n  current approach looks at the packages that are already installed in the\n  environment. Because there's no way to know which of them were explicitly\n  requested by the user, or whether any version constraints were requested when\n  they were installed, _all_ of them are currently added to the `dependencies`\n  with the currently installed version.\n\n  This makes it really hard to add new packages (because the version constraints\n  are likely too tight to solve), and likely doesn't match the intent of the\n  user.\n\n  An alternative approach is to use `conda-meta/history` to populate\n  `conda.toml` with the user-requested packages; but this doesn't work if the\n  environment isn't managed by `conda`, as is the case for the development\n  environments used in this project (`pixi` doesn't write to\n  `conda-meta/history`).\n\n- Package removal doesn't work yet. The main focus so far has been on the TUI\n  and the spec.\n\n## Installation\n\nThis is a `conda` plugin and goes in the `base` environment:\n\n```bash \nconda install -n base conda-forge::conda-declarative\n```\n\nMore information is available on our\n[documentation](https://conda-incubator.github.io/conda-declarative).\n\n## Try it locally\n\n1. Make sure `pixi` and `git` are installed. [Instructions for\n   `pixi`](https://pixi.sh/latest/installation/).\n2. Clone this repository: `git clone\n   https://github.com/jaimergp/conda-declarative`\n3. Change to that directory: `cd conda-declarative`\n4. Run the help message: `pixi run conda edit --help`\n\nWe _could_ just use the default pixi env to try things, but it doesn't write a\ngood `history` file, so `conda edit|apply` will misunderstand what to do and\nremove everything sometimes. For now, let's use this default conda to create a\ndemo environment to do things with:\n\n1. Create a demo environment with `conda` and `pip`: `pixi run conda create -p\n   .pixi/en"
+    },
+    {
+      "name": "conda-forge-conda-plugins",
+      "description": "conda plugins for the conda-forge ecosystem",
+      "repo_url": "https://github.com/regro/conda-forge-conda-plugins",
+      "repo_full_name": "regro/conda-forge-conda-plugins",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-forge-conda-plugins": "conda_forge_conda_plugins.hooks"
+      },
+      "category": "Other",
+      "readme": "# conda-forge-conda-plugins\n[![tests](https://github.com/regro/conda-forge-conda-plugins/actions/workflows/tests.yml/badge.svg)](https://github.com/regro/conda-forge-conda-plugins/actions/workflows/tests.yml) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/regro/conda-forge-conda-plugins/main.svg)](https://results.pre-commit.ci/latest/github/regro/conda-forge-conda-plugins/main)\n\nconda plugins for the `conda-forge` ecosystem\n\n## Current Plugins\n\n### OpenMPI Virtual Package\n\nThis plugin provides the `__openmpi` virtual package to be used in conjunction with the `external*` builds of the `conda-forge` `openmpi` package. If the `ompi_info` command is found in the path, the `__openmpi` virtual package is set to the installed version of OpenMPI. You can override the version by setting the `CONDA_OVERRIDE_OPENMPI` environment variable.\n\n### MPICH Virtual Package\n\nThis plugin provides the `__mpich` virtual package to be used in conjunction with the `external*` builds of the `conda-forge` `mpich` package. If the `mpichversion` command is found in the path, the `__mpich` virtual package is set to the installed version of MPICH. You can override the version by setting the `CONDA_OVERRIDE_MPICH` environment variable.\n"
+    },
+    {
+      "name": "conda-random-solver",
+      "description": "A random conda solver",
+      "repo_url": "https://github.com/costrouc/conda-random-solver",
+      "repo_full_name": "costrouc/conda-random-solver",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-random-solver": "conda_random_solver.plugin"
+      },
+      "category": "Solvers",
+      "readme": "# conda-random-solver\n\nA test of the conda plugin system. This plugin ties into the solver\nplugin endpoint. It picks 10 random packages within the channels you\nhave chosen.\n\n```shell\n$ docker run -it --rm --platform=linux/amd64 \\\n  -v $PWD/:/opt/conda-random-solver-src \\\n  ghcr.io/conda/conda-ci:main-linux-python3.9 bash\n\n$ pip install -e .\n```\n"
+    },
+    {
+      "name": "conda-random-subcommand",
+      "description": "A random conda subcommand",
+      "repo_url": "https://github.com/costrouc/conda-random-subcomand",
+      "repo_full_name": "costrouc/conda-random-subcomand",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-random-subcommand": "conda_random_subcommand.plugin"
+      },
+      "category": "Subcommands",
+      "readme": "# conda-random-subcommand\n\nA random subcommand\n"
+    },
+    {
+      "name": "conda-restricted",
+      "description": "A conda plugin to restrict the SEARCH_PATH for conda configuration files",
+      "repo_url": "https://github.com/jezdez/conda-restricted",
+      "repo_full_name": "jezdez/conda-restricted",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-restricted": "conda_restricted.hooks"
+      },
+      "category": "Environment management",
+      "readme": "# conda-restricted\n\nA conda plugin to restrict the `SEARCH_PATH` for conda configuration files\n\n## How?\n\n- Install this conda plugin into your conda base environments:\n\n  ```\n  $ conda activate base\n  $ (base) pip install \"conda-restricted @ https://github.com/jezdez/conda-restricted/archive/refs/heads/main.zip\"\n  ```\n\n- The only config files loades are the ones from `~/.conda-restricted/.condarc` (POSIX) and `C:/ProgramData/conda-restricted/.condarc` (Windows).\n"
+    },
+    {
+      "name": "conda-rich",
+      "description": "Conda plugin which uses rich components for its display",
+      "repo_url": "https://github.com/conda-incubator/conda-rich",
+      "repo_full_name": "conda-incubator/conda-rich",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-rich": "conda_rich.hooks"
+      },
+      "category": "UI and display",
+      "readme": "# Conda rich\n\nThis is a plugin for overriding certain elements of the conda CLI with components\nfrom the rich library. To install and configure run the following commands:\n\n```\nconda install -c conda-forge conda-rich\nconda config --set console rich\n```\n\n> [!TIP]\n> You must be using conda at version 24.11 or higher to access this feature.\n\nThis plugin currently overrides the following display components:\n\n- Loading spinner\n- Download progress bars\n- Confirmation dialogs\n- The `conda info` display\n\nThis plugin also serves as a demonstration of how to use the \"reporter backend\"\nplugin hook.\n"
+    },
+    {
+      "name": "conda-test-header-plugin",
+      "description": "A plugin for injecting headers (just for testing)",
+      "repo_url": "https://github.com/anaconda/docker-examples",
+      "repo_full_name": "anaconda/docker-examples",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-test-header-plugin": "conda_test_header_plugin.plugin"
+      },
+      "category": "Authentication",
+      "readme": "# Anaconda Docker Examples\n\nThis repository contains examples for using `conda` to build Docker images.\nSpecifically, the examples are targed towards best practice usage when using Anaconda's repositories.\n\n## Example application\n\nThe example provided is a simple \"Hello World\" application using FastAPI.\n\nThe following files define the application and its dependencies:\n\n* [`app.py`](./app.py): The application code\n* [`environment.yml`](./environment.yml): The conda environment dependency specification\n\n## Local dependencies\n\nThe example requires a local installation of `conda` with the `anaconda-auth` package installed:\n\n```shell\nconda install --name base anaconda-auth\n```\n\n## Building the images\n\nThe commands to build the images are stored in [`Makefile`](./Makefile).\nBy default all of the images in the [`./examples`](.examples) directory.\n\nTo build the images:\n\n```shell\nmake build\n```\n\n## Running the service\n\nYou ran also build and run the services locally using `docker-compose` (if that is installed):\n\n```shell\nmake up\n```\n\nYou can then access the services by visiting e.g. http://localhost:8000 in your web browser.\n\nYou can also check with a tool like `curl`:\n\n```shell\n\u276f curl http://localhost:8000\n{\"hello\":\"world\"}%\n```\n"
+    },
+    {
+      "name": "conda-toml-spec",
+      "description": "Toml environment specification for conda",
+      "repo_url": "https://github.com/peytondmurray/conda-toml-spec",
+      "repo_full_name": "peytondmurray/conda-toml-spec",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-toml-spec": "conda_toml_spec.plugin"
+      },
+      "category": "Environment management",
+      "readme": "# conda-toml-spec\nToml environment specification for conda\n"
+    },
+    {
+      "name": "conda-whl-support",
+      "description": "Conda plugin to add support for installing Python wheels (whl).",
+      "repo_url": "https://github.com/jezdez/conda-whl-support",
+      "repo_full_name": "jezdez/conda-whl-support",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-anaconda-tos": "conda_whl_support.plugin"
+      },
+      "category": "Solvers",
+      "readme": "## conda-whl-support\n\n## Examples\n\nCreate a conda environment with conda-whl-support:\n\n```\nconda create --prefix ./demo_env -c jjhelmus/label/conda_whl_support conda-whl-support conda=24.11.3\n```\n\nUse this to install a wheel from a static demo repo:\n\n```\nconda activate ./demo_env\n./demo_env/bin/conda create --prefix test_env --channel https://jjhelmus.github.io/sample-whl-repo/repo imagesize\n```\n\nThis environment listing includes `imagesize` installed from the test channel:\n\n```\n\u276f ./demo_env/bin/conda list --prefix test_env\n# packages in environment at /Users/jhelmus/workspace/conda-whl-support/plugin/test_env:\n#\n# Name                    Version                   Build  Channel\nbzip2                     1.0.8                h80987f9_6\nca-certificates           2024.11.26           hca03da5_0\nexpat                     2.6.4                h313beb8_0\nimagesize                 1.4.1                         0    https://jjhelmus.github.io/sample-whl-repo/repo\nlibcxx                    14.0.6               h848a8c0_0\nlibffi                    3.4.4                hca03da5_1\nlibmpdec                  4.0.0                h80987f9_0\nncurses                   6.4                  h313beb8_0\nopenssl                   3.0.15               h80987f9_0\npip                       24.2            py313hca03da5_0\npython                    3.13.1          h4862095_100_cp313\npython_abi                3.13                    0_cp313\nreadline                  8.2                  h1a28f6b_0\nsetuptools                75.1.0          py313hca03da5_0\nsqlite                    3.45.3               h80987f9_0\ntk                        8.6.14               h6ba3021_0\ntzdata                    2024b                h04d1e81_0\nwheel                     0.44.0          py313hca03da5_0\nxz                        5.4.6                h80987f9_1\nzlib                      1.2.13               h18a0788_1\n```\n\nSetup environments for generating and server a local repo:\n\n```\nconda create --prefix gen_env python=3.12 pip --yes\n./gen_env/bin/python -m pip install pypi-simple packaging requests python-dotenv requests-cache \"markerpry>=0.3\" psycopg2-binary\n\n\n```\n\nCreate repodata for flask and dependencies on macos-arm64:\n\n```\ncd tools\nconda activate ../gen_env\npython gen_repo.py -r ../specs/flask.txt --recurse\n```\n\nUpload the repo files\nAdd a .env file with\n\n```\nWHEEL_SERVER_PASSWORD=PASSWORD_GOES_HERE\nWHEEL_SERVER_HOST=\"SERVER_URL\"\n```\n\nWhere the server URL points to a server running https://github.com/intentionally-left-nil/conda_wheel_server\n\nThen, execute\n`python upload.py repo --channel=demo_flask`\n\nAlso ensure that your stub package has been uploaded to the server (only needs to be done once)\n`python upload.py stub ../sample-1.0-0.tar.bz2`\n\nFlask can now be installed from this repo:\n\n```\n./demo_env/bin/conda create --prefix test_env flask=3.1.0 python=3.13 --channel http://127.0.0.1:8000/repo\n```\n\n# Iterating on specs\n\nAfter creating an initial channel, first we need to figure out if it resolves.\nTo do so, run the following command\n\n```sh\nconda activate ./gen_env\npython tools/doesitsolve.py -c CHANNEL_HERE -o ./specs/channel.solve.json\n```\n\nThis will try to dry-run solve every version in the channel, and report the status to the output file\n"
+    },
+    {
+      "name": "package-counter",
+      "description": "Displays the number of packages in the environment",
+      "repo_url": "https://github.com/TMK04/conda-plugin",
+      "repo_full_name": "TMK04/conda-plugin",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "package-counter": "package_counter"
+      },
+      "category": "Subcommands",
+      "readme": "# conda-plugin-template\n\nThis repository contains a mix of templates and tutorials related to conda plugins.\n\n\n## Tutorials\n\nTo take a look at the tutorials, head over to [tutorials](./tutorials).\n\n\n## Templates\n\nWe currently have a [cookiecutter](https://cookiecutter.io) template you can use to\nstart a new conda plugin project. To use it, run the following command:\n\n```\ncookiecutter gh:conda/conda-plugin-template --directory=\"cookiecutter-template\"\n```\n\nor\n\n```\ncookiecutter https://github.com/conda/conda-plugin-template.git --directory=\"cookiecutter-template\"\n```\n\nIf you do not currently have cookiecutter installed, please refer to their \n[installation guide](https://cookiecutter.readthedocs.io/en/stable/installation.html).\n\n## Share Your Plugins\n\nPlease consider submitting a pull request with a link to your conda plugin to the [conda-incubator/plugins](https://github.com/conda-incubator/plugins) repository. This will help others find your plugin and use it.\n"
+    }
+  ]
+}
