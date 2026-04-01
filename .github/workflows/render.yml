@@ -1,0 +1,38 @@
+name: Render
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+concurrency: render
+
+jobs:
+  render:
+    name: Render plugin index
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+        with:
+          environments: render
+      - name: Cache GGUF model
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ~/.local/share/io.datasette.llm/gguf/models
+          key: llm-gguf-smollm2-360m
+      - name: Render plugin index
+        run: pixi run -e render render
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        run: |
+          git diff --quiet -- README.md scripts/categories.toml docs/_data/plugins.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md scripts/categories.toml docs/_data/plugins.json
+          git commit -m "Rerender plugin index"
+          git pull --rebase
+          git push
