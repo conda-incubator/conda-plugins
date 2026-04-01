@@ -9,18 +9,11 @@ from github import GithubException
 
 RETRY_WAIT = 60
 MAX_RETRIES = 5
+DELAY_BETWEEN_RESULTS = 2
 
 
-def search_github():
-    gh = github.Github(os.environ.get("GITHUB_TOKEN"), per_page=30)
-    results = gh.search_code('"[project.entry-points.conda]" language:TOML')
-    if results.totalCount:
-        return results
-    raise RuntimeError("Did not find any results")
-
-
-def _fetch_with_retry(fn, label=""):
-    """Call *fn* with retries on rate limit (HTTP 429) and abuse errors."""
+def _api_call(fn, label=""):
+    """Call *fn* with retries on rate limit (HTTP 429/403) errors."""
     for attempt in range(MAX_RETRIES):
         try:
             return fn()
@@ -38,9 +31,35 @@ def _fetch_with_retry(fn, label=""):
     raise RuntimeError(f"Exceeded {MAX_RETRIES} retries for {label}")
 
 
+def search_github():
+    gh = github.Github(os.environ.get("GITHUB_TOKEN"), per_page=30)
+    query = '"[project.entry-points.conda]" language:TOML'
+    results = gh.search_code(query)
+    total = _api_call(lambda: results.totalCount, label="search totalCount")
+    if not total:
+        raise RuntimeError("Did not find any results")
+    print(f"Found {total} results", file=sys.stderr)
+    return results
+
+
+def _get_page_results(search_results):
+    """Yield results one at a time, retrying on rate limit during pagination."""
+    page = 0
+    while True:
+        items = _api_call(
+            lambda p=page: search_results.get_page(p),
+            label=f"search page {page}",
+        )
+        if not items:
+            break
+        yield from items
+        page += 1
+        time.sleep(DELAY_BETWEEN_RESULTS)
+
+
 def results(search_results):
     seen_repos = set()
-    for result in search_results:
+    for result in _get_page_results(search_results):
         if result.name != "pyproject.toml":
             continue
 
@@ -53,7 +72,7 @@ def results(search_results):
             continue
 
         try:
-            content = _fetch_with_retry(
+            content = _api_call(
                 lambda r=result: r.decoded_content.decode(),
                 label=repo_full_name,
             )
@@ -79,8 +98,7 @@ def results(search_results):
             plugin["description"] = description
         print("Processed", repo_full_name, file=sys.stderr)
 
-        # Small delay between results to stay under secondary rate limits
-        time.sleep(1)
+        time.sleep(DELAY_BETWEEN_RESULTS)
 
         yield plugin
 
