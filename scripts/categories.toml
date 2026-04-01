@@ -1,0 +1,67 @@
+# Category assignments for conda plugins.
+# Keys are GitHub "owner/repo" identifiers; values are one of:
+#   Solvers, Subcommands, Channels, Authentication,
+#   Environment management, Build tools, UI and display, Other
+
+[categories]
+# Solvers
+"conda-incubator/conda-rattler-solver" = "Solvers"
+"conda/conda-classic-solver" = "Solvers"
+"conda/conda-libmamba-solver" = "Solvers"
+"costrouc/conda-random-solver" = "Solvers"
+"jezdez/conda-express" = "Solvers"
+
+# Subcommands
+"anaconda/conda-anaconda-tos" = "Subcommands"
+"beeankha/SimplePythonStuff" = "Subcommands"
+"conda/conda-plugin-template" = "Subcommands"
+"costrouc/conda-random-subcomand" = "Subcommands"
+"kalawac/simple-bash-plugin" = "Subcommands"
+"kelvinou01/conda-which" = "Subcommands"
+
+# Channels
+"anaconda/anaconda-time-machine" = "Channels"
+"conda-incubator/conda-subchannel" = "Channels"
+"jaimergp/conda-pypi-channel" = "Channels"
+"kenodegard/conda-repodata" = "Channels"
+
+# Authentication
+"anaconda/anaconda-auth" = "Authentication"
+"anaconda/anaconda-cloud-tools" = "Authentication"
+"anaconda/conda-repo-cli" = "Authentication"
+"anaconda/docker-examples" = "Authentication"
+"conda-incubator/conda-auth" = "Authentication"
+
+# Environment management
+"Anaconda-Sandbox/conda-brew" = "Environment management"
+"acwooding/conda-ops" = "Environment management"
+"aterrel/conda-npm" = "Environment management"
+"conda-incubator/conda-checkpoints" = "Environment management"
+"conda-incubator/conda-protect" = "Environment management"
+"conda-incubator/conda-self" = "Environment management"
+"conda-incubator/conda-shell" = "Environment management"
+"conda-incubator/conda-spawn" = "Environment management"
+"conda-incubator/conda-workspaces" = "Environment management"
+"conda-incubator/nvidia-virtual-packages" = "Environment management"
+"conda/conda-pypi" = "Environment management"
+"conda/menuinst" = "Environment management"
+"jaimergp/conda-declarative" = "Environment management"
+"jennan/conda_disable_init" = "Environment management"
+"jezdez/conda-global" = "Environment management"
+"jezdez/conda-restricted" = "Environment management"
+"jezdez/conda-whl-support" = "Environment management"
+"peytondmurray/conda-toml-spec" = "Environment management"
+
+# Build tools
+"conda/conda-build" = "Build tools"
+"conda/conda-index" = "Build tools"
+
+# UI and display
+"conda-incubator/conda-rich" = "UI and display"
+"conda-incubator/conda-tui" = "UI and display"
+
+# Other
+"anaconda/anaconda-connector" = "Other"
+"anaconda/assistant-sdk" = "Other"
+"anaconda/conda-anaconda-telemetry" = "Other"
+"regro/conda-forge-conda-plugins" = "Other"
