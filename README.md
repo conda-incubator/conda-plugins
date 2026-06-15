@@ -9,17 +9,17 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 <!-- PLUGIN_LIST -->
 | Name | Description | ⭐ |
 |------|-------------|--:|
-| [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 557 |
+| [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 556 |
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 398 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 244 |
 | [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 178 |
 | [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 174 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 48 |
-| [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 34 |
+| [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 35 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 16 |
-| [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 12 |
-| [ascii-graph](https://github.com/conda/conda-plugin-template) | My ascii graph subcommand plugin | 11 |
+| [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 13 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
+| [package-counter](https://github.com/conda/conda-plugin-template) | Displays the number of packages in the environment | 11 |
 | [anaconda-auth](https://github.com/anaconda/anaconda-auth) | A client auth library for Anaconda APIs | 8 |
 | [conda-lockfiles](https://github.com/conda/conda-lockfiles) | Support different lockfiles in conda. | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to? | 7 |
@@ -31,10 +31,10 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-self](https://github.com/conda/conda-self) | A self command for conda | 4 |
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
 | [nvidia-virtual-packages](https://github.com/conda-incubator/nvidia-virtual-packages) | Provides conda virtual packages for NVIDIA hardware. | 4 |
-| [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 3 |
 | [conda-anaconda-telemetry](https://github.com/anaconda/conda-anaconda-telemetry) | A conda plugin for Anaconda Telemetry | 3 |
 | [conda-global](https://github.com/conda-incubator/conda-global) | Global tool installation for conda — install CLI tools into isolated environments and make them available on PATH via trampolines | 3 |
 | [conda-tui](https://github.com/conda-incubator/conda-tui) | A Text User Interface for conda | 3 |
+| [string-art](https://github.com/beeankha/SimplePythonStuff) | My string art subcommand plugin | 3 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
 | [captain-planet](https://github.com/kalawac/simple-bash-plugin) | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [conda-checkpoints](https://github.com/conda-incubator/conda-checkpoints) | conda plugin to save lockfiles to your environment after each environment modification | 1 |
@@ -47,11 +47,11 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-presto](https://github.com/jezdez/conda-presto) | Resolve conda environment.yml files to fully pinned package lists with SHA256 hashes | 1 |
 | [conda-pypi-channel](https://github.com/jaimergp/conda-pypi-channel) | Expose a PyPI index as a conda channel, on the fly. | 1 |
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
+| [conda-ship](https://github.com/jezdez/conda-ship) | Conda plugin entry point for the conda-ship runtime builder. | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
 | [anaconda-auth](https://github.com/testifysec/anaconda-auth) | A client auth library for Anaconda APIs | 0 |
 | [anaconda-auth](https://github.com/Arseniiiii-ai/dynamic-price-optimization-rl) | A client auth library for Anaconda APIs | 0 |
 | [anaconda-auth](https://github.com/ahm4d-312/Code_space) | A client auth library for Anaconda APIs | 0 |
-| [ascii-graph](https://github.com/TMK04/conda-plugin) | My ascii graph subcommand plugin | 0 |
 | [conda-declarative](https://github.com/jaimergp/conda-declarative) | Declarative workflows for conda environment handling. | 0 |
 | [conda-disable-init](https://github.com/jennan/conda_disable_init) | Disable conda init command | 0 |
 | [conda-env-spec-v2](https://github.com/peytondmurray/conda-env-spec-v2) | A V2 environment spec for conda. | 0 |
@@ -60,10 +60,10 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-random-subcommand](https://github.com/costrouc/conda-random-subcomand) | A random conda subcommand | 0 |
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH_PATH for conda configuration files | 0 |
 | [conda-rich](https://github.com/conda-incubator/conda-rich) | Conda plugin which uses rich components for its display | 0 |
-| [conda-ship](https://github.com/jezdez/conda-ship) | Conda plugin entry point for the conda-ship runtime builder. | 0 |
 | [conda-test-header-plugin](https://github.com/anaconda/docker-examples) | A plugin for injecting headers (just for testing) | 0 |
 | [conda-toml-spec](https://github.com/peytondmurray/conda-toml-spec) | Toml environment specification for conda | 0 |
 | [conda-wasm](https://github.com/jezdez/conda-wasm) | Browser runtime and conda plugins for WebAssembly conda environments | 0 |
+| [package-counter](https://github.com/TMK04/conda-plugin) | Displays the number of packages in the environment | 0 |
 
 <!-- PLUGIN_LIST -->
 
