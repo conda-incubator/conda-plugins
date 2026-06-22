@@ -12,9 +12,9 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 556 |
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 398 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 244 |
-| [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 178 |
+| [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 179 |
 | [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 174 |
-| [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 48 |
+| [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 49 |
 | [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 35 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 16 |
 | [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 13 |
@@ -26,15 +26,15 @@ To learn about how to implement your own custom plugins, check out our [tutorial
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 6 |
 | [conda-spawn](https://github.com/conda/conda-spawn) | Activate conda environments in new shell processes. | 6 |
 | [conda-workspaces](https://github.com/conda-incubator/conda-workspaces) | Project-scoped multi-environment workspace management for conda, with pixi compatibility | 5 |
-| [anaconda-assistant-mcp](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant MCP plugin | 4 |
+| [anaconda-assistant-conda](https://github.com/anaconda/assistant-sdk) | The Anaconda Assistant conda plugin | 4 |
 | [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS). | 4 |
 | [conda-self](https://github.com/conda/conda-self) | A self command for conda | 4 |
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
 | [nvidia-virtual-packages](https://github.com/conda-incubator/nvidia-virtual-packages) | Provides conda virtual packages for NVIDIA hardware. | 4 |
+| [chord-cli](https://github.com/beeankha/SimplePythonStuff) | A subcommand that displays guitar chords | 3 |
 | [conda-anaconda-telemetry](https://github.com/anaconda/conda-anaconda-telemetry) | A conda plugin for Anaconda Telemetry | 3 |
 | [conda-global](https://github.com/conda-incubator/conda-global) | Global tool installation for conda — install CLI tools into isolated environments and make them available on PATH via trampolines | 3 |
 | [conda-tui](https://github.com/conda-incubator/conda-tui) | A Text User Interface for conda | 3 |
-| [string-art](https://github.com/beeankha/SimplePythonStuff) | My string art subcommand plugin | 3 |
 | [conda-libmamba-solver](https://github.com/Gujilde163904STI/lifi-project) | The fast mamba solver, now in conda | 2 |
 | [captain-planet](https://github.com/kalawac/simple-bash-plugin) | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [conda-checkpoints](https://github.com/conda-incubator/conda-checkpoints) | conda plugin to save lockfiles to your environment after each environment modification | 1 |
