@@ -20,6 +20,12 @@ Each hook has its own documentation page in the conda developer guide:
 [Environment specifiers](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/environment_specifiers.html)
 : Provide alternative environment specification formats.
 
+[Error hints](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/error_hints.html)
+: Add contextual hints when conda reports an expected error.
+
+[Exception observers](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/exception_observers.html)
+: Observe unexpected exceptions for external reporting or diagnostics.
+
 [Health checks](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/health_checks.html)
 : Run diagnostic checks on environments.
 
@@ -28,6 +34,9 @@ Each hook has its own documentation page in the conda developer guide:
 
 [Pre-commands](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/pre_commands.html) / [Post-commands](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/post_commands.html)
 : Run code before or after built-in conda commands.
+
+[Pre-solves](https://docs.conda.io/projects/conda/en/latest/dev-guide/api/conda/plugins/hookspec/index.html#conda.plugins.hookspec.CondaSpecs.conda_pre_solves) / [Post-solves](https://docs.conda.io/projects/conda/en/latest/dev-guide/api/conda/plugins/hookspec/index.html#conda.plugins.hookspec.CondaSpecs.conda_post_solves)
+: Inspect requested specifications before a solve or records after it.
 
 [Pre-transactions](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/pre_transaction_actions.html) / [Post-transactions](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/post_transaction_actions.html)
 : Hook into environment transactions (installs, updates, removes).
@@ -38,8 +47,8 @@ Each hook has its own documentation page in the conda developer guide:
 [Reporter backends](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/reporter_backends.html)
 : Provide custom output formats for conda commands.
 
-[Request headers](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/request_headers.html)
-: Inject HTTP headers into channel requests.
+[Request and session headers](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/request_headers.html)
+: Inject HTTP headers into individual channel requests or client sessions.
 
 [Settings](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/settings.html)
 : Register custom configuration options.

@@ -32,7 +32,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/conda/conda-plugins",
+            "url": "https://github.com/conda-incubator/conda-plugins",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
         },
@@ -40,7 +40,7 @@ html_theme_options = {
 }
 
 html_context = {
-    "github_user": "conda",
+    "github_user": "conda-incubator",
     "github_repo": "conda-plugins",
     "github_version": "main",
     "doc_path": "docs",
@@ -49,7 +49,8 @@ html_context = {
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 
-html_baseurl = "https://conda.github.io/conda-plugins/"
+html_baseurl = "https://conda-incubator.github.io/conda-plugins/"
+sitemap_url_scheme = "{link}"
 
 exclude_patterns = ["_build"]
 

@@ -9,8 +9,10 @@ publishing your plugin.
 Your repository must:
 
 1. Contain a `pyproject.toml` at the repository root.
-2. Declare at least one entry point under `[project.entry-points.conda]`.
+2. Declare at least one entry point under `[project.entry-points.conda]`
+   or `[project.entry-points."conda"]`.
 3. Not be a fork of another repository (forks are filtered out).
+4. Be publicly visible on GitHub (private repositories are filtered out).
 
 ## Example pyproject.toml
 
@@ -32,10 +34,11 @@ your docs will appear on the plugin page.
 
 ## Categorization
 
-Plugins are automatically categorized based on their name, description,
-entry points, and README content. If the automatic classification is
-wrong, open a pull request updating
-[`scripts/categories.toml`](https://github.com/conda/conda-plugins/blob/main/scripts/categories.toml)
+Known plugins are categorized using reviewed mappings. A pinned local
+Qwen3.5 2B model suggests a category for each unmapped plugin without
+modifying the reviewed mappings. To correct or stabilize its category,
+open a pull request updating
+[`scripts/categories.toml`](https://github.com/conda-incubator/conda-plugins/blob/main/scripts/categories.toml)
 in the conda-plugins repository.
 
 ## Building a plugin from scratch

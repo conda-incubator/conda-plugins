@@ -8,13 +8,10 @@ python = ">=3.13"
 
 [feature.render.dependencies]
 pygithub = ">=2.4.0"
-llm = ">=0.28"
-
-[feature.render.pypi-dependencies]
-llm-gguf = ">=0.2"
+llama-cpp-python = "0.3.34.*"
 
 [feature.render.tasks]
-render = { cmd = "python scripts/plugin_list.py", description = "Fetch plugins, categorize, and generate data" }
+render = { cmd = "python scripts/plugin_list.py", description = "Fetch plugins and generate index data" }
 
 [feature.docs.dependencies]
 sphinx = ">=7.0"
@@ -25,9 +22,13 @@ sphinx-copybutton = ">=0.5"
 sphinx-sitemap = ">=2.5"
 
 [feature.docs.tasks]
-docs = { cmd = "sphinx-build -b dirhtml docs docs/_build/dirhtml", description = "Build documentation" }
+docs = { cmd = "sphinx-build -W --keep-going -b dirhtml docs docs/_build/dirhtml", description = "Build documentation" }
 docs-serve = { cmd = "python -m http.server", cwd = "docs/_build/dirhtml" }
+
+[feature.test.tasks]
+test = { cmd = "python -m unittest discover -s tests -v", description = "Run the test suite" }
 
 [environments]
 render = { features = ["render"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
+test = { features = ["render", "docs", "test"], solve-group = "default" }

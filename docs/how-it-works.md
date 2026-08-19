@@ -6,48 +6,38 @@ categorizes, and publishes conda plugins found on GitHub.
 ## Discovery
 
 A weekly GitHub Actions workflow runs
-[`scripts/plugin_list.py`](https://github.com/conda/conda-plugins/blob/main/scripts/plugin_list.py),
-which searches GitHub for repositories whose `pyproject.toml` contains
-`[project.entry-points.conda]`. For each discovered repository it
+[`scripts/plugin_list.py`](https://github.com/conda-incubator/conda-plugins/blob/main/scripts/plugin_list.py),
+which searches GitHub for repositories whose root `pyproject.toml`
+contains `[project.entry-points.conda]` or
+`[project.entry-points."conda"]`. For each discovered repository it
 collects:
 
 - The plugin name and description from `pyproject.toml`
 - GitHub stars, topics, and documentation URL
 - The conda entry points declared by the plugin
-- The repository README (used for categorization and display)
 
-Forks and duplicate repositories are filtered out automatically.
+Forks, private repositories, nested example projects, and duplicate
+distributions are filtered out automatically. Previously indexed and reviewed
+repositories missing from a search response are checked directly before removal.
 
 ## Categorization
 
-Each plugin is assigned to one of eight categories using a three-tier
-approach designed to be sustainable and transparent:
+Each plugin is assigned to one of eight categories using a committed
+[`scripts/categories.toml`](https://github.com/conda-incubator/conda-plugins/blob/main/scripts/categories.toml)
+file that maps known repositories to reviewed categories. This mapping
+is authoritative.
 
-Tier 1 -- Explicit mapping
-: A committed
-  [`scripts/categories.toml`](https://github.com/conda/conda-plugins/blob/main/scripts/categories.toml)
-  file maps each known repository to its category. This is the source
-  of truth and is checked first. Once a plugin is mapped here, it
-  stays in that category until a human changes it.
+For an unmapped plugin, the renderer asks the Apache-2.0
+[Qwen3.5 2B](https://huggingface.co/Qwen/Qwen3.5-2B) model for a category.
+It runs locally through `llama-cpp-python` using a pinned Q4_K_M GGUF,
+deterministic decoding, and a grammar that permits only the eight category
+names. The model sees the project name, description, entry points, and
+GitHub topics. It does not receive repository README content.
 
-Tier 2 -- Keyword heuristic
-: For plugins not yet in `categories.toml`, the script applies
-  keyword matching against the plugin's name, description, entry-point
-  names, and README content. For example, "solver" in the name maps to
-  Solvers, "auth" maps to Authentication, "subcommand" in the README
-  maps to Subcommands, and so on.
-
-Tier 3 -- Local LLM
-: When the keyword heuristic cannot confidently classify a plugin
-  (it would fall into "Other"), the script calls the
-  [llm](https://llm.datasette.io/) CLI tool to classify it. This
-  runs a small open-source model
-  ([SmolLM2-360M-Instruct](https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct),
-  Apache 2.0, ~300 MB) locally on the GitHub Actions runner via
-  [llm-gguf](https://github.com/simonw/llm-gguf). No data leaves
-  the machine, no API keys are needed, and the model is cached
-  between runs. The result is written back to `categories.toml` so
-  the LLM is only consulted once per plugin.
+The result is a suggestion for the generated index only. The renderer never
+writes it to `categories.toml`. A reviewed mapping therefore overrides the
+model on every later run. If the model chooses **Other**, the plugin remains
+there until a human adds a more specific mapping.
 
 The categories are:
 
@@ -61,12 +51,12 @@ The categories are:
 - UI and display -- TUI, rich output, and display enhancements
 - Other -- plugins that don't fit the above
 
-If the automatic classification is wrong, anyone can open a pull
-request updating `scripts/categories.toml`.
+Anyone can open a pull request to correct or stabilize a category in
+`scripts/categories.toml`.
 
 ## Data generation
 
-The script produces three outputs:
+The script produces two outputs:
 
 `README.md`
 : The plugin table between `<!-- PLUGIN_LIST -->` markers is
@@ -74,20 +64,20 @@ The script produces three outputs:
   on GitHub without visiting this site.
 
 `docs/_data/plugins.json`
-: A JSON file with rich metadata for every plugin (name, description,
-  stars, category, entry points, topics, documentation URL). This is
-  the data source for the Sphinx site.
+: A JSON file with metadata for every plugin, including its name,
+  description, stars, category, entry points, topics, and documentation
+  URL. Repository READMEs are not copied into the site. This is the data
+  source for the Sphinx build.
 
-`scripts/categories.toml`
-: Updated with any new classifications from tiers 2 and 3.
-
-All three files are committed automatically by the weekly workflow.
+The script reads reviewed assignments from `scripts/categories.toml`
+but never modifies them. Both generated files are committed automatically
+by the weekly workflow.
 
 ## Site generation
 
 A separate GitHub Actions workflow builds this Sphinx site from the
 JSON data using a custom extension
-([`docs/_ext/plugin_pages.py`](https://github.com/conda/conda-plugins/blob/main/docs/_ext/plugin_pages.py))
+([`docs/_ext/plugin_pages.py`](https://github.com/conda-incubator/conda-plugins/blob/main/docs/_ext/plugin_pages.py))
 that generates a page for each plugin and each category at build time.
 The result is deployed to GitHub Pages.
 
@@ -101,10 +91,7 @@ pixi run -e docs docs        # build the Sphinx site
 pixi run -e docs docs-serve  # serve at http://localhost:8000
 ```
 
-The `--model` flag lets you override the LLM model, and `--skip-llm`
-disables LLM classification entirely (useful for quick iterations).
-
 ## Source code
 
 The full source for this index lives at
-[conda/conda-plugins](https://github.com/conda/conda-plugins).
+[conda-incubator/conda-plugins](https://github.com/conda-incubator/conda-plugins).
