@@ -16,9 +16,11 @@ collects:
 - GitHub stars, topics, and documentation URL
 - The conda entry points declared by the plugin
 
-Forks, private repositories, nested example projects, and duplicate
-distributions are filtered out automatically. Previously indexed and reviewed
-repositories missing from a search response are checked directly before removal.
+Forks, private repositories, and nested example projects are filtered out
+automatically. When repositories declare the same normalized project name, a
+reviewed repository takes precedence before star count. Previously indexed and
+reviewed repositories missing from a search response are checked directly
+before removal.
 
 ## Categorization
 
@@ -38,6 +40,10 @@ The result is a suggestion for the generated index only. The renderer never
 writes it to `categories.toml`. A reviewed mapping therefore overrides the
 model on every later run. If the model chooses **Other**, the plugin remains
 there until a human adds a more specific mapping.
+
+An unmapped plugin links only to its GitHub repository. Its project-supplied
+documentation URL is published after a reviewer adds the repository to
+`scripts/categories.toml`.
 
 The categories are:
 
@@ -65,9 +71,9 @@ The script produces two outputs:
 
 `docs/_data/plugins.json`
 : A JSON file with metadata for every plugin, including its name,
-  description, stars, category, entry points, topics, and documentation
-  URL. Repository READMEs are not copied into the site. This is the data
-  source for the Sphinx build.
+  description, stars, category, entry points, topics, and a documentation
+  URL for reviewed repositories. Repository READMEs are not copied into the
+  site. This is the data source for the Sphinx build.
 
 The script reads reviewed assignments from `scripts/categories.toml`
 but never modifies them. Both generated files are committed automatically

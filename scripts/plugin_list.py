@@ -44,8 +44,8 @@ MODEL_URL = (
 MODEL_SHA256 = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
 
 SEARCH_QUERIES = (
-    '"[project.entry-points.conda]" language:TOML',
-    r'"[project.entry-points.\"conda\"]" language:TOML',
+    '"[project.entry-points.conda]" language:TOML path:/',
+    r'"[project.entry-points.\"conda\"]" language:TOML path:/',
 )
 
 VALID_CATEGORIES = [
@@ -59,7 +59,8 @@ VALID_CATEGORIES = [
     "Other",
 ]
 
-MARKDOWN_PUNCTUATION = re.compile(r"([!\"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~])")
+README_MARKDOWN_SPECIALS = re.compile(r"([!()*<>?\[\\\]_`|])")
+README_AUTOLINK_PREFIXES = re.compile(r"(?i)\b(?:https?|ftp):|www\.")
 
 
 def bounded_prompt_text(value: object, limit: int) -> str:
@@ -196,12 +197,15 @@ def search_github(gh):
     found = False
     for query in SEARCH_QUERIES:
         results = gh.search_code(query)
-        total = _api_call(lambda: results.totalCount, label=f"search totalCount for {query}")
+        total = _api_call(
+            lambda search_results=results: search_results.totalCount,
+            label=f"search totalCount for {query}",
+        )
         print(f"Found {total} results for {query}", file=sys.stderr)
         page = 0
         while True:
             items = _api_call(
-                lambda p=page: results.get_page(p),
+                lambda p=page, search_results=results: search_results.get_page(p),
                 label=f"search page {page}",
             )
             if not items:
@@ -299,7 +303,7 @@ def discover_plugins(search_results):
             "docs": docs,
             "entry_points": entry_points,
             "topics": _api_call(
-                lambda: repo.get_topics(),
+                lambda current_repo=repo: current_repo.get_topics(),
                 label=f"{repo.full_name}/topics",
             ),
         }
@@ -370,15 +374,25 @@ def revalidate_missing_plugins(
     return plugins
 
 
-def deduplicate_plugins(plugins: list[dict]) -> list[dict]:
-    """When multiple repos ship the same plugin name, keep only the most-starred."""
+def deduplicate_plugins(
+    plugins: list[dict],
+    reviewed_repos: set[str],
+) -> list[dict]:
+    """Prefer a reviewed repository, then stars, for duplicate project names."""
     by_name: dict[str, list[dict]] = {}
     for p in plugins:
         normalized_name = re.sub(r"[-_.]+", "-", p["name"]).lower()
         by_name.setdefault(normalized_name, []).append(p)
     result = []
     for name, group in by_name.items():
-        winner = sorted(group, key=lambda p: (-p["stars"], p["repo_full_name"]))[0]
+        winner = min(
+            group,
+            key=lambda p: (
+                p["repo_full_name"] not in reviewed_repos,
+                -p["stars"],
+                p["repo_full_name"],
+            ),
+        )
         if len(group) > 1:
             dropped = [p["repo_full_name"] for p in group if p is not winner]
             print(
@@ -426,9 +440,18 @@ def generate_readme_table(plugins: list[dict]) -> str:
         "|------|-------------|--:|",
     ]
     for p in sorted(plugins, key=lambda p: (-p["stars"], p["name"])):
-        description = MARKDOWN_PUNCTUATION.sub(
+        description = README_MARKDOWN_SPECIALS.sub(
             r"\\\1",
             " ".join(str(p["description"]).split()),
+        )
+        # Split GitHub mention and issue syntax across trusted inline elements.
+        description = description.replace("@", "<span>@</span>").replace(
+            "#", "<span>#</span>"
+        )
+        # Disable GFM's extended URL autolinks without escaping ordinary prose.
+        description = README_AUTOLINK_PREFIXES.sub(
+            lambda match: match.group().replace(":", r"\:").replace(".", r"\."),
+            description,
         )
         lines.append(
             f'| [{p["name"]}]({p["repo_url"]}) | '
@@ -438,8 +461,8 @@ def generate_readme_table(plugins: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def generate_json(plugins: list[dict]) -> str:
-    """Generate the JSON data file content."""
+def generate_json(plugins: list[dict], reviewed_repos: set[str]) -> str:
+    """Generate JSON, publishing documentation links only after review."""
     clean = []
     for p in sorted(plugins, key=lambda p: (-p["stars"], p["name"])):
         clean.append({
@@ -448,7 +471,11 @@ def generate_json(plugins: list[dict]) -> str:
             "repo_url": p["repo_url"],
             "repo_full_name": p["repo_full_name"],
             "stars": p["stars"],
-            "docs": p.get("docs"),
+            "docs": (
+                p.get("docs")
+                if p["repo_full_name"] in reviewed_repos
+                else None
+            ),
             "topics": p.get("topics", []),
             "entry_points": p.get("entry_points", {}),
             "category": p["category"],
@@ -483,7 +510,7 @@ def main():
 
     plugins = list(discover_plugins(search_github(gh)))
     plugins = revalidate_missing_plugins(gh, plugins, set(categories))
-    plugins = deduplicate_plugins(plugins)
+    plugins = deduplicate_plugins(plugins, set(categories))
     classifier = (
         PluginClassifier()
         if any(plugin["repo_full_name"] not in categories for plugin in plugins)
@@ -499,7 +526,7 @@ def main():
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     json_path = DATA_DIR / "plugins.json"
-    json_path.write_text(generate_json(plugins))
+    json_path.write_text(generate_json(plugins, set(categories)))
     print(f"Wrote {json_path}", file=sys.stderr)
 
 

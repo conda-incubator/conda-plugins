@@ -29,8 +29,8 @@ documentation = "https://my-plugin.readthedocs.io"
 ```
 
 The `project.name` and `project.description` fields are used for the
-plugin listing. If `project.urls.documentation` is set, a link to
-your docs will appear on the plugin page.
+plugin listing. If `project.urls.documentation` is set, the link appears
+after the repository receives a reviewed category mapping.
 
 ## Categorization
 

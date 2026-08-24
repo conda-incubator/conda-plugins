@@ -25,8 +25,12 @@ sphinx-sitemap = ">=2.5"
 docs = { cmd = "sphinx-build -W --keep-going -b dirhtml docs docs/_build/dirhtml", description = "Build documentation" }
 docs-serve = { cmd = "python -m http.server", cwd = "docs/_build/dirhtml" }
 
+[feature.test.dependencies]
+pytest = ">=8.0"
+pytest-mock = ">=3.14"
+
 [feature.test.tasks]
-test = { cmd = "python -m unittest discover -s tests -v", description = "Run the test suite" }
+test = { cmd = "python -m pytest -v", description = "Run the test suite" }
 
 [environments]
 render = { features = ["render"], solve-group = "default" }
