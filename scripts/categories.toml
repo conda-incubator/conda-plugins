@@ -1,88 +1,79 @@
-# Category assignments for conda plugins.
-# Keys are GitHub "owner/repo" identifiers; values are one of:
-#   Solvers, Subcommands, Channels, Authentication,
-#   Environment management, Build tools, UI and display, Other
+# Reviewed category assignments for public conda plugin repositories.
+# Keys are current GitHub "owner/repo" identifiers. Each value records the
+# immutable GitHub repository ID and one supported category.
 
 [categories]
 # Solvers
-"conda-incubator/conda-rattler-solver" = "Solvers"
-"conda/conda-classic-solver" = "Solvers"
-"conda/conda-libmamba-solver" = "Solvers"
-"conda/conda-rattler-solver" = "Solvers"
-"costrouc/conda-random-solver" = "Solvers"
-"jezdez/conda-express" = "Solvers"
-"jezdez/conda-presto" = "Solvers"
+"conda/conda-classic-solver" = { id = 845943532, category = "Solvers" }
+"conda/conda-libmamba-solver" = { id = 449789872, category = "Solvers" }
+"conda/conda-rattler-solver" = { id = 704190015, category = "Solvers" }
+"costrouc/conda-random-solver" = { id = 604354437, category = "Solvers" }
+"jezdez/conda-express" = { id = 1171619517, category = "Solvers" }
+"jezdez/conda-presto" = { id = 1211735623, category = "Solvers" }
 
 # Subcommands
-"anaconda/conda-anaconda-tos" = "Subcommands"
-"beeankha/SimplePythonStuff" = "Subcommands"
-"conda/conda-plugin-template" = "Subcommands"
-"conda-incubator/conda-tree" = "Subcommands"
-"costrouc/conda-random-subcomand" = "Subcommands"
-"kalawac/simple-bash-plugin" = "Subcommands"
-"kelvinou01/conda-which" = "Subcommands"
-"sophieblock/conda-controlplane" = "Subcommands"
+"anaconda/conda-anaconda-tos" = { id = 869995975, category = "Subcommands" }
+"beeankha/SimplePythonStuff" = { id = 127155774, category = "Subcommands" }
+"conda/conda-plugin-template" = { id = 529314877, category = "Subcommands" }
+"conda-incubator/conda-tree" = { id = 90068685, category = "Subcommands" }
+"costrouc/conda-random-subcomand" = { id = 604644098, category = "Subcommands" }
+"kalawac/simple-bash-plugin" = { id = 618595139, category = "Subcommands" }
+"kelvinou01/conda-which" = { id = 833504546, category = "Subcommands" }
+"sophieblock/conda-controlplane" = { id = 1129439949, category = "Subcommands" }
 
 # Channels
-"anaconda/anaconda-channel-guide" = "Channels"
-"anaconda/anaconda-time-machine" = "Channels"
-"conda-incubator/conda-subchannel" = "Channels"
-"jaimergp/conda-pypi-channel" = "Channels"
-"kenodegard/conda-repodata" = "Channels"
+"anaconda/anaconda-channel-guide" = { id = 1232342490, category = "Channels" }
+"conda-incubator/conda-subchannel" = { id = 794620330, category = "Channels" }
+"jaimergp/conda-pypi-channel" = { id = 1057530880, category = "Channels" }
+"kenodegard/conda-repodata" = { id = 651608264, category = "Channels" }
 
 # Authentication
-"anaconda/anaconda-auth" = "Authentication"
-"anaconda/anaconda-cloud-tools" = "Authentication"
-"anaconda/conda-repo-cli" = "Authentication"
-"anaconda/docker-examples" = "Authentication"
-"conda-incubator/conda-auth" = "Authentication"
+"anaconda/anaconda-auth" = { id = 924766645, category = "Authentication" }
+"anaconda/docker-examples" = { id = 1117994188, category = "Authentication" }
+"conda-incubator/conda-auth" = { id = 669174359, category = "Authentication" }
 
 # Environment management
-"acwooding/conda-ops" = "Environment management"
-"aterrel/conda-npm" = "Environment management"
-"conda-incubator/conda-checkpoints" = "Environment management"
-"conda-incubator/conda-exec" = "Environment management"
-"conda-incubator/conda-global" = "Environment management"
-"conda-incubator/conda-protect" = "Environment management"
-"conda-incubator/conda-self" = "Environment management"
-"conda-incubator/conda-shell" = "Environment management"
-"conda-incubator/conda-spawn" = "Environment management"
-"conda-incubator/conda-workspaces" = "Environment management"
-"conda-incubator/nvidia-virtual-packages" = "Environment management"
-"conda/conda-lock" = "Environment management"
-"conda/conda-lockfiles" = "Environment management"
-"conda/conda-pypi" = "Environment management"
-"conda/conda-self" = "Environment management"
-"conda/conda-spawn" = "Environment management"
-"jaimergp/conda-declarative" = "Environment management"
-"jennan/conda_disable_init" = "Environment management"
-"jezdez/conda-global" = "Environment management"
-"jezdez/conda-sboms" = "Environment management"
-"jjhelmus/conda-history-d" = "Environment management"
-"peytondmurray/conda-declarative-input-states" = "Environment management"
-"peytondmurray/conda-env-spec-v2" = "Environment management"
-"peytondmurray/conda-toml-spec" = "Environment management"
+"acwooding/conda-ops" = { id = 672367538, category = "Environment management" }
+"aterrel/conda-npm" = { id = 666789926, category = "Environment management" }
+"conda-incubator/conda-checkpoints" = { id = 784108170, category = "Environment management" }
+"conda-incubator/conda-exec" = { id = 1247482149, category = "Environment management" }
+"conda-incubator/conda-global" = { id = 1197761472, category = "Environment management" }
+"conda-incubator/conda-protect" = { id = 645187825, category = "Environment management" }
+"conda-incubator/conda-sboms" = { id = 1339855232, category = "Environment management" }
+"conda-incubator/conda-shell" = { id = 665290038, category = "Environment management" }
+"conda-incubator/conda-workspaces" = { id = 1168591964, category = "Environment management" }
+"conda-incubator/nvidia-virtual-packages" = { id = 1095101883, category = "Environment management" }
+"conda/conda-lock" = { id = 207361415, category = "Environment management" }
+"conda/conda-lockfiles" = { id = 973590509, category = "Environment management" }
+"conda/conda-pypi" = { id = 449841253, category = "Environment management" }
+"conda/conda-self" = { id = 988477668, category = "Environment management" }
+"conda/conda-spawn" = { id = 916096990, category = "Environment management" }
+"jaimergp/conda-declarative" = { id = 975194680, category = "Environment management" }
+"jennan/conda_disable_init" = { id = 832948281, category = "Environment management" }
+"jjhelmus/conda-history-d" = { id = 976183462, category = "Environment management" }
+"peytondmurray/conda-declarative-input-states" = { id = 954920659, category = "Environment management" }
+"peytondmurray/conda-env-spec-v2" = { id = 986634054, category = "Environment management" }
+"peytondmurray/conda-toml-spec" = { id = 1017691518, category = "Environment management" }
 
 # Build tools
-"conda-forge/conda-smithy" = "Build tools"
-"conda/conda-build" = "Build tools"
-"conda/conda-index" = "Build tools"
-"jezdez/conda-ship" = "Build tools"
+"conda-forge/conda-smithy" = { id = 33767206, category = "Build tools" }
+"conda/conda-build" = { id = 16008423, category = "Build tools" }
+"conda/conda-index" = { id = 493352300, category = "Build tools" }
+"jezdez/conda-ship" = { id = 1252248288, category = "Build tools" }
 
 # UI and display
-"conda-incubator/conda-completion" = "UI and display"
-"conda-incubator/conda-rich" = "UI and display"
-"conda-incubator/conda-tui" = "UI and display"
-"conda/menuinst" = "UI and display"
+"conda-incubator/conda-completion" = { id = 1245837819, category = "UI and display" }
+"conda-incubator/conda-rich" = { id = 834104902, category = "UI and display" }
+"conda-incubator/conda-tui" = { id = 411331218, category = "UI and display" }
+"conda/menuinst" = { id = 8413823, category = "UI and display" }
 
 # Other
-"Adam-D-Lewis/conda-serviceinst" = "Other"
-"anaconda/anaconda-connector" = "Other"
-"anaconda/assistant-sdk" = "Other"
-"anaconda/conda-anaconda-telemetry" = "Other"
-"conda/conda-content-trust" = "Other"
-"jezdez/conda-broker" = "Other"
-"jezdez/conda-dev-request-headers" = "Other"
-"jezdez/conda-restricted" = "Other"
-"jezdez/conda-sigstore" = "Other"
-"regro/conda-forge-conda-plugins" = "Other"
+"Adam-D-Lewis/conda-serviceinst" = { id = 1169321315, category = "Other" }
+"anaconda/assistant-sdk" = { id = 897377197, category = "Other" }
+"anaconda/conda-anaconda-telemetry" = { id = 866667154, category = "Other" }
+"conda/conda-content-trust" = { id = 213960510, category = "Other" }
+"jezdez/conda-broker" = { id = 1288434833, category = "Other" }
+"jezdez/conda-dev-request-headers" = { id = 1286991849, category = "Other" }
+"jezdez/conda-restricted" = { id = 816802074, category = "Other" }
+"jezdez/conda-sigstore" = { id = 1331053026, category = "Other" }
+"regro/conda-forge-conda-plugins" = { id = 808567165, category = "Other" }

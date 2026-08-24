@@ -316,6 +316,7 @@ def discover_plugins(search_results):
             "description": description,
             "repo_url": repo.html_url,
             "repo_full_name": repo_full_name,
+            "repo_id": repo.id,
             "stars": repo.stargazers_count,
             "docs": docs,
             "entry_points": entry_points,
@@ -393,9 +394,9 @@ def revalidate_missing_plugins(
 
 def deduplicate_plugins(
     plugins: list[dict],
-    reviewed_repos: set[str],
+    reviewed_repos: dict[str, dict],
 ) -> list[dict]:
-    """Prefer a reviewed repository, then stars, for duplicate project names."""
+    """Prefer the reviewed repository ID, then stars, for duplicate names."""
     by_name: dict[str, list[dict]] = {}
     for p in plugins:
         normalized_name = re.sub(r"[-_.]+", "-", p["name"]).lower()
@@ -405,7 +406,8 @@ def deduplicate_plugins(
         winner = min(
             group,
             key=lambda p: (
-                p["repo_full_name"] not in reviewed_repos,
+                reviewed_repos.get(p["repo_full_name"], {}).get("id")
+                != p["repo_id"],
                 -p["stars"],
                 p["repo_full_name"],
             ),
@@ -421,8 +423,8 @@ def deduplicate_plugins(
     return result
 
 
-def load_categories() -> dict[str, str]:
-    """Load the repo -> category mapping from categories.toml."""
+def load_categories() -> dict[str, dict]:
+    """Load reviewed repository IDs and categories from categories.toml."""
     if not CATEGORIES_PATH.exists():
         return {}
     with open(CATEGORIES_PATH, "rb") as f:
@@ -430,22 +432,33 @@ def load_categories() -> dict[str, str]:
     categories = data.get("categories", {})
     if not isinstance(categories, dict):
         raise ValueError(f"{CATEGORIES_PATH} must contain a [categories] table")
-    invalid = {repo: cat for repo, cat in categories.items() if cat not in VALID_CATEGORIES}
+    invalid = {
+        repo: config
+        for repo, config in categories.items()
+        if not isinstance(config, dict)
+        or type(config.get("id")) is not int
+        or config["id"] <= 0
+        or config.get("category") not in VALID_CATEGORIES
+    }
     if invalid:
         raise ValueError(f"Invalid category assignments: {invalid}")
+    repo_ids = [config["id"] for config in categories.values()]
+    if len(repo_ids) != len(set(repo_ids)):
+        raise ValueError(f"Repository IDs in {CATEGORIES_PATH} must be unique")
     return categories
 
 
 def categorize_plugin(
     plugin: dict,
-    categories: dict[str, str],
+    categories: dict[str, dict],
     classifier: PluginClassifier | None = None,
 ) -> str:
     """Return a reviewed category or an ephemeral model suggestion."""
     repo = plugin["repo_full_name"]
 
-    if repo in categories:
-        return categories[repo]
+    review = categories.get(repo)
+    if review and review["id"] == plugin["repo_id"]:
+        return review["category"]
 
     return classifier.classify(plugin) if classifier else "Other"
 
@@ -478,7 +491,7 @@ def generate_readme_table(plugins: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def generate_json(plugins: list[dict], reviewed_repos: set[str]) -> str:
+def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
     """Generate JSON, publishing documentation links only after review."""
     clean = []
     for p in sorted(plugins, key=lambda p: (-p["stars"], p["name"])):
@@ -490,7 +503,8 @@ def generate_json(plugins: list[dict], reviewed_repos: set[str]) -> str:
             "stars": p["stars"],
             "docs": (
                 p.get("docs")
-                if p["repo_full_name"] in reviewed_repos
+                if reviewed_repos.get(p["repo_full_name"], {}).get("id")
+                == p["repo_id"]
                 else None
             ),
             "topics": p.get("topics", []),
@@ -527,10 +541,14 @@ def main():
 
     plugins = list(discover_plugins(search_github(gh)))
     plugins = revalidate_missing_plugins(gh, plugins, set(categories))
-    plugins = deduplicate_plugins(plugins, set(categories))
+    plugins = deduplicate_plugins(plugins, categories)
     classifier = (
         PluginClassifier()
-        if any(plugin["repo_full_name"] not in categories for plugin in plugins)
+        if any(
+            categories.get(plugin["repo_full_name"], {}).get("id")
+            != plugin["repo_id"]
+            for plugin in plugins
+        )
         else None
     )
 
@@ -543,7 +561,7 @@ def main():
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     json_path = DATA_DIR / "plugins.json"
-    json_path.write_text(generate_json(plugins, set(categories)))
+    json_path.write_text(generate_json(plugins, categories))
     print(f"Wrote {json_path}", file=sys.stderr)
 
 

@@ -510,6 +510,19 @@
       "category": "Channels"
     },
     {
+      "name": "conda-sboms",
+      "description": "Generate software bills of materials from conda environments",
+      "repo_url": "https://github.com/conda-incubator/conda-sboms",
+      "repo_full_name": "conda-incubator/conda-sboms",
+      "stars": 1,
+      "docs": "https://conda-incubator.github.io/conda-sboms/",
+      "topics": [],
+      "entry_points": {
+        "conda-sboms": "conda_sboms.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
       "name": "conda-ship",
       "description": "Conda plugin entry point for the conda-ship runtime builder.",
       "repo_url": "https://github.com/jezdez/conda-ship",
@@ -696,19 +709,6 @@
         "conda-rich": "conda_rich.hooks"
       },
       "category": "UI and display"
-    },
-    {
-      "name": "conda-sboms",
-      "description": "Generate software bills of materials from conda environments",
-      "repo_url": "https://github.com/jezdez/conda-sboms",
-      "repo_full_name": "jezdez/conda-sboms",
-      "stars": 0,
-      "docs": "https://jezdez.github.io/conda-sboms/",
-      "topics": [],
-      "entry_points": {
-        "conda-sboms": "conda_sboms.plugin"
-      },
-      "category": "Environment management"
     },
     {
       "name": "conda-serviceinst",

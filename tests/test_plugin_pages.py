@@ -138,6 +138,55 @@ def test_cleanup_removes_only_generated_files(tmp_path: Path):
     assert not plugin.exists()
 
 
+def test_generated_plugin_slug_is_bounded_and_stable(tmp_path: Path):
+    long_name = "a" * 300
+    colliding_name = plugin_pages._slugify(long_name)
+    data_dir = tmp_path / "_data"
+    data_dir.mkdir()
+    (data_dir / "plugins.json").write_text(
+        json.dumps(
+            {
+                "categories": ["Other"],
+                "plugins": [
+                    {
+                        "name": long_name,
+                        "description": "Example",
+                        "repo_url": "https://github.com/owner/long",
+                        "repo_full_name": "owner/long",
+                        "stars": 1,
+                        "category": "Other",
+                    },
+                    {
+                        "name": colliding_name,
+                        "description": "Example",
+                        "repo_url": "https://github.com/owner/short",
+                        "repo_full_name": "owner/short",
+                        "stars": 1,
+                        "category": "Other",
+                    }
+                ],
+            }
+        )
+    )
+    app = type("App", (), {"srcdir": str(tmp_path)})()
+    generated_slugs = []
+
+    for _ in range(2):
+        try:
+            plugin_pages._generate_source_files(app)
+            plugin_dirs = sorted(
+                path for path in (tmp_path / "other").iterdir() if path.is_dir()
+            )
+            assert len(plugin_dirs) == 2
+            generated_slugs.append([path.name for path in plugin_dirs])
+            assert all(len(path.name) == 120 for path in plugin_dirs)
+            assert all((path / "index.md").exists() for path in plugin_dirs)
+        finally:
+            plugin_pages._cleanup_source_files(app, None)
+
+    assert generated_slugs[0] == generated_slugs[1]
+
+
 def test_generated_files_do_not_overwrite_authored_content(tmp_path: Path):
     data_dir = tmp_path / "_data"
     data_dir.mkdir()

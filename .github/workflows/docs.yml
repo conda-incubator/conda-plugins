@@ -36,6 +36,7 @@ jobs:
           persist-credentials: false
       - uses: prefix-dev/setup-pixi@f00437f565399d418b0acc85936d12c1fb668347 # v0.10.1
         with:
+          pixi-version: v0.77.0
           environments: docs test
       - name: Run tests
         run: pixi run -e test test

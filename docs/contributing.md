@@ -30,7 +30,8 @@ documentation = "https://my-plugin.readthedocs.io"
 
 The `project.name` and `project.description` fields are used for the
 plugin listing. If `project.urls.documentation` is set, the link appears
-after the repository receives a reviewed category mapping.
+after the repository receives a reviewed category mapping tied to its immutable
+numeric GitHub repository ID.
 
 ## Categorization
 
@@ -39,7 +40,8 @@ Qwen3.5 2B model suggests a category for each unmapped plugin without
 modifying the reviewed mappings. To correct or stabilize its category,
 open a pull request updating
 [`scripts/categories.toml`](https://github.com/conda-incubator/conda-plugins/blob/main/scripts/categories.toml)
-in the conda-plugins repository.
+in the conda-plugins repository. Record the repository's current `owner/repo`
+name, numeric GitHub ID, and category in the existing inline-table format.
 
 ## Building a plugin from scratch
 

@@ -13,11 +13,13 @@ class FakeRepo:
         self,
         full_name: str,
         *,
+        repo_id: int = 1,
         stars: int = 1,
         private: bool = False,
         content: str = "",
     ):
         self.full_name = full_name
+        self.id = repo_id
         self.name = full_name.rsplit("/", 1)[-1]
         self.description = "Repository description"
         self.html_url = f"https://github.com/{full_name}"
@@ -108,30 +110,78 @@ Documentation = "https://example.com/docs"
 
     assert [plugin["repo_full_name"] for plugin in plugins] == ["owner/example"]
     assert plugins[0]["docs"] == "https://example.com/docs"
+    assert plugins[0]["repo_id"] == 1
     assert plugins[0]["entry_points"] == {"example": "example.plugin"}
     assert "readme" not in plugins[0]
 
 
 def test_deduplication_uses_normalized_name_and_is_deterministic():
     plugins = [
-        {"name": "conda_example", "stars": 2, "repo_full_name": "z/repo"},
-        {"name": "conda-example", "stars": 2, "repo_full_name": "a/repo"},
+        {
+            "name": "conda_example",
+            "stars": 2,
+            "repo_full_name": "z/repo",
+            "repo_id": 2,
+        },
+        {
+            "name": "conda-example",
+            "stars": 2,
+            "repo_full_name": "a/repo",
+            "repo_id": 1,
+        },
     ]
 
-    result = plugin_list.deduplicate_plugins(plugins, set())
+    result = plugin_list.deduplicate_plugins(plugins, {})
 
     assert [plugin["repo_full_name"] for plugin in result] == ["a/repo"]
 
 
 def test_deduplication_prefers_reviewed_repository_over_star_count():
     plugins = [
-        {"name": "conda-example", "stars": 1, "repo_full_name": "trusted/repo"},
-        {"name": "conda_example", "stars": 100, "repo_full_name": "other/repo"},
+        {
+            "name": "conda-example",
+            "stars": 1,
+            "repo_full_name": "trusted/repo",
+            "repo_id": 10,
+        },
+        {
+            "name": "conda_example",
+            "stars": 100,
+            "repo_full_name": "other/repo",
+            "repo_id": 20,
+        },
     ]
 
-    result = plugin_list.deduplicate_plugins(plugins, {"trusted/repo"})
+    result = plugin_list.deduplicate_plugins(
+        plugins,
+        {"trusted/repo": {"id": 10, "category": "Other"}},
+    )
 
     assert [plugin["repo_full_name"] for plugin in result] == ["trusted/repo"]
+
+
+def test_deduplication_does_not_trust_reused_repository_name():
+    plugins = [
+        {
+            "name": "conda-example",
+            "stars": 1,
+            "repo_full_name": "trusted/repo",
+            "repo_id": 99,
+        },
+        {
+            "name": "conda_example",
+            "stars": 100,
+            "repo_full_name": "other/repo",
+            "repo_id": 20,
+        },
+    ]
+
+    result = plugin_list.deduplicate_plugins(
+        plugins,
+        {"trusted/repo": {"id": 10, "category": "Other"}},
+    )
+
+    assert [plugin["repo_full_name"] for plugin in result] == ["other/repo"]
 
 
 def test_missing_search_result_is_revalidated_directly(tmp_path, monkeypatch):
@@ -172,6 +222,7 @@ def test_fallback_category_is_not_persisted():
         "description": "No matching words",
         "entry_points": {"example": "example.plugin"},
         "repo_full_name": "owner/example",
+        "repo_id": 1,
     }
 
     assert plugin_list.categorize_plugin(plugin, categories) == "Other"
@@ -236,10 +287,21 @@ def test_classifier_rejects_text_outside_the_category_grammar(mocker):
 
 
 def test_reviewed_category_takes_precedence():
-    categories = {"owner/example": "Build tools"}
-    plugin = {"repo_full_name": "owner/example"}
+    categories = {
+        "owner/example": {"id": 10, "category": "Build tools"},
+    }
+    plugin = {"repo_full_name": "owner/example", "repo_id": 10}
 
     assert plugin_list.categorize_plugin(plugin, categories) == "Build tools"
+
+
+def test_reused_repository_name_does_not_receive_reviewed_category():
+    categories = {
+        "owner/example": {"id": 10, "category": "Build tools"},
+    }
+    plugin = {"repo_full_name": "owner/example", "repo_id": 99}
+
+    assert plugin_list.categorize_plugin(plugin, categories) == "Other"
 
 
 def test_generated_outputs_treat_repository_metadata_as_text():
@@ -252,6 +314,7 @@ def test_generated_outputs_treat_repository_metadata_as_text():
         ),
         "repo_url": "https://github.com/owner/example",
         "repo_full_name": "owner/example",
+        "repo_id": 10,
         "stars": 1,
         "docs": "https://evil.example/phish",
         "topics": [],
@@ -261,7 +324,7 @@ def test_generated_outputs_treat_repository_metadata_as_text():
     }
 
     table = plugin_list.generate_readme_table([plugin])
-    data = json.loads(plugin_list.generate_json([plugin], set()))
+    data = json.loads(plugin_list.generate_json([plugin], {}))
 
     assert "Safe, sentence." in table
     assert "<script>" not in table
@@ -283,6 +346,7 @@ def test_json_preserves_documentation_url_for_reviewed_repository():
         "description": "Example",
         "repo_url": "https://github.com/owner/example",
         "repo_full_name": "owner/example",
+        "repo_id": 10,
         "stars": 1,
         "docs": "https://docs.example/plugin",
         "topics": [],
@@ -290,9 +354,45 @@ def test_json_preserves_documentation_url_for_reviewed_repository():
         "category": "Other",
     }
 
-    data = json.loads(plugin_list.generate_json([plugin], {"owner/example"}))
+    data = json.loads(
+        plugin_list.generate_json(
+            [plugin],
+            {"owner/example": {"id": 10, "category": "Other"}},
+        )
+    )
 
     assert data["plugins"][0]["docs"] == "https://docs.example/plugin"
+
+
+def test_json_rejects_reviewed_docs_when_repository_id_changes():
+    plugin = {
+        "name": "conda-example",
+        "description": "Example",
+        "repo_url": "https://github.com/owner/example",
+        "repo_full_name": "owner/example",
+        "repo_id": 99,
+        "stars": 1,
+        "docs": "https://docs.example/plugin",
+        "topics": [],
+        "entry_points": {"example": "example.plugin"},
+        "category": "Other",
+    }
+
+    data = json.loads(
+        plugin_list.generate_json(
+            [plugin],
+            {"owner/example": {"id": 10, "category": "Other"}},
+        )
+    )
+
+    assert data["plugins"][0]["docs"] is None
+
+
+def test_reviewed_repository_ids_are_unique():
+    categories = plugin_list.load_categories()
+
+    assert categories
+    assert len({config["id"] for config in categories.values()}) == len(categories)
 
 
 def test_discovery_rejects_unsafe_documentation_urls(monkeypatch):

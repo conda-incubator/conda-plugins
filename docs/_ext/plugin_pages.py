@@ -13,6 +13,7 @@ URL structure::
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from collections import Counter
@@ -50,7 +51,11 @@ def _code_span(value: object) -> str:
 
 
 def _slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    if len(slug) > 120:
+        digest = hashlib.sha256(slug.encode()).hexdigest()[:12]
+        slug = f"{slug[:107].rstrip('-')}-{digest}"
+    return slug
 
 
 def _load_plugins(app: Sphinx) -> dict[str, Any]:
@@ -64,7 +69,10 @@ def _load_plugins(app: Sphinx) -> dict[str, Any]:
         name_slug = _slugify(plugin["name"])
         if name_counts[name_slug] > 1:
             owner = plugin["repo_full_name"].split("/")[0]
-            plugin["slug"] = f"{_slugify(owner)}-{name_slug}"
+            prefix = f"{_slugify(owner)}-{name_slug}"
+            identity = f'{plugin["repo_full_name"]}\0{plugin["name"]}'
+            digest = hashlib.sha256(identity.encode()).hexdigest()[:12]
+            plugin["slug"] = f"{prefix[:107].rstrip('-')}-{digest}"
         else:
             plugin["slug"] = name_slug
     return data

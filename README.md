@@ -49,6 +49,7 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-presto](https://github.com/jezdez/conda-presto) | Resolve, inspect, and cache conda solve results through CLI, HTTP, CI, and solver integrations | 1 |
 | [conda-pypi-channel](https://github.com/jaimergp/conda-pypi-channel) | Expose a PyPI index as a conda channel, on the fly. | 1 |
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
+| [conda-sboms](https://github.com/conda-incubator/conda-sboms) | Generate software bills of materials from conda environments | 1 |
 | [conda-ship](https://github.com/jezdez/conda-ship) | Conda plugin entry point for the conda-ship runtime builder. | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
 | [anaconda-channel-guide](https://github.com/anaconda/anaconda-channel-guide) | A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels. | 0 |
@@ -63,7 +64,6 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-random-subcommand](https://github.com/costrouc/conda-random-subcomand) | A random conda subcommand | 0 |
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH\_PATH for conda configuration files | 0 |
 | [conda-rich](https://github.com/conda-incubator/conda-rich) | Conda plugin which uses rich components for its display | 0 |
-| [conda-sboms](https://github.com/jezdez/conda-sboms) | Generate software bills of materials from conda environments | 0 |
 | [conda-serviceinst](https://github.com/Adam-D-Lewis/conda-serviceinst) | Thin conda plugin that auto-triggers serviceinst on package install/remove | 0 |
 | [conda-sigstore](https://github.com/jezdez/conda-sigstore) | Create and verify Sigstore attestations for conda packages | 0 |
 | [conda-toml-spec](https://github.com/peytondmurray/conda-toml-spec) | Toml environment specification for conda | 0 |

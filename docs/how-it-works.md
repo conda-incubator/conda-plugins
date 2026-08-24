@@ -18,16 +18,17 @@ collects:
 
 Forks, private repositories, and nested example projects are filtered out
 automatically. When repositories declare the same normalized project name, a
-reviewed repository takes precedence before star count. Previously indexed and
-reviewed repositories missing from a search response are checked directly
-before removal.
+reviewed repository takes precedence before star count. Review status requires
+both the current `owner/repo` name and the immutable numeric GitHub repository
+ID to match. Previously indexed and reviewed repositories missing from a search
+response are checked directly before removal.
 
 ## Categorization
 
 Each plugin is assigned to one of eight categories using a committed
 [`scripts/categories.toml`](https://github.com/conda-incubator/conda-plugins/blob/main/scripts/categories.toml)
-file that maps known repositories to reviewed categories. This mapping
-is authoritative.
+file that maps known repositories and their immutable GitHub IDs to reviewed
+categories. This mapping is authoritative.
 
 For an unmapped plugin, the renderer asks the Apache-2.0
 [Qwen3.5 2B](https://huggingface.co/Qwen/Qwen3.5-2B) model for a category.
@@ -42,8 +43,8 @@ model on every later run. If the model chooses **Other**, the plugin remains
 there until a human adds a more specific mapping.
 
 An unmapped plugin links only to its GitHub repository. Its project-supplied
-documentation URL is published after a reviewer adds the repository to
-`scripts/categories.toml`.
+documentation URL is published after a reviewer records the repository name,
+immutable ID, and category in `scripts/categories.toml`.
 
 The categories are:
 
@@ -76,8 +77,8 @@ The script produces two outputs:
   site. This is the data source for the Sphinx build.
 
 The script reads reviewed assignments from `scripts/categories.toml`
-but never modifies them. Both generated files are committed automatically
-by the weekly workflow.
+but never modifies them. The read-only render job passes only these two files
+to a separate commit job, which writes any changes to the repository.
 
 ## Site generation
 
