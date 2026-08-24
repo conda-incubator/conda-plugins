@@ -179,7 +179,24 @@ def _api_call(fn, label=""):
         try:
             return fn()
         except GithubException as exc:
-            if exc.status in (403, 429):
+            headers = {
+                str(key).casefold(): str(value)
+                for key, value in (exc.headers or {}).items()
+            }
+            message = (
+                str(exc.data.get("message", ""))
+                if isinstance(exc.data, dict)
+                else str(exc.data or "")
+            ).casefold()
+            rate_limited = exc.status == 429 or (
+                exc.status == 403
+                and (
+                    headers.get("x-ratelimit-remaining") == "0"
+                    or "retry-after" in headers
+                    or "rate limit" in message
+                )
+            )
+            if rate_limited:
                 wait = RETRY_WAIT * (attempt + 1)
                 print(
                     f"  Rate limited ({exc.status}) on {label}, "

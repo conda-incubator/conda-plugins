@@ -44,6 +44,41 @@ class FakeResult:
         self.path = path
 
 
+def test_api_call_retries_actual_rate_limit(mocker):
+    operation = mocker.Mock(
+        side_effect=[
+            plugin_list.GithubException(
+                403,
+                {"message": "API rate limit exceeded"},
+                {"X-RateLimit-Remaining": "0"},
+            ),
+            "ok",
+        ]
+    )
+    sleep = mocker.patch.object(plugin_list.time, "sleep")
+
+    assert plugin_list._api_call(operation, "example") == "ok"
+    assert operation.call_count == 2
+    sleep.assert_called_once_with(plugin_list.RETRY_WAIT)
+
+
+def test_api_call_does_not_retry_saml_403(mocker):
+    operation = mocker.Mock(
+        side_effect=plugin_list.GithubException(
+            403,
+            {"message": "Resource protected by organization SAML enforcement"},
+            {"X-RateLimit-Remaining": "4999"},
+        )
+    )
+    sleep = mocker.patch.object(plugin_list.time, "sleep")
+
+    with pytest.raises(plugin_list.GithubException, match="SAML enforcement"):
+        plugin_list._api_call(operation, "example")
+
+    operation.assert_called_once_with()
+    sleep.assert_not_called()
+
+
 def test_discovery_requires_root_project_with_conda_entry_points(monkeypatch):
     monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
     valid = """
