@@ -1,0 +1,753 @@
+{
+  "categories": [
+    "Solvers",
+    "Subcommands",
+    "Channels",
+    "Authentication",
+    "Environment management",
+    "Build tools",
+    "UI and display",
+    "Other"
+  ],
+  "plugins": [
+    {
+      "name": "conda_lock",
+      "description": "Lockfiles for conda",
+      "repo_url": "https://github.com/conda/conda-lock",
+      "repo_full_name": "conda/conda-lock",
+      "stars": 562,
+      "docs": "https://conda.github.io/conda-lock/",
+      "topics": [
+        "conda",
+        "lockfile",
+        "hacktoberfest"
+      ],
+      "entry_points": {
+        "conda-lock": "conda_lock.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-build",
+      "description": "tools for building conda packages",
+      "repo_url": "https://github.com/conda/conda-build",
+      "repo_full_name": "conda/conda-build",
+      "stars": 400,
+      "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
+      "topics": [
+        "conda",
+        "conda-build",
+        "package-management"
+      ],
+      "entry_points": {
+        "conda-build": "conda_build.plugin"
+      },
+      "category": "Build tools"
+    },
+    {
+      "name": "conda-libmamba-solver",
+      "description": "The fast mamba solver, now in conda",
+      "repo_url": "https://github.com/conda/conda-libmamba-solver",
+      "repo_full_name": "conda/conda-libmamba-solver",
+      "stars": 247,
+      "docs": null,
+      "topics": [
+        "conda",
+        "mamba",
+        "solver",
+        "libmamba"
+      ],
+      "entry_points": {
+        "conda-libmamba-solver": "conda_libmamba_solver.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-smithy",
+      "description": "A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows.",
+      "repo_url": "https://github.com/conda-forge/conda-smithy",
+      "repo_full_name": "conda-forge/conda-smithy",
+      "stars": 179,
+      "docs": null,
+      "topics": [
+        "hacktoberfest",
+        "continuous-integration"
+      ],
+      "entry_points": {
+        "conda-smithy": "conda_smithy.plugin"
+      },
+      "category": "Build tools"
+    },
+    {
+      "name": "conda-tree",
+      "description": "conda dependency tree helper",
+      "repo_url": "https://github.com/conda-incubator/conda-tree",
+      "repo_full_name": "conda-incubator/conda-tree",
+      "stars": 174,
+      "docs": null,
+      "topics": [
+        "conda",
+        "dependency-manager"
+      ],
+      "entry_points": {
+        "conda-tree": "conda_tree.hooks"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "menuinst",
+      "description": "cross platform install of menu items",
+      "repo_url": "https://github.com/conda/menuinst",
+      "repo_full_name": "conda/menuinst",
+      "stars": 49,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "menuinst": "menuinst.conda_plugin"
+      },
+      "category": "UI and display"
+    },
+    {
+      "name": "conda-pypi",
+      "description": "Better PyPI interoperability for the conda ecosystem.",
+      "repo_url": "https://github.com/conda/conda-pypi",
+      "repo_full_name": "conda/conda-pypi",
+      "stars": 41,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-pypi": "conda_pypi.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-rattler-solver",
+      "description": "The fast pixi solver, now in conda",
+      "repo_url": "https://github.com/conda/conda-rattler-solver",
+      "repo_full_name": "conda/conda-rattler-solver",
+      "stars": 17,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-rattler-solver": "conda_rattler_solver.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-protect",
+      "description": "Protects conda environments to avoid mistakenly modifying them",
+      "repo_url": "https://github.com/conda-incubator/conda-protect",
+      "repo_full_name": "conda-incubator/conda-protect",
+      "stars": 16,
+      "docs": null,
+      "topics": [
+        "conda-plugin"
+      ],
+      "entry_points": {
+        "conda-protect": "conda_protect.main"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda_index",
+      "description": "conda index, formerly part of conda-build. Create channels from collections of packages.",
+      "repo_url": "https://github.com/conda/conda-index",
+      "repo_full_name": "conda/conda-index",
+      "stars": 11,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "index": "conda_index.plugin"
+      },
+      "category": "Build tools"
+    },
+    {
+      "name": "anaconda-auth",
+      "description": "A client auth library for Anaconda APIs",
+      "repo_url": "https://github.com/anaconda/anaconda-auth",
+      "repo_full_name": "anaconda/anaconda-auth",
+      "stars": 9,
+      "docs": "https://anaconda.github.io/anaconda-auth",
+      "topics": [],
+      "entry_points": {
+        "anaconda-auth": "anaconda_auth._conda.entrypoint"
+      },
+      "category": "Authentication"
+    },
+    {
+      "name": "conda-content-trust",
+      "description": "Signing and verification tools, geared toward the conda ecosystem.",
+      "repo_url": "https://github.com/conda/conda-content-trust",
+      "repo_full_name": "conda/conda-content-trust",
+      "stars": 9,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-content-trust": "conda_content_trust.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-auth",
+      "description": "A conda plugin for handling multiple authentication schemes",
+      "repo_url": "https://github.com/conda-incubator/conda-auth",
+      "repo_full_name": "conda-incubator/conda-auth",
+      "stars": 7,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-auth": "conda_auth.plugin"
+      },
+      "category": "Authentication"
+    },
+    {
+      "name": "conda-lockfiles",
+      "description": "Support different lockfiles in conda.",
+      "repo_url": "https://github.com/conda/conda-lockfiles",
+      "repo_full_name": "conda/conda-lockfiles",
+      "stars": 7,
+      "docs": null,
+      "topics": [
+        "conda",
+        "conda-plugin",
+        "plugin",
+        "pypi"
+      ],
+      "entry_points": {
+        "conda-lockfiles": "conda_lockfiles.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-which",
+      "description": "What package does this file belong to?",
+      "repo_url": "https://github.com/kelvinou01/conda-which",
+      "repo_full_name": "kelvinou01/conda-which",
+      "stars": 7,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-which": "conda_which"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "conda-global",
+      "description": "Global tool installation for conda \u2014 install CLI tools into isolated environments and make them available on PATH via trampolines",
+      "repo_url": "https://github.com/conda-incubator/conda-global",
+      "repo_full_name": "conda-incubator/conda-global",
+      "stars": 6,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-global": "conda_global.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-spawn",
+      "description": "Activate conda environments in new shell processes.",
+      "repo_url": "https://github.com/conda/conda-spawn",
+      "repo_full_name": "conda/conda-spawn",
+      "stars": 6,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-spawn": "conda_spawn.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-workspaces",
+      "description": "Project-scoped multi-environment workspace management for conda, with pixi compatibility",
+      "repo_url": "https://github.com/conda-incubator/conda-workspaces",
+      "repo_full_name": "conda-incubator/conda-workspaces",
+      "stars": 6,
+      "docs": "https://conda-incubator.github.io/conda-workspaces",
+      "topics": [],
+      "entry_points": {
+        "conda-workspaces": "conda_workspaces.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-self",
+      "description": "A self command for conda",
+      "repo_url": "https://github.com/conda/conda-self",
+      "repo_full_name": "conda/conda-self",
+      "stars": 5,
+      "docs": "https://conda-incubator.github.io/conda-self",
+      "topics": [],
+      "entry_points": {
+        "conda-self": "conda_self.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-anaconda-tos",
+      "description": "Conda subcommand to view, accept, and interact with a channel's Terms of Service (ToS).",
+      "repo_url": "https://github.com/anaconda/conda-anaconda-tos",
+      "repo_full_name": "anaconda/conda-anaconda-tos",
+      "stars": 4,
+      "docs": null,
+      "topics": [
+        "anaconda",
+        "conda"
+      ],
+      "entry_points": {
+        "conda-anaconda-tos": "conda_anaconda_tos.plugin"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "conda-subchannel",
+      "description": "Create subsets of conda channels thanks to CEP-15 metadata.",
+      "repo_url": "https://github.com/conda-incubator/conda-subchannel",
+      "repo_full_name": "conda-incubator/conda-subchannel",
+      "stars": 4,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-subchannel": "conda_subchannel.plugin"
+      },
+      "category": "Channels"
+    },
+    {
+      "name": "nvidia-virtual-packages",
+      "description": "Provides conda virtual packages for NVIDIA hardware.",
+      "repo_url": "https://github.com/conda-incubator/nvidia-virtual-packages",
+      "repo_full_name": "conda-incubator/nvidia-virtual-packages",
+      "stars": 4,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "cuda-arch": "nvidia_virtual_packages.cuda.arch"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-anaconda-telemetry",
+      "description": "A conda plugin for Anaconda Telemetry",
+      "repo_url": "https://github.com/anaconda/conda-anaconda-telemetry",
+      "repo_full_name": "anaconda/conda-anaconda-telemetry",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-anaconda-telemetry": "conda_anaconda_telemetry.hooks"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-tui",
+      "description": "A Text User Interface for conda",
+      "repo_url": "https://github.com/conda-incubator/conda-tui",
+      "repo_full_name": "conda-incubator/conda-tui",
+      "stars": 3,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "tui": "conda_tui.app"
+      },
+      "category": "UI and display"
+    },
+    {
+      "name": "conda-exec",
+      "description": "Ephemeral package execution for conda -- run any conda package without installing it",
+      "repo_url": "https://github.com/conda-incubator/conda-exec",
+      "repo_full_name": "conda-incubator/conda-exec",
+      "stars": 2,
+      "docs": "https://conda-incubator.github.io/conda-exec",
+      "topics": [],
+      "entry_points": {
+        "conda-exec": "conda_exec.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "captain-planet",
+      "description": "Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command",
+      "repo_url": "https://github.com/kalawac/simple-bash-plugin",
+      "repo_full_name": "kalawac/simple-bash-plugin",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "captain-planet": "captain_planet"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "conda-checkpoints",
+      "description": "conda plugin to save lockfiles to your environment after each environment modification",
+      "repo_url": "https://github.com/conda-incubator/conda-checkpoints",
+      "repo_full_name": "conda-incubator/conda-checkpoints",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-checkpoints": "conda_checkpoints.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-classic-solver",
+      "description": "The `classic` solver used in `conda`",
+      "repo_url": "https://github.com/conda/conda-classic-solver",
+      "repo_full_name": "conda/conda-classic-solver",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-classic-solver": "conda_classic_solver.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-completion",
+      "description": "Fast shell tab completion for conda and all its plugins",
+      "repo_url": "https://github.com/conda-incubator/conda-completion",
+      "repo_full_name": "conda-incubator/conda-completion",
+      "stars": 1,
+      "docs": null,
+      "topics": [
+        "conda"
+      ],
+      "entry_points": {
+        "conda-completion": "conda_completion.plugin"
+      },
+      "category": "UI and display"
+    },
+    {
+      "name": "conda-controlplane",
+      "description": "Inspect conda base control-plane tooling (solvers/auth/platform, compiler metas, packaging helpers).",
+      "repo_url": "https://github.com/sophieblock/conda-controlplane",
+      "repo_full_name": "sophieblock/conda-controlplane",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-controlplane": "conda_controlplane.plugin"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "conda-history-d",
+      "description": "conda plugin which records a detailed history of environments in a history.d directory.",
+      "repo_url": "https://github.com/jjhelmus/conda-history-d",
+      "repo_full_name": "jjhelmus/conda-history-d",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-checkpoints": "conda_history_d.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-npm",
+      "description": "conda-npm",
+      "repo_url": "https://github.com/aterrel/conda-npm",
+      "repo_full_name": "aterrel/conda-npm",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-npm": "conda_npm.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-ops",
+      "description": "Conda plugin to maintain environments and projects reproducibly.",
+      "repo_url": "https://github.com/acwooding/conda-ops",
+      "repo_full_name": "acwooding/conda-ops",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-ops": "conda_ops.conda_ops_parser"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-presto",
+      "description": "Resolve, inspect, and cache conda solve results through CLI, HTTP, CI, and solver integrations",
+      "repo_url": "https://github.com/jezdez/conda-presto",
+      "repo_full_name": "jezdez/conda-presto",
+      "stars": 1,
+      "docs": "https://jezdez.github.io/conda-presto",
+      "topics": [],
+      "entry_points": {
+        "conda-presto": "conda_presto.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-pypi-channel",
+      "description": "Expose a PyPI index as a conda channel, on the fly.",
+      "repo_url": "https://github.com/jaimergp/conda-pypi-channel",
+      "repo_full_name": "jaimergp/conda-pypi-channel",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-pypi-channel": "conda_pypi_channel.plugin"
+      },
+      "category": "Channels"
+    },
+    {
+      "name": "conda-repodata",
+      "description": "Conda plugin to locally manipulate or inspect the repodata.json.",
+      "repo_url": "https://github.com/kenodegard/conda-repodata",
+      "repo_full_name": "kenodegard/conda-repodata",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-repodata": "conda_repodata.repodata"
+      },
+      "category": "Channels"
+    },
+    {
+      "name": "conda-sboms",
+      "description": "Generate software bills of materials from conda environments",
+      "repo_url": "https://github.com/conda-incubator/conda-sboms",
+      "repo_full_name": "conda-incubator/conda-sboms",
+      "stars": 1,
+      "docs": "https://conda-incubator.github.io/conda-sboms/",
+      "topics": [],
+      "entry_points": {
+        "conda-sboms": "conda_sboms.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-ship",
+      "description": "Conda plugin entry point for the conda-ship runtime builder.",
+      "repo_url": "https://github.com/jezdez/conda-ship",
+      "repo_full_name": "jezdez/conda-ship",
+      "stars": 1,
+      "docs": null,
+      "topics": [
+        "bootstrap",
+        "conda",
+        "distribution",
+        "rattler",
+        "conda-community"
+      ],
+      "entry_points": {
+        "conda-ship": "conda_ship.plugin"
+      },
+      "category": "Build tools"
+    },
+    {
+      "name": "condact",
+      "description": "Conda shell hook and subcommand for shell plugins",
+      "repo_url": "https://github.com/conda-incubator/conda-shell",
+      "repo_full_name": "conda-incubator/conda-shell",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "condact": "condact.cli"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "anaconda-channel-guide",
+      "description": "A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels.",
+      "repo_url": "https://github.com/anaconda/anaconda-channel-guide",
+      "repo_full_name": "anaconda/anaconda-channel-guide",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "anaconda-channel-guide": "anaconda_channel_guide.hooks"
+      },
+      "category": "Channels"
+    },
+    {
+      "name": "conda-broker",
+      "description": "User-visible service supervision for long-running conda-adjacent processes",
+      "repo_url": "https://github.com/jezdez/conda-broker",
+      "repo_full_name": "jezdez/conda-broker",
+      "stars": 0,
+      "docs": "https://jezdez.github.io/conda-broker",
+      "topics": [],
+      "entry_points": {
+        "conda-broker": "conda_broker.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-declarative",
+      "description": "Declarative workflows for conda environment handling.",
+      "repo_url": "https://github.com/jaimergp/conda-declarative",
+      "repo_full_name": "jaimergp/conda-declarative",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-declarative": "conda_declarative.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-declarative-input-states",
+      "description": "Declarative input states for conda",
+      "repo_url": "https://github.com/peytondmurray/conda-declarative-input-states",
+      "repo_full_name": "peytondmurray/conda-declarative-input-states",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-declarative-input-states": "conda_declarative_input_states.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-dev-request-headers",
+      "description": "Development-only conda plugin for injecting scoped HTTP request headers",
+      "repo_url": "https://github.com/jezdez/conda-dev-request-headers",
+      "repo_full_name": "jezdez/conda-dev-request-headers",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-dev-request-headers": "conda_dev_request_headers.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-disable-init",
+      "description": "Disable conda init command",
+      "repo_url": "https://github.com/jennan/conda_disable_init",
+      "repo_full_name": "jennan/conda_disable_init",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-disable-init": "conda_disable_init"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-env-spec-v2",
+      "description": "A V2 environment spec for conda.",
+      "repo_url": "https://github.com/peytondmurray/conda-env-spec-v2",
+      "repo_full_name": "peytondmurray/conda-env-spec-v2",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-declarative": "conda_env_spec_v2.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "conda-forge-conda-plugins",
+      "description": "conda plugins for the conda-forge ecosystem",
+      "repo_url": "https://github.com/regro/conda-forge-conda-plugins",
+      "repo_full_name": "regro/conda-forge-conda-plugins",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-forge-conda-plugins": "conda_forge_conda_plugins.hooks"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-random-solver",
+      "description": "A random conda solver",
+      "repo_url": "https://github.com/costrouc/conda-random-solver",
+      "repo_full_name": "costrouc/conda-random-solver",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-random-solver": "conda_random_solver.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-random-subcommand",
+      "description": "A random conda subcommand",
+      "repo_url": "https://github.com/costrouc/conda-random-subcomand",
+      "repo_full_name": "costrouc/conda-random-subcomand",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-random-subcommand": "conda_random_subcommand.plugin"
+      },
+      "category": "Subcommands"
+    },
+    {
+      "name": "conda-restricted",
+      "description": "A conda plugin to restrict the SEARCH_PATH for conda configuration files",
+      "repo_url": "https://github.com/jezdez/conda-restricted",
+      "repo_full_name": "jezdez/conda-restricted",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-restricted": "conda_restricted.hooks"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-rich",
+      "description": "Conda plugin which uses rich components for its display",
+      "repo_url": "https://github.com/conda-incubator/conda-rich",
+      "repo_full_name": "conda-incubator/conda-rich",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-rich": "conda_rich.hooks"
+      },
+      "category": "UI and display"
+    },
+    {
+      "name": "conda-serviceinst",
+      "description": "Thin conda plugin that auto-triggers serviceinst on package install/remove",
+      "repo_url": "https://github.com/Adam-D-Lewis/conda-serviceinst",
+      "repo_full_name": "Adam-D-Lewis/conda-serviceinst",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-serviceinst": "conda_serviceinst.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-sigstore",
+      "description": "Create and verify Sigstore attestations for conda packages",
+      "repo_url": "https://github.com/jezdez/conda-sigstore",
+      "repo_full_name": "jezdez/conda-sigstore",
+      "stars": 0,
+      "docs": "https://jezdez.github.io/conda-sigstore",
+      "topics": [],
+      "entry_points": {
+        "conda-sigstore": "conda_sigstore.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-toml-spec",
+      "description": "Toml environment specification for conda",
+      "repo_url": "https://github.com/peytondmurray/conda-toml-spec",
+      "repo_full_name": "peytondmurray/conda-toml-spec",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-toml-spec": "conda_toml_spec.plugin"
+      },
+      "category": "Environment management"
+    }
+  ]
+}

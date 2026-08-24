@@ -1,0 +1,88 @@
+name: Render
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+concurrency: render
+
+jobs:
+  render:
+    name: Render plugin index
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: prefix-dev/setup-pixi@f00437f565399d418b0acc85936d12c1fb668347 # v0.10.1
+        with:
+          pixi-version: v0.77.0
+          environments: render
+      - name: Cache classification model
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/conda-plugins/models
+          key: qwen3.5-2b-q4-k-m-aaf42c8b
+      - name: Render plugin index
+        run: pixi run -e render render
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload rendered index
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rendered-plugin-index
+          path: |
+            README.md
+            docs/_data/plugins.json
+          if-no-files-found: error
+          retention-days: 1
+
+  commit:
+    name: Commit plugin index
+    needs: render
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Download rendered index
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: rendered-plugin-index
+          path: ${{ runner.temp }}/rendered-plugin-index
+      - name: Commit changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp "$RUNNER_TEMP/rendered-plugin-index/README.md" README.md
+          cp "$RUNNER_TEMP/rendered-plugin-index/docs/_data/plugins.json" docs/_data/plugins.json
+          if git diff --quiet -- README.md docs/_data/plugins.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          gh auth setup-git
+          git add README.md docs/_data/plugins.json
+          git commit -m "Rerender plugin index"
+          git push
+
+  deploy:
+    name: Deploy plugin index
+    needs: commit
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Deploy plugin index
+        run: gh workflow run docs.yml --ref "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
