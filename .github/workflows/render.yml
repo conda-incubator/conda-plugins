@@ -1,6 +1,7 @@
 name: Render
 
 on:
+  pull_request:
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * 1'
@@ -44,6 +45,7 @@ jobs:
   commit:
     name: Commit plugin index
     needs: render
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write
