@@ -32,7 +32,7 @@
       "description": "tools for building conda packages",
       "repo_url": "https://github.com/conda/conda-build",
       "repo_full_name": "conda/conda-build",
-      "stars": 400,
+      "stars": 398,
       "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
       "topics": [
         "conda",
@@ -99,7 +99,7 @@
       "description": "cross platform install of menu items",
       "repo_url": "https://github.com/conda/menuinst",
       "repo_full_name": "conda/menuinst",
-      "stars": 49,
+      "stars": 50,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -162,6 +162,19 @@
       "category": "Build tools"
     },
     {
+      "name": "conda-content-trust",
+      "description": "Signing and verification tools, geared toward the conda ecosystem.",
+      "repo_url": "https://github.com/conda/conda-content-trust",
+      "repo_full_name": "conda/conda-content-trust",
+      "stars": 10,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-content-trust": "conda_content_trust.plugin"
+      },
+      "category": "Other"
+    },
+    {
       "name": "anaconda-auth",
       "description": "A client auth library for Anaconda APIs",
       "repo_url": "https://github.com/anaconda/anaconda-auth",
@@ -173,19 +186,6 @@
         "anaconda-auth": "anaconda_auth._conda.entrypoint"
       },
       "category": "Authentication"
-    },
-    {
-      "name": "conda-content-trust",
-      "description": "Signing and verification tools, geared toward the conda ecosystem.",
-      "repo_url": "https://github.com/conda/conda-content-trust",
-      "repo_full_name": "conda/conda-content-trust",
-      "stars": 9,
-      "docs": null,
-      "topics": [],
-      "entry_points": {
-        "conda-content-trust": "conda_content_trust.plugin"
-      },
-      "category": "Other"
     },
     {
       "name": "conda-auth",
@@ -339,6 +339,19 @@
       "category": "Other"
     },
     {
+      "name": "conda-exec",
+      "description": "Ephemeral package execution for conda -- run any conda package without installing it",
+      "repo_url": "https://github.com/conda-incubator/conda-exec",
+      "repo_full_name": "conda-incubator/conda-exec",
+      "stars": 3,
+      "docs": "https://conda-incubator.github.io/conda-exec",
+      "topics": [],
+      "entry_points": {
+        "conda-exec": "conda_exec.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
       "name": "conda-tui",
       "description": "A Text User Interface for conda",
       "repo_url": "https://github.com/conda-incubator/conda-tui",
@@ -352,17 +365,36 @@
       "category": "UI and display"
     },
     {
-      "name": "conda-exec",
-      "description": "Ephemeral package execution for conda -- run any conda package without installing it",
-      "repo_url": "https://github.com/conda-incubator/conda-exec",
-      "repo_full_name": "conda-incubator/conda-exec",
+      "name": "conda-sboms",
+      "description": "Generate software bills of materials from conda environments",
+      "repo_url": "https://github.com/conda-incubator/conda-sboms",
+      "repo_full_name": "conda-incubator/conda-sboms",
       "stars": 2,
-      "docs": "https://conda-incubator.github.io/conda-exec",
+      "docs": "https://conda-incubator.github.io/conda-sboms/",
       "topics": [],
       "entry_points": {
-        "conda-exec": "conda_exec.plugin"
+        "conda-sboms": "conda_sboms.plugin"
       },
       "category": "Environment management"
+    },
+    {
+      "name": "conda-ship",
+      "description": "Conda plugin entry point for the conda-ship runtime builder.",
+      "repo_url": "https://github.com/jezdez/conda-ship",
+      "repo_full_name": "jezdez/conda-ship",
+      "stars": 2,
+      "docs": null,
+      "topics": [
+        "bootstrap",
+        "conda",
+        "distribution",
+        "rattler",
+        "conda-community"
+      ],
+      "entry_points": {
+        "conda-ship": "conda_ship.plugin"
+      },
+      "category": "Build tools"
     },
     {
       "name": "captain-planet",
@@ -510,38 +542,6 @@
       "category": "Channels"
     },
     {
-      "name": "conda-sboms",
-      "description": "Generate software bills of materials from conda environments",
-      "repo_url": "https://github.com/conda-incubator/conda-sboms",
-      "repo_full_name": "conda-incubator/conda-sboms",
-      "stars": 1,
-      "docs": "https://conda-incubator.github.io/conda-sboms/",
-      "topics": [],
-      "entry_points": {
-        "conda-sboms": "conda_sboms.plugin"
-      },
-      "category": "Environment management"
-    },
-    {
-      "name": "conda-ship",
-      "description": "Conda plugin entry point for the conda-ship runtime builder.",
-      "repo_url": "https://github.com/jezdez/conda-ship",
-      "repo_full_name": "jezdez/conda-ship",
-      "stars": 1,
-      "docs": null,
-      "topics": [
-        "bootstrap",
-        "conda",
-        "distribution",
-        "rattler",
-        "conda-community"
-      ],
-      "entry_points": {
-        "conda-ship": "conda_ship.plugin"
-      },
-      "category": "Build tools"
-    },
-    {
       "name": "condact",
       "description": "Conda shell hook and subcommand for shell plugins",
       "repo_url": "https://github.com/conda-incubator/conda-shell",
@@ -551,6 +551,19 @@
       "topics": [],
       "entry_points": {
         "condact": "condact.cli"
+      },
+      "category": "Environment management"
+    },
+    {
+      "name": "amdgpu-virtual-packages",
+      "description": "Conda virtual packages for AMDGPU hardware.",
+      "repo_url": "https://github.com/traversaro/amdgpu-virtual-packages",
+      "repo_full_name": "traversaro/amdgpu-virtual-packages",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "amdgpu": "amdgpu_virtual_packages.plugin"
       },
       "category": "Environment management"
     },
@@ -579,6 +592,19 @@
         "conda-broker": "conda_broker.plugin"
       },
       "category": "Other"
+    },
+    {
+      "name": "conda-cli-mcp",
+      "description": "Expose conda and its plugin commands through the Model Context Protocol",
+      "repo_url": "https://github.com/jezdez/conda-cli-mcp",
+      "repo_full_name": "jezdez/conda-cli-mcp",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-cli-mcp": "conda_cli_mcp.plugin"
+      },
+      "category": "Subcommands"
     },
     {
       "name": "conda-declarative",
