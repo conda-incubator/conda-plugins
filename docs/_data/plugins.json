@@ -32,7 +32,7 @@
       "description": "tools for building conda packages",
       "repo_url": "https://github.com/conda/conda-build",
       "repo_full_name": "conda/conda-build",
-      "stars": 398,
+      "stars": 400,
       "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
       "topics": [
         "conda",
@@ -67,7 +67,7 @@
       "description": "A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows.",
       "repo_url": "https://github.com/conda-forge/conda-smithy",
       "repo_full_name": "conda-forge/conda-smithy",
-      "stars": 179,
+      "stars": 180,
       "docs": null,
       "topics": [
         "hacktoberfest",
@@ -125,7 +125,7 @@
       "description": "The fast pixi solver, now in conda",
       "repo_url": "https://github.com/conda/conda-rattler-solver",
       "repo_full_name": "conda/conda-rattler-solver",
-      "stars": 17,
+      "stars": 18,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -579,6 +579,25 @@
         "anaconda-channel-guide": "anaconda_channel_guide.hooks"
       },
       "category": "Channels"
+    },
+    {
+      "name": "conda-advise",
+      "description": "Conda plugin for advisory reports and post-solve warnings",
+      "repo_url": "https://github.com/jezdez/conda-advise",
+      "repo_full_name": "jezdez/conda-advise",
+      "stars": 0,
+      "docs": null,
+      "topics": [
+        "conda",
+        "conda-forge",
+        "conda-plugin",
+        "security",
+        "vulnerability-management"
+      ],
+      "entry_points": {
+        "conda-advise": "conda_advise.plugin"
+      },
+      "category": "Other"
     },
     {
       "name": "conda-broker",

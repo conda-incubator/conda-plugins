@@ -14,13 +14,13 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | Name | Description | ⭐ |
 |------|-------------|--:|
 | [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 562 |
-| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 398 |
+| [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 400 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 247 |
-| [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 179 |
+| [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 180 |
 | [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 174 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 50 |
 | [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 41 |
-| [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 17 |
+| [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 18 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 16 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
 | [conda-content-trust](https://github.com/conda/conda-content-trust) | Signing and verification tools, geared toward the conda ecosystem. | 10 |
@@ -54,6 +54,7 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
 | [amdgpu-virtual-packages](https://github.com/traversaro/amdgpu-virtual-packages) | Conda virtual packages for AMDGPU hardware. | 0 |
 | [anaconda-channel-guide](https://github.com/anaconda/anaconda-channel-guide) | A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels. | 0 |
+| [conda-advise](https://github.com/jezdez/conda-advise) | Conda plugin for advisory reports and post-solve warnings | 0 |
 | [conda-broker](https://github.com/jezdez/conda-broker) | User-visible service supervision for long-running conda-adjacent processes | 0 |
 | [conda-cli-mcp](https://github.com/jezdez/conda-cli-mcp) | Expose conda and its plugin commands through the Model Context Protocol | 0 |
 | [conda-declarative](https://github.com/jaimergp/conda-declarative) | Declarative workflows for conda environment handling. | 0 |
