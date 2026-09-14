@@ -15,7 +15,7 @@
       "description": "Lockfiles for conda",
       "repo_url": "https://github.com/conda/conda-lock",
       "repo_full_name": "conda/conda-lock",
-      "stars": 562,
+      "stars": 563,
       "docs": "https://conda.github.io/conda-lock/",
       "topics": [
         "conda",
@@ -112,7 +112,7 @@
       "description": "Better PyPI interoperability for the conda ecosystem.",
       "repo_url": "https://github.com/conda/conda-pypi",
       "repo_full_name": "conda/conda-pypi",
-      "stars": 41,
+      "stars": 42,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -380,8 +380,8 @@
     {
       "name": "conda-ship",
       "description": "Conda plugin entry point for the conda-ship runtime builder.",
-      "repo_url": "https://github.com/jezdez/conda-ship",
-      "repo_full_name": "jezdez/conda-ship",
+      "repo_url": "https://github.com/conda-incubator/conda-ship",
+      "repo_full_name": "conda-incubator/conda-ship",
       "stars": 2,
       "docs": null,
       "topics": [
@@ -395,6 +395,19 @@
         "conda-ship": "conda_ship.plugin"
       },
       "category": "Build tools"
+    },
+    {
+      "name": "anaconda-channel-guide",
+      "description": "A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels.",
+      "repo_url": "https://github.com/anaconda/anaconda-channel-guide",
+      "repo_full_name": "anaconda/anaconda-channel-guide",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "anaconda-channel-guide": "anaconda_channel_guide.hooks"
+      },
+      "category": "Channels"
     },
     {
       "name": "captain-planet",
@@ -504,7 +517,7 @@
     },
     {
       "name": "conda-presto",
-      "description": "Resolve, inspect, and cache conda solve results through CLI, HTTP, CI, and solver integrations",
+      "description": "Expose conda solving, parsing and artifact tools through an HTTP service",
       "repo_url": "https://github.com/jezdez/conda-presto",
       "repo_full_name": "jezdez/conda-presto",
       "stars": 1,
@@ -566,19 +579,6 @@
         "amdgpu": "amdgpu_virtual_packages.plugin"
       },
       "category": "Environment management"
-    },
-    {
-      "name": "anaconda-channel-guide",
-      "description": "A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels.",
-      "repo_url": "https://github.com/anaconda/anaconda-channel-guide",
-      "repo_full_name": "anaconda/anaconda-channel-guide",
-      "stars": 0,
-      "docs": null,
-      "topics": [],
-      "entry_points": {
-        "anaconda-channel-guide": "anaconda_channel_guide.hooks"
-      },
-      "category": "Channels"
     },
     {
       "name": "conda-advise",
