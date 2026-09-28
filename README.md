@@ -17,9 +17,9 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 400 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 247 |
 | [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 180 |
-| [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 174 |
+| [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 173 |
 | [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 50 |
-| [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 42 |
+| [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 43 |
 | [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 18 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 16 |
 | [conda_index](https://github.com/conda/conda-index) | conda index, formerly part of conda-build. Create channels from collections of packages. | 11 |
@@ -43,13 +43,13 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [anaconda-channel-guide](https://github.com/anaconda/anaconda-channel-guide) | A plugin that intercepts PackageNotFoundErrors and checks if the package exists in other channels. | 1 |
 | [captain-planet](https://github.com/kalawac/simple-bash-plugin) | Plugin for POSIX shells that calls the conda processes used for activate, deactivate, reactivate, hook, and command | 1 |
 | [conda-checkpoints](https://github.com/conda-incubator/conda-checkpoints) | conda plugin to save lockfiles to your environment after each environment modification | 1 |
-| [conda-classic-solver](https://github.com/conda/conda-classic-solver) | The \`classic\` solver used in \`conda\` | 1 |
 | [conda-completion](https://github.com/conda-incubator/conda-completion) | Fast shell tab completion for conda and all its plugins | 1 |
 | [conda-controlplane](https://github.com/sophieblock/conda-controlplane) | Inspect conda base control-plane tooling \(solvers/auth/platform, compiler metas, packaging helpers\). | 1 |
 | [conda-history-d](https://github.com/jjhelmus/conda-history-d) | conda plugin which records a detailed history of environments in a history.d directory. | 1 |
 | [conda-npm](https://github.com/aterrel/conda-npm) | conda-npm | 1 |
 | [conda-ops](https://github.com/acwooding/conda-ops) | Conda plugin to maintain environments and projects reproducibly. | 1 |
 | [conda-presto](https://github.com/jezdez/conda-presto) | Expose conda solving, parsing and artifact tools through an HTTP service | 1 |
+| [conda-pycosat-solver](https://github.com/conda/conda-pycosat-solver) | The \`pycosat\` solver used in \`conda\`, also available as \`classic\` | 1 |
 | [conda-pypi-channel](https://github.com/jaimergp/conda-pypi-channel) | Expose a PyPI index as a conda channel, on the fly. | 1 |
 | [conda-repodata](https://github.com/kenodegard/conda-repodata) | Conda plugin to locally manipulate or inspect the repodata.json. | 1 |
 | [condact](https://github.com/conda-incubator/conda-shell) | Conda shell hook and subcommand for shell plugins | 1 |
@@ -63,6 +63,7 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-disable-init](https://github.com/jennan/conda_disable_init) | Disable conda init command | 0 |
 | [conda-env-spec-v2](https://github.com/peytondmurray/conda-env-spec-v2) | A V2 environment spec for conda. | 0 |
 | [conda-forge-conda-plugins](https://github.com/regro/conda-forge-conda-plugins) | conda plugins for the conda-forge ecosystem | 0 |
+| [conda-pyproject-toml](https://github.com/m-rossi/conda-pyproject-toml) | Conda plugin that installs dependencies from a pyproject.toml file. | 0 |
 | [conda-random-solver](https://github.com/costrouc/conda-random-solver) | A random conda solver | 0 |
 | [conda-random-subcommand](https://github.com/costrouc/conda-random-subcomand) | A random conda subcommand | 0 |
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH\_PATH for conda configuration files | 0 |

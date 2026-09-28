@@ -83,7 +83,7 @@
       "description": "conda dependency tree helper",
       "repo_url": "https://github.com/conda-incubator/conda-tree",
       "repo_full_name": "conda-incubator/conda-tree",
-      "stars": 174,
+      "stars": 173,
       "docs": null,
       "topics": [
         "conda",
@@ -112,7 +112,7 @@
       "description": "Better PyPI interoperability for the conda ecosystem.",
       "repo_url": "https://github.com/conda/conda-pypi",
       "repo_full_name": "conda/conda-pypi",
-      "stars": 42,
+      "stars": 43,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -276,7 +276,7 @@
       "repo_url": "https://github.com/conda/conda-self",
       "repo_full_name": "conda/conda-self",
       "stars": 5,
-      "docs": "https://conda-incubator.github.io/conda-self",
+      "docs": "https://conda.github.io/conda-self/",
       "topics": [],
       "entry_points": {
         "conda-self": "conda_self.plugin"
@@ -436,19 +436,6 @@
       "category": "Environment management"
     },
     {
-      "name": "conda-classic-solver",
-      "description": "The `classic` solver used in `conda`",
-      "repo_url": "https://github.com/conda/conda-classic-solver",
-      "repo_full_name": "conda/conda-classic-solver",
-      "stars": 1,
-      "docs": null,
-      "topics": [],
-      "entry_points": {
-        "conda-classic-solver": "conda_classic_solver.plugin"
-      },
-      "category": "Solvers"
-    },
-    {
       "name": "conda-completion",
       "description": "Fast shell tab completion for conda and all its plugins",
       "repo_url": "https://github.com/conda-incubator/conda-completion",
@@ -525,6 +512,19 @@
       "topics": [],
       "entry_points": {
         "conda-presto": "conda_presto.plugin"
+      },
+      "category": "Solvers"
+    },
+    {
+      "name": "conda-pycosat-solver",
+      "description": "The `pycosat` solver used in `conda`, also available as `classic`",
+      "repo_url": "https://github.com/conda/conda-pycosat-solver",
+      "repo_full_name": "conda/conda-pycosat-solver",
+      "stars": 1,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-pycosat-solver": "conda_pycosat_solver.plugin"
       },
       "category": "Solvers"
     },
@@ -702,6 +702,25 @@
         "conda-forge-conda-plugins": "conda_forge_conda_plugins.hooks"
       },
       "category": "Other"
+    },
+    {
+      "name": "conda-pyproject-toml",
+      "description": "Conda plugin that installs dependencies from a pyproject.toml file.",
+      "repo_url": "https://github.com/m-rossi/conda-pyproject-toml",
+      "repo_full_name": "m-rossi/conda-pyproject-toml",
+      "stars": 0,
+      "docs": null,
+      "topics": [
+        "conda",
+        "conda-plugin",
+        "pyproject",
+        "pyproject-toml",
+        "toml"
+      ],
+      "entry_points": {
+        "conda-pyproject-toml": "conda_pyproject_toml"
+      },
+      "category": "Build tools"
     },
     {
       "name": "conda-random-solver",
