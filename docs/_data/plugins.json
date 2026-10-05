@@ -15,7 +15,7 @@
       "description": "Lockfiles for conda",
       "repo_url": "https://github.com/conda/conda-lock",
       "repo_full_name": "conda/conda-lock",
-      "stars": 563,
+      "stars": 565,
       "docs": "https://conda.github.io/conda-lock/",
       "topics": [
         "conda",
@@ -32,7 +32,7 @@
       "description": "tools for building conda packages",
       "repo_url": "https://github.com/conda/conda-build",
       "repo_full_name": "conda/conda-build",
-      "stars": 400,
+      "stars": 402,
       "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
       "topics": [
         "conda",
@@ -125,7 +125,7 @@
       "description": "The fast pixi solver, now in conda",
       "repo_url": "https://github.com/conda/conda-rattler-solver",
       "repo_full_name": "conda/conda-rattler-solver",
-      "stars": 18,
+      "stars": 19,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -259,7 +259,7 @@
     },
     {
       "name": "conda-workspaces",
-      "description": "Project-scoped multi-environment workspace management for conda, with pixi compatibility",
+      "description": "Multi-environment workspace management for conda, with pixi compatibility",
       "repo_url": "https://github.com/conda-incubator/conda-workspaces",
       "repo_full_name": "conda-incubator/conda-workspaces",
       "stars": 6,
