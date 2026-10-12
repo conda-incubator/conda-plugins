@@ -13,7 +13,7 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 <!-- PLUGIN_LIST -->
 | Name | Description | ⭐ |
 |------|-------------|--:|
-| [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 565 |
+| [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 564 |
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 402 |
 | [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 247 |
 | [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 180 |

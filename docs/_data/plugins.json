@@ -15,7 +15,7 @@
       "description": "Lockfiles for conda",
       "repo_url": "https://github.com/conda/conda-lock",
       "repo_full_name": "conda/conda-lock",
-      "stars": 565,
+      "stars": 564,
       "docs": "https://conda.github.io/conda-lock/",
       "topics": [
         "conda",
