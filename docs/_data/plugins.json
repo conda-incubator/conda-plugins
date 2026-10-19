@@ -49,7 +49,7 @@
       "description": "The fast mamba solver, now in conda",
       "repo_url": "https://github.com/conda/conda-libmamba-solver",
       "repo_full_name": "conda/conda-libmamba-solver",
-      "stars": 247,
+      "stars": 246,
       "docs": null,
       "topics": [
         "conda",
@@ -99,7 +99,7 @@
       "description": "cross platform install of menu items",
       "repo_url": "https://github.com/conda/menuinst",
       "repo_full_name": "conda/menuinst",
-      "stars": 50,
+      "stars": 49,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -232,6 +232,19 @@
       "category": "Subcommands"
     },
     {
+      "name": "conda-workspaces",
+      "description": "Multi-environment workspace management for conda, with pixi compatibility",
+      "repo_url": "https://github.com/conda-incubator/conda-workspaces",
+      "repo_full_name": "conda-incubator/conda-workspaces",
+      "stars": 7,
+      "docs": "https://conda-incubator.github.io/conda-workspaces",
+      "topics": [],
+      "entry_points": {
+        "conda-workspaces": "conda_workspaces.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
       "name": "conda-global",
       "description": "Global tool installation for conda \u2014 install CLI tools into isolated environments and make them available on PATH via trampolines",
       "repo_url": "https://github.com/conda-incubator/conda-global",
@@ -254,19 +267,6 @@
       "topics": [],
       "entry_points": {
         "conda-spawn": "conda_spawn.plugin"
-      },
-      "category": "Environment management"
-    },
-    {
-      "name": "conda-workspaces",
-      "description": "Multi-environment workspace management for conda, with pixi compatibility",
-      "repo_url": "https://github.com/conda-incubator/conda-workspaces",
-      "repo_full_name": "conda-incubator/conda-workspaces",
-      "stars": 6,
-      "docs": "https://conda-incubator.github.io/conda-workspaces",
-      "topics": [],
-      "entry_points": {
-        "conda-workspaces": "conda_workspaces.plugin"
       },
       "category": "Environment management"
     },

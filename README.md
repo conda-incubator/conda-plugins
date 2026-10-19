@@ -15,10 +15,10 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 |------|-------------|--:|
 | [conda_lock](https://github.com/conda/conda-lock) | Lockfiles for conda | 564 |
 | [conda-build](https://github.com/conda/conda-build) | tools for building conda packages | 402 |
-| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 247 |
+| [conda-libmamba-solver](https://github.com/conda/conda-libmamba-solver) | The fast mamba solver, now in conda | 246 |
 | [conda-smithy](https://github.com/conda-forge/conda-smithy) | A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows. | 180 |
 | [conda-tree](https://github.com/conda-incubator/conda-tree) | conda dependency tree helper | 173 |
-| [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 50 |
+| [menuinst](https://github.com/conda/menuinst) | cross platform install of menu items | 49 |
 | [conda-pypi](https://github.com/conda/conda-pypi) | Better PyPI interoperability for the conda ecosystem. | 43 |
 | [conda-rattler-solver](https://github.com/conda/conda-rattler-solver) | The fast pixi solver, now in conda | 19 |
 | [conda-protect](https://github.com/conda-incubator/conda-protect) | Protects conda environments to avoid mistakenly modifying them | 16 |
@@ -28,9 +28,9 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-auth](https://github.com/conda-incubator/conda-auth) | A conda plugin for handling multiple authentication schemes | 7 |
 | [conda-lockfiles](https://github.com/conda/conda-lockfiles) | Support different lockfiles in conda. | 7 |
 | [conda-which](https://github.com/kelvinou01/conda-which) | What package does this file belong to\? | 7 |
+| [conda-workspaces](https://github.com/conda-incubator/conda-workspaces) | Multi-environment workspace management for conda, with pixi compatibility | 7 |
 | [conda-global](https://github.com/conda-incubator/conda-global) | Global tool installation for conda — install CLI tools into isolated environments and make them available on PATH via trampolines | 6 |
 | [conda-spawn](https://github.com/conda/conda-spawn) | Activate conda environments in new shell processes. | 6 |
-| [conda-workspaces](https://github.com/conda-incubator/conda-workspaces) | Multi-environment workspace management for conda, with pixi compatibility | 6 |
 | [conda-self](https://github.com/conda/conda-self) | A self command for conda | 5 |
 | [conda-anaconda-tos](https://github.com/anaconda/conda-anaconda-tos) | Conda subcommand to view, accept, and interact with a channel's Terms of Service \(ToS\). | 4 |
 | [conda-subchannel](https://github.com/conda-incubator/conda-subchannel) | Create subsets of conda channels thanks to CEP-15 metadata. | 4 |
