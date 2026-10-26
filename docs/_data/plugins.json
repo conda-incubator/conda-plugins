@@ -321,7 +321,7 @@
       "docs": null,
       "topics": [],
       "entry_points": {
-        "cuda-arch": "nvidia_virtual_packages.cuda.arch"
+        "cuda": "nvidia_virtual_packages.cuda.plugin"
       },
       "category": "Environment management"
     },
@@ -790,15 +790,15 @@
     {
       "name": "conda-sigstore",
       "description": "Create and verify Sigstore attestations for conda packages",
-      "repo_url": "https://github.com/jezdez/conda-sigstore",
-      "repo_full_name": "jezdez/conda-sigstore",
+      "repo_url": "https://github.com/conda-incubator/conda-sigstore",
+      "repo_full_name": "conda-incubator/conda-sigstore",
       "stars": 0,
-      "docs": "https://jezdez.github.io/conda-sigstore",
+      "docs": null,
       "topics": [],
       "entry_points": {
         "conda-sigstore": "conda_sigstore.plugin"
       },
-      "category": "Other"
+      "category": "Authentication"
     },
     {
       "name": "conda-toml-spec",

@@ -69,6 +69,6 @@ and the [tutorial template repo](https://github.com/conda/conda-plugin-template)
 | [conda-restricted](https://github.com/jezdez/conda-restricted) | A conda plugin to restrict the SEARCH\_PATH for conda configuration files | 0 |
 | [conda-rich](https://github.com/conda-incubator/conda-rich) | Conda plugin which uses rich components for its display | 0 |
 | [conda-serviceinst](https://github.com/Adam-D-Lewis/conda-serviceinst) | Thin conda plugin that auto-triggers serviceinst on package install/remove | 0 |
-| [conda-sigstore](https://github.com/jezdez/conda-sigstore) | Create and verify Sigstore attestations for conda packages | 0 |
+| [conda-sigstore](https://github.com/conda-incubator/conda-sigstore) | Create and verify Sigstore attestations for conda packages | 0 |
 | [conda-toml-spec](https://github.com/peytondmurray/conda-toml-spec) | Toml environment specification for conda | 0 |
 <!-- PLUGIN_LIST -->
