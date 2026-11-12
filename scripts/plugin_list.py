@@ -23,7 +23,7 @@ from datetime import UTC, datetime
 from itertools import islice
 from pathlib import Path
 from types import SimpleNamespace
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
@@ -31,9 +31,11 @@ import github
 from github import GithubException
 
 if TYPE_CHECKING:
+    from typing import TypeVar
+
     from github.ContentFile import ContentFile
 
-T = TypeVar("T")
+    T = TypeVar("T")
 
 RETRY_WAIT = 60
 MAX_RETRIES = 5
