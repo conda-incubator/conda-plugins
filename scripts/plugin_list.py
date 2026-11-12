@@ -19,6 +19,7 @@ import sys
 import time
 import tomllib
 from collections.abc import Callable, Iterable, Iterator, Mapping
+from datetime import UTC, datetime
 from itertools import islice
 from pathlib import Path
 from types import SimpleNamespace
@@ -187,13 +188,25 @@ Reply with ONLY the category name."""
         return category
 
 
-def _retry_wait(headers: Mapping[str, str], attempt: int) -> float:
-    """Seconds to wait before retrying, preferring what GitHub tells us."""
+def _rate_limit_delay(headers: Mapping[str, str], attempt: int) -> tuple[float, datetime]:
+    """Seconds to wait before retrying and the time the limit resets.
+
+    GitHub answers a rate limit with ``retry-after`` seconds or with the epoch
+    of the reset in ``x-ratelimit-reset``; both are preferred over guessing.
+    """
+    now = time.time()
     if retry_after := headers.get("retry-after"):
-        return float(retry_after)
+        try:
+            wait = float(retry_after)
+        except ValueError:
+            pass
+        else:
+            return wait, datetime.fromtimestamp(now + wait, tz=UTC)
     if reset := headers.get("x-ratelimit-reset"):
-        return max(float(reset) - time.time(), 1.0) + 1.0
-    return float(RETRY_WAIT * (attempt + 1))
+        reset_at = float(reset)
+        return max(reset_at - now, 1.0) + 1.0, datetime.fromtimestamp(reset_at, tz=UTC)
+    wait = float(RETRY_WAIT * (attempt + 1))
+    return wait, datetime.fromtimestamp(now + wait, tz=UTC)
 
 
 def _inaccessible(exc: GithubException) -> bool:
@@ -234,15 +247,17 @@ def _api_call(fn: Callable[[], T], label: str = "") -> T:
                 )
             )
             if rate_limited:
-                wait = _retry_wait(headers, attempt)
+                wait, resets = _rate_limit_delay(headers, attempt)
+                moment = resets.strftime("%H:%M:%SZ")
                 if wait > MAX_WAIT:
                     raise RuntimeError(
-                        f"Rate limited on {label} for {wait:.0f}s, longer than "
-                        f"this run can wait; try again later"
+                        f"Rate limited on {label} until {moment} ({wait:.0f}s "
+                        "away), longer than this run can wait; try again later"
                     ) from exc
                 print(
-                    f"  Rate limited ({exc.status}) on {label}, "
-                    f"waiting {wait:.0f}s (attempt {attempt + 1}/{MAX_RETRIES})",
+                    f"  Rate limited ({exc.status}) on {label}, resets at "
+                    f"{moment}, waiting {wait:.0f}s "
+                    f"(attempt {attempt + 1}/{MAX_RETRIES})",
                     file=sys.stderr,
                 )
                 time.sleep(wait)

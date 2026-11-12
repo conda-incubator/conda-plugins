@@ -501,13 +501,23 @@ example = "example.plugin"
     unreviewed_topics.assert_called_once_with()
 
 
-def test_retry_wait_prefers_headers(monkeypatch):
-    assert plugin_list._retry_wait({"retry-after": "7"}, 0) == 7.0
-
+def test_rate_limit_delay_prefers_headers(monkeypatch):
     monkeypatch.setattr(plugin_list.time, "time", lambda: 1000.0)
-    assert plugin_list._retry_wait({"x-ratelimit-reset": "1060"}, 0) == 61.0
 
-    assert plugin_list._retry_wait({}, 1) == 120.0
+    wait, resets = plugin_list._rate_limit_delay({"retry-after": "7"}, 0)
+    assert wait == 7.0
+    assert resets.strftime("%H:%M:%SZ") == "00:16:47Z"
+
+    wait, resets = plugin_list._rate_limit_delay({"x-ratelimit-reset": "1060"}, 0)
+    assert wait == 61.0
+    assert resets.strftime("%H:%M:%SZ") == "00:17:40Z"
+
+    # an unparsable retry-after falls back instead of raising mid-run
+    wait, resets = plugin_list._rate_limit_delay(
+        {"retry-after": "Wed, 21 Oct 2015 07:28:00 GMT"}, 1
+    )
+    assert wait == 120.0
+    assert resets.strftime("%H:%M:%SZ") == "00:18:40Z"
 
 
 def test_api_call_fails_instead_of_waiting_out_a_far_limit(mocker):
@@ -520,7 +530,7 @@ def test_api_call_fails_instead_of_waiting_out_a_far_limit(mocker):
     )
     sleep = mocker.patch.object(plugin_list.time, "sleep")
 
-    with pytest.raises(RuntimeError, match="longer than"):
+    with pytest.raises(RuntimeError, match="until .* longer than"):
         plugin_list._api_call(operation, "example")
 
     sleep.assert_not_called()
