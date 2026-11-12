@@ -49,6 +49,9 @@ html_context = {
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 
+# Serve _data/plugins.json at /plugins.json so other sites can consume it
+html_extra_path = ["_data"]
+
 html_baseurl = "https://conda-incubator.github.io/conda-plugins/"
 sitemap_url_scheme = "{link}"
 

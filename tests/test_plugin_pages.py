@@ -116,6 +116,8 @@ def test_sphinx_html_does_not_execute_repository_metadata(tmp_path: Path):
     assert "included-secret-marker" not in html
     assert "evil_from_readme" not in html
     assert 'href="https://docs.example/plugin"' in html
+    # _data/ is published, so the plugin list is available to other sites
+    assert (output / "plugins.json").exists()
     assert 'href="https://github.com/owner/example"' in html
 
 
