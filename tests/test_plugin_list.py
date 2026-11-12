@@ -632,3 +632,113 @@ def test_revalidation_reports_a_missing_pyproject_separately(tmp_path, monkeypat
     err = capsys.readouterr().err
     assert "no pyproject.toml" in err
     assert "SAML" not in err
+
+
+def _snapshot(tmp_path: Path) -> Path:
+    plugins = [
+        {
+            "name": "reviewed",
+            "description": "reviewed plugin",
+            "repo_url": "https://github.com/owner/reviewed",
+            "repo_full_name": "owner/reviewed",
+            "repo_id": 1,
+            "stars": 2,
+            "docs": "https://example.com/docs",
+            "topics": [],
+            "entry_points": {"reviewed": "reviewed.plugin"},
+            "pyproject_sha": "a",
+            "category": "Solvers",
+        },
+        {
+            "name": "unreviewed",
+            "description": "unreviewed plugin",
+            "repo_url": "https://github.com/owner/unreviewed",
+            "repo_full_name": "owner/unreviewed",
+            "repo_id": 2,
+            "stars": 1,
+            "docs": None,
+            "topics": [],
+            "entry_points": {"unreviewed": "unreviewed.plugin"},
+            "pyproject_sha": "b",
+            "category": "Other",
+        },
+    ]
+    path = tmp_path / "plugins.json"
+    path.write_text(json.dumps({"categories": [], "plugins": plugins}))
+    return path
+
+
+def test_classify_only_fills_in_unreviewed_plugins(tmp_path, monkeypatch):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    path = _snapshot(tmp_path)
+    classifier = type(
+        "Classifier", (), {"classify": lambda self, plugin: "Channels"}
+    )
+    monkeypatch.setattr(plugin_list, "PluginClassifier", classifier)
+    categories = {"owner/reviewed": {"id": 1, "category": "Solvers"}}
+
+    assert plugin_list.classify_only(categories) == 1
+
+    by_name = {p["name"]: p for p in json.loads(path.read_text())["plugins"]}
+    assert by_name["unreviewed"]["category"] == "Channels"
+    assert by_name["reviewed"]["category"] == "Solvers"
+    assert "repo_id" in by_name["unreviewed"]
+
+
+def test_classify_only_does_nothing_when_everything_is_reviewed(tmp_path, monkeypatch):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    path = _snapshot(tmp_path)
+    before = path.read_text()
+    monkeypatch.setattr(
+        plugin_list,
+        "PluginClassifier",
+        type("Classifier", (), {"classify": lambda self, plugin: "Channels"}),
+    )
+    categories = {
+        "owner/reviewed": {"id": 1, "category": "Solvers"},
+        "owner/unreviewed": {"id": 2, "category": "Other"},
+    }
+
+    assert plugin_list.classify_only(categories) == 0
+    assert path.read_text() == before
+
+
+def test_pending_count_reaches_github_output(tmp_path, monkeypatch):
+    output = tmp_path / "github_output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+
+    plugin_list.report_pending(3)
+
+    assert output.read_text() == "pending=3\n"
+
+
+def test_missing_classifier_dependency_explains_the_environment(tmp_path, monkeypatch):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(plugin_list, "load_previous_plugins", lambda: {})
+    monkeypatch.setattr(plugin_list, "search_github", lambda gh: [])
+    monkeypatch.setattr(plugin_list, "discover_plugins", lambda *a, **k: iter([
+        {
+            "name": "unreviewed",
+            "description": "",
+            "repo_url": "https://github.com/owner/unreviewed",
+            "repo_full_name": "owner/unreviewed",
+            "repo_id": 2,
+            "stars": 1,
+            "docs": None,
+            "topics": [],
+            "entry_points": {},
+            "pyproject_sha": "b",
+        }
+    ]))
+    monkeypatch.setattr(plugin_list, "revalidate_missing_plugins", lambda gh, p, *a: p)
+    monkeypatch.setattr(plugin_list, "deduplicate_plugins", lambda p, c: p)
+    monkeypatch.setattr(plugin_list, "load_categories", lambda: {})
+
+    def missing() -> None:
+        raise ImportError("No module named 'llama_cpp'")
+
+    monkeypatch.setattr(plugin_list, "PluginClassifier", missing)
+    monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
+
+    with pytest.raises(SystemExit, match="render-classify"):
+        plugin_list.main([])

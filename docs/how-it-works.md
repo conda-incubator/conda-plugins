@@ -70,6 +70,11 @@ into the site. That file is the data source for the Sphinx build, and it is also
 published at `/plugins.json` so other sites can consume the list. `README.md` is
 not regenerated -- this site is the index.
 
+The classifier is optional: `render` runs without `llama-cpp-python`, and the
+workflow installs the classifier environment and restores the model cache only
+when the render reports plugins without a reviewed category. A second pass then
+fills in just those categories.
+
 Runs are incremental: a repository whose `pyproject.toml` has not changed since
 the last snapshot (same blob sha) is rebuilt from that snapshot instead of being
 downloaded again, topics are reused from it, and only plugins that still need a

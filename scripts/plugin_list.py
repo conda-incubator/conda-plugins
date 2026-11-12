@@ -670,6 +670,7 @@ def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
             "description": p["description"],
             "repo_url": p["repo_url"],
             "repo_full_name": p["repo_full_name"],
+            "repo_id": p["repo_id"],
             "stars": p["stars"],
             "docs": (
                 p.get("docs")
@@ -689,6 +690,33 @@ def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
     return json.dumps(data, indent=2) + "\n"
 
 
+def report_pending(count: int) -> None:
+    """Tell CI how many plugins still need a category, if it is listening."""
+    if output := os.environ.get("GITHUB_OUTPUT"):
+        with open(output, "a", encoding="utf-8") as handle:
+            handle.write(f"pending={count}\n")
+
+
+def classify_only(categories: dict[str, dict]) -> int:
+    """Fill in categories for the unreviewed plugins of an existing snapshot."""
+    data_path = DATA_DIR / "plugins.json"
+    plugins = json.loads(data_path.read_text())["plugins"]
+    pending = [
+        p
+        for p in plugins
+        if categories.get(p["repo_full_name"], {}).get("id") != p.get("repo_id")
+    ]
+    if pending:
+        classifier = PluginClassifier()
+        for plugin in pending:
+            plugin["category"] = classifier.classify(plugin)
+        data_path.write_text(generate_json(plugins, categories))
+        print(f"Classified {len(pending)} plugin(s)", file=sys.stderr)
+    else:
+        print("Nothing to classify", file=sys.stderr)
+    return len(pending)
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -696,7 +724,16 @@ def main(argv: list[str] | None = None) -> None:
         action="store_true",
         help="skip model suggestions; leave unreviewed plugins as Other",
     )
+    parser.add_argument(
+        "--classify-only",
+        action="store_true",
+        help="only classify unreviewed plugins in the existing snapshot",
+    )
     args = parser.parse_args(argv)
+
+    if args.classify_only:
+        classify_only(load_categories())
+        return
 
     token = os.environ.get("GITHUB_TOKEN")
     auth = github.Auth.Token(token) if token else None
@@ -729,7 +766,13 @@ def main(argv: list[str] | None = None) -> None:
     classifier = None
     if needs_model and not args.no_classify:
         phase = time.monotonic()
-        classifier = PluginClassifier()
+        try:
+            classifier = PluginClassifier()
+        except ImportError as exc:
+            raise SystemExit(
+                "llama-cpp-python is not installed: use the render-classify "
+                "environment, or pass --no-classify"
+            ) from exc
         print(
             f"Classifier ready for {len(needs_model)} plugin(s): "
             f"{time.monotonic() - phase:.1f}s",
@@ -748,6 +791,18 @@ def main(argv: list[str] | None = None) -> None:
     json_path = DATA_DIR / "plugins.json"
     json_path.write_text(generate_json(plugins, categories))
     print(f"Wrote {json_path}", file=sys.stderr)
+
+    pending = sum(
+        1
+        for p in plugins
+        if categories.get(p["repo_full_name"], {}).get("id") != p.get("repo_id")
+    )
+    report_pending(pending)
+    if pending and args.no_classify:
+        print(
+            f"! {pending} plugin(s) still need a category; run the classify pass",
+            file=sys.stderr,
+        )
 
 
 if __name__ == "__main__":
