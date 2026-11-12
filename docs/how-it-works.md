@@ -70,6 +70,17 @@ into the site. That file is the data source for the Sphinx build, and it is also
 published at `/plugins.json` so other sites can consume the list. `README.md` is
 not regenerated -- this site is the index.
 
+Runs are incremental: a repository whose `pyproject.toml` has not changed since
+the last snapshot (same blob sha) is rebuilt from that snapshot instead of being
+downloaded again, topics are reused from it, and only plugins that still need a
+category have their topics fetched. `--no-classify` skips the model entirely.
+
+Repositories the token cannot read -- private, SAML-enforced organizations, or
+deleted -- are skipped with a log line rather than failing the run, and they are
+left out of the published index. A single code search returns at most 1,000
+results, so the run warns at 500 and again at 900 to leave time to partition the
+query.
+
 The script reads reviewed assignments from `scripts/categories.toml`
 but never modifies them. The read-only render job passes only
 `docs/_data/plugins.json` to a separate commit job, which writes any changes to

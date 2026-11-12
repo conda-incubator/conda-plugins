@@ -17,6 +17,7 @@ class FakeRepo:
         stars: int = 1,
         private: bool = False,
         content: str = "",
+        sha: str = "0" * 40,
     ):
         self.full_name = full_name
         self.id = repo_id
@@ -27,6 +28,7 @@ class FakeRepo:
         self.fork = False
         self.private = private
         self.content = content
+        self.sha = sha
 
     def get_topics(self):
         return ["conda-plugin"]
@@ -35,15 +37,23 @@ class FakeRepo:
         return type(
             "Content",
             (),
-            {"path": path, "decoded_content": self.content.encode()},
+            {"path": path, "sha": self.sha, "decoded_content": self.content.encode()},
         )()
 
 
 class FakeResult:
-    def __init__(self, repo: FakeRepo, content: str, *, path: str = "pyproject.toml"):
+    def __init__(
+        self,
+        repo: FakeRepo,
+        content: str,
+        *,
+        path: str = "pyproject.toml",
+        sha: str = "0" * 40,
+    ):
         self.repository = repo
         self.decoded_content = content.encode()
         self.path = path
+        self.sha = sha
 
 
 def test_api_call_retries_actual_rate_limit(mocker):
@@ -81,8 +91,7 @@ def test_api_call_does_not_retry_saml_403(mocker):
     sleep.assert_not_called()
 
 
-def test_discovery_requires_root_project_with_conda_entry_points(monkeypatch):
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
+def test_discovery_requires_root_project_with_conda_entry_points():
     valid = """
 [project]
 name = "conda-example"
@@ -186,7 +195,6 @@ def test_deduplication_does_not_trust_reused_repository_name():
 
 def test_missing_search_result_is_revalidated_directly(tmp_path, monkeypatch):
     monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
     project = """
 [project]
 name = "conda-example"
@@ -385,8 +393,7 @@ def test_reviewed_repository_ids_are_unique():
     assert len({config["id"] for config in categories.values()}) == len(categories)
 
 
-def test_discovery_rejects_unsafe_documentation_urls(monkeypatch):
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
+def test_discovery_rejects_unsafe_documentation_urls():
     project = """
 [project]
 name = "conda-example"
@@ -411,3 +418,181 @@ def test_search_queries_limit_results_to_repository_root():
     assert all(query.endswith(" path:/") for query in plugin_list.SEARCH_QUERIES)
 
 
+
+
+def test_discovery_reuses_unchanged_pyproject_from_snapshot():
+    repo = FakeRepo("owner/example")
+    result = type(
+        "Result",
+        (),
+        {"path": "pyproject.toml", "repository": repo, "sha": "abc123", "decoded_content": None},
+    )()
+    previous = {
+        "owner/example": {
+            "name": "conda-example",
+            "description": "from the snapshot",
+            "entry_points": {"example": "example.plugin"},
+            "docs": "https://example.com/docs",
+            "topics": ["conda-plugin"],
+            "pyproject_sha": "abc123",
+        }
+    }
+
+    categories = {"owner/example": {"id": 1, "category": "Other"}}
+
+    plugins = list(plugin_list.discover_plugins([result], categories, previous))
+
+    assert len(plugins) == 1
+    assert plugins[0]["description"] == "from the snapshot"
+    assert plugins[0]["docs"] == "https://example.com/docs"
+    assert plugins[0]["entry_points"] == {"example": "example.plugin"}
+    assert plugins[0]["topics"] == ["conda-plugin"]
+
+
+def test_discovery_fetches_when_pyproject_changed():
+    project = """
+[project]
+name = "conda-example"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    repo = FakeRepo("owner/example", content=project)
+    result = FakeResult(repo, project, sha="new")
+    previous = {
+        "owner/example": {
+            "name": "conda-example",
+            "entry_points": {"old": "old.plugin"},
+            "docs": "https://example.com/docs",
+            "pyproject_sha": "old",
+        }
+    }
+
+    categories = {"owner/example": {"id": 1, "category": "Other"}}
+
+    plugins = list(plugin_list.discover_plugins([result], categories, previous))
+
+    assert plugins[0]["entry_points"] == {"example": "example.plugin"}
+
+
+def test_topics_fetched_only_when_classification_is_needed(mocker):
+    project = """
+[project]
+name = "conda-example"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    reviewed = FakeRepo("owner/reviewed", repo_id=7, content=project)
+    unreviewed = FakeRepo("owner/unreviewed", repo_id=8, content=project)
+    categories = {"owner/reviewed": {"id": 7, "category": "Other"}}
+    reviewed_topics = mocker.spy(reviewed, "get_topics")
+    unreviewed_topics = mocker.spy(unreviewed, "get_topics")
+
+    plugins = list(
+        plugin_list.discover_plugins(
+            [FakeResult(reviewed, project), FakeResult(unreviewed, project)],
+            categories,
+        )
+    )
+
+    assert [plugin["topics"] for plugin in plugins] == [[], ["conda-plugin"]]
+    reviewed_topics.assert_not_called()
+    unreviewed_topics.assert_called_once_with()
+
+
+def test_retry_wait_prefers_headers(monkeypatch):
+    assert plugin_list._retry_wait({"retry-after": "7"}, 0) == 7.0
+
+    monkeypatch.setattr(plugin_list.time, "time", lambda: 1000.0)
+    assert plugin_list._retry_wait({"x-ratelimit-reset": "1060"}, 0) == 61.0
+
+    assert plugin_list._retry_wait({}, 1) == 120.0
+
+
+def test_api_call_fails_instead_of_waiting_out_a_far_limit(mocker):
+    operation = mocker.Mock(
+        side_effect=plugin_list.GithubException(
+            429,
+            {"message": "API rate limit exceeded"},
+            {"Retry-After": "600"},
+        )
+    )
+    sleep = mocker.patch.object(plugin_list.time, "sleep")
+
+    with pytest.raises(RuntimeError, match="longer than"):
+        plugin_list._api_call(operation, "example")
+
+    sleep.assert_not_called()
+
+
+class UnreadableResult:
+    """Search result whose content cannot be fetched with this token."""
+
+    path = "pyproject.toml"
+    sha = "0" * 40
+
+    def __init__(self, repo: FakeRepo, error: Exception):
+        self.repository = repo
+        self.error = error
+
+    @property
+    def decoded_content(self):
+        raise self.error
+
+
+def test_discovery_skips_repositories_it_cannot_read():
+    project = """
+[project]
+name = "conda-example"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    restricted = UnreadableResult(
+        FakeRepo("anaconda/restricted"),
+        plugin_list.GithubException(
+            403,
+            {"message": "Resource protected by organization SAML enforcement"},
+            {"X-RateLimit-Remaining": "4999"},
+        ),
+    )
+    readable = FakeRepo("owner/readable", content=project)
+
+    plugins = list(
+        plugin_list.discover_plugins([restricted, FakeResult(readable, project)])
+    )
+
+    assert [plugin["repo_full_name"] for plugin in plugins] == ["owner/readable"]
+
+
+def test_discovery_still_fails_on_other_errors():
+    result = UnreadableResult(
+        FakeRepo("owner/example"),
+        plugin_list.GithubException(500, {"message": "boom"}, {}),
+    )
+
+    with pytest.raises(plugin_list.GithubException):
+        list(plugin_list.discover_plugins([result]))
+
+
+def test_revalidation_skips_repositories_it_cannot_read(tmp_path, monkeypatch):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    (tmp_path / "plugins.json").write_text(
+        json.dumps({"plugins": [{"repo_full_name": "anaconda/restricted"}]})
+    )
+    gh = type(
+        "Github",
+        (),
+        {
+            "get_repo": lambda self, name: (_ for _ in ()).throw(
+                plugin_list.GithubException(
+                    403,
+                    {"message": "Resource protected by organization SAML enforcement"},
+                    {},
+                )
+            )
+        },
+    )()
+
+    assert plugin_list.revalidate_missing_plugins(gh, [], set()) == []
