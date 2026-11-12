@@ -1,8 +1,7 @@
 """Discover conda plugins on GitHub, categorize them, and generate data files.
 
-Outputs:
-  - README.md table (between PLUGIN_LIST markers)
-  - docs/_data/plugins.json (rich metadata for Sphinx)
+Output: docs/_data/plugins.json (metadata for Sphinx). The site is the index,
+so README.md is no longer regenerated.
 
 Category assignments are read from scripts/categories.toml and changed only
 through review.
@@ -58,9 +57,6 @@ VALID_CATEGORIES = [
     "UI and display",
     "Other",
 ]
-
-README_MARKDOWN_SPECIALS = re.compile(r"([!()*<>?\[\\\]_`|])")
-README_AUTOLINK_PREFIXES = re.compile(r"(?i)\b(?:https?|ftp):|www\.")
 
 
 def bounded_prompt_text(value: object, limit: int) -> str:
@@ -463,34 +459,6 @@ def categorize_plugin(
     return classifier.classify(plugin) if classifier else "Other"
 
 
-def generate_readme_table(plugins: list[dict]) -> str:
-    """Generate the markdown table for README.md."""
-    lines = [
-        "| Name | Description | \u2b50 |",
-        "|------|-------------|--:|",
-    ]
-    for p in sorted(plugins, key=lambda p: (-p["stars"], p["name"])):
-        description = README_MARKDOWN_SPECIALS.sub(
-            r"\\\1",
-            " ".join(str(p["description"]).split()),
-        )
-        # Split GitHub mention and issue syntax across trusted inline elements.
-        description = description.replace("@", "<span>@</span>").replace(
-            "#", "<span>#</span>"
-        )
-        # Disable GFM's extended URL autolinks without escaping ordinary prose.
-        description = README_AUTOLINK_PREFIXES.sub(
-            lambda match: match.group().replace(":", r"\:").replace(".", r"\."),
-            description,
-        )
-        lines.append(
-            f'| [{p["name"]}]({p["repo_url"]}) | '
-            f'{description} | {p["stars"]} |'
-        )
-    lines.append("")
-    return "\n".join(lines)
-
-
 def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
     """Generate JSON, publishing documentation links only after review."""
     clean = []
@@ -518,20 +486,7 @@ def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
     return json.dumps(data, indent=2) + "\n"
 
 
-def rerender_readme(path: str, table: str) -> None:
-    """Replace the PLUGIN_LIST section in README.md."""
-    text = Path(path).read_text()
-    marker = "<!-- PLUGIN_LIST -->"
-    positions = [match.start() for match in re.finditer(re.escape(marker), text)]
-    if len(positions) != 2:
-        raise ValueError(f"Expected exactly two {marker} markers in {path}")
-    before = text[: positions[0] + len(marker)]
-    after = text[positions[1] :]
-    Path(path).write_text(before + "\n" + table + after)
-
-
 def main():
-    readme = sys.argv[1] if len(sys.argv) > 1 else "README.md"
     token = os.environ.get("GITHUB_TOKEN")
     auth = github.Auth.Token(token) if token else None
     gh = github.Github(auth=auth, per_page=30)
@@ -554,10 +509,6 @@ def main():
 
     for plugin in plugins:
         plugin["category"] = categorize_plugin(plugin, categories, classifier)
-
-    readme_table = generate_readme_table(plugins)
-    rerender_readme(readme, readme_table)
-    print(f"Updated {readme}", file=sys.stderr)
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     json_path = DATA_DIR / "plugins.json"
