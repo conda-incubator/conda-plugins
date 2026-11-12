@@ -505,8 +505,9 @@ def test_rate_limit_delay_prefers_headers(monkeypatch):
     monkeypatch.setattr(plugin_list.time, "time", lambda: 1000.0)
 
     wait, resets = plugin_list._rate_limit_delay({"retry-after": "7"}, 0)
-    assert wait == 7.0
-    assert resets.strftime("%H:%M:%SZ") == "00:16:47Z"
+    # one second of cushion so a retry does not land exactly on the reset
+    assert wait == 8.0
+    assert resets.strftime("%H:%M:%SZ") == "00:16:48Z"
 
     wait, resets = plugin_list._rate_limit_delay({"x-ratelimit-reset": "1060"}, 0)
     assert wait == 61.0
@@ -752,3 +753,28 @@ def test_missing_classifier_dependency_explains_the_environment(tmp_path, monkey
 
     with pytest.raises(SystemExit, match="render-classify"):
         plugin_list.main([])
+
+
+def test_search_uses_one_request_per_query(mocker):
+    class Results:
+        def __init__(self, pages):
+            self.pages = pages
+            self.requested = []
+
+        def get_page(self, page):
+            self.requested.append(page)
+            return self.pages[page]
+
+    pages = [[f"item{i}" for i in range(100)], ["tail"]]
+    results = Results(pages)
+    gh = mocker.Mock()
+    gh.search_code.return_value = results
+
+    mocker.patch.object(plugin_list, "SEARCH_QUERIES", ("q",))
+    mocker.patch.object(plugin_list.time, "sleep")
+    mocker.patch.object(plugin_list, "_api_call", side_effect=lambda fn, label: fn())
+
+    assert len(list(plugin_list.search_github(gh))) == 101
+    # full page then the short last page, no empty page and no totalCount call
+    assert results.requested == [0, 1]
+    gh.search_code.assert_called_once_with("q")

@@ -49,6 +49,8 @@ SEARCH_DELAY = 1
 # A single search returns at most 1000 results, silently truncated past that
 SEARCH_CAP_WARN = 500
 SEARCH_CAP_ALERT = 900
+# Requests results 100 at a time, which is the API maximum
+SEARCH_PAGE_SIZE = 100
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 CATEGORIES_PATH = SCRIPT_DIR / "categories.toml"
@@ -197,7 +199,7 @@ def _rate_limit_delay(headers: Mapping[str, str], attempt: int) -> tuple[float, 
     now = time.time()
     if retry_after := headers.get("retry-after"):
         try:
-            wait = float(retry_after)
+            wait = float(retry_after) + 1.0
         except ValueError:
             pass
         else:
@@ -267,29 +269,17 @@ def _api_call(fn: Callable[[], T], label: str = "") -> T:
 
 
 def search_github(gh: github.Github) -> Iterator[ContentFile]:
-    """Yield code-search results for both valid conda entry-point headers."""
+    """Yield code-search results for both valid conda entry-point headers.
+
+    Code search allows 10 requests per minute for a shared bot identity, so the
+    search spends as few of them as possible: no separate result count, and the
+    last page ends the loop instead of asking for an empty one.
+    """
     found = False
     for query in SEARCH_QUERIES:
         results = gh.search_code(query)
-        total = _api_call(
-            lambda search_results=results: search_results.totalCount,
-            label=f"search totalCount for {query}",
-        )
-        print(f"Found {total} results for {query}", file=sys.stderr)
-        if total >= SEARCH_CAP_ALERT:
-            print(
-                f"! {query} is near the 1000-result search cap ({total}); "
-                "partition the query before results start being dropped",
-                file=sys.stderr,
-            )
-        elif total >= SEARCH_CAP_WARN:
-            print(
-                f"! {query} has {total} results, half way to the search cap; "
-                "plan a partitioned query",
-                file=sys.stderr,
-            )
         page = 0
-        yielded = 0
+        collected = 0
         while True:
             if page:
                 # a small gap between pages; _api_call handles any 429
@@ -301,13 +291,23 @@ def search_github(gh: github.Github) -> Iterator[ContentFile]:
             if not items:
                 break
             found = True
-            yielded += len(items)
+            collected += len(items)
             yield from items
+            if len(items) < SEARCH_PAGE_SIZE:
+                break
             page += 1
-        if yielded < total:
+
+        print(f"Found {collected} results for {query}", file=sys.stderr)
+        if collected >= SEARCH_CAP_ALERT:
             print(
-                f"! {query} returned {yielded} of {total} results; GitHub "
-                "truncates at 1000 or timed out, so the index may be incomplete",
+                f"! {query} returned {collected} results, at the 1000-result "
+                "search cap; partition the query before results are dropped",
+                file=sys.stderr,
+            )
+        elif collected >= SEARCH_CAP_WARN:
+            print(
+                f"! {query} returned {collected} results, half way to the search "
+                "cap; plan a partitioned query",
                 file=sys.stderr,
             )
     if not found:
@@ -754,7 +754,7 @@ def main(argv: list[str] | None = None) -> None:
     auth = github.Auth.Token(token) if token else None
     # per_page=100 keeps code search to one page per query; retry=0 hands
     # backoff to _api_call so the header values are respected
-    gh = github.Github(auth=auth, per_page=100, retry=0)
+    gh = github.Github(auth=auth, per_page=SEARCH_PAGE_SIZE, retry=0)
 
     categories = load_categories()
     print(f"Loaded {len(categories)} category mappings", file=sys.stderr)
