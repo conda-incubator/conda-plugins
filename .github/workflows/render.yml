@@ -12,7 +12,7 @@ jobs:
   render:
     name: Render plugin index
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -23,22 +23,30 @@ jobs:
         with:
           pixi-version: v0.77.0
           environments: render
+      - name: Render plugin index
+        id: render
+        run: pixi run -e render render --no-classify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The classifier env, the llama.cpp wheel and the model cache are only
+      # needed when the render found plugins without a reviewed category.
       - name: Cache classification model
+        if: steps.render.outputs.pending != '0'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/conda-plugins/models
           key: qwen3.5-2b-q4-k-m-aaf42c8b
-      - name: Render plugin index
-        run: pixi run -e render render
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install classifier
+        if: steps.render.outputs.pending != '0'
+        run: pixi install -e classify --locked
+      - name: Classify new plugins
+        if: steps.render.outputs.pending != '0'
+        run: pixi run -e classify classify
       - name: Upload rendered index
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rendered-plugin-index
-          path: |
-            README.md
-            docs/_data/plugins.json
+          path: docs/_data/
           if-no-files-found: error
           retention-days: 1
 
@@ -62,15 +70,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cp "$RUNNER_TEMP/rendered-plugin-index/README.md" README.md
-          cp "$RUNNER_TEMP/rendered-plugin-index/docs/_data/plugins.json" docs/_data/plugins.json
-          if git diff --quiet -- README.md docs/_data/plugins.json; then
+          cp "$RUNNER_TEMP/rendered-plugin-index/plugins.json" docs/_data/plugins.json
+          if git diff --quiet -- docs/_data/plugins.json; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           gh auth setup-git
-          git add README.md docs/_data/plugins.json
+          git add docs/_data/plugins.json
           git commit -m "Rerender plugin index"
           git push
 

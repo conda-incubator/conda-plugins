@@ -8,10 +8,17 @@ python = ">=3.13"
 
 [feature.render.dependencies]
 pygithub = ">=2.4.0"
-llama-cpp-python = "0.3.34.*"
 
 [feature.render.tasks]
 render = { cmd = "python scripts/plugin_list.py", description = "Fetch plugins and generate index data" }
+
+# The classifier is a separate feature so render runs do not install llama.cpp
+# or pull the model unless something actually needs a category.
+[feature.classify.dependencies]
+llama-cpp-python = "0.3.34.*"
+
+[feature.classify.tasks]
+classify = { cmd = "python scripts/plugin_list.py --classify-only", description = "Fill in categories for unreviewed plugins" }
 
 [feature.docs.dependencies]
 sphinx = ">=7.0"
@@ -34,5 +41,6 @@ test = { cmd = "python -m pytest -v", description = "Run the test suite" }
 
 [environments]
 render = { features = ["render"], solve-group = "default" }
+classify = { features = ["render", "classify"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
-test = { features = ["render", "docs", "test"], solve-group = "default" }
+test = { features = ["render", "classify", "docs", "test"], solve-group = "default" }
