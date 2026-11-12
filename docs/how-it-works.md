@@ -63,22 +63,17 @@ Anyone can open a pull request to correct or stabilize a category in
 
 ## Data generation
 
-The script produces two outputs:
-
-`README.md`
-: The plugin table between `<!-- PLUGIN_LIST -->` markers is
-  rewritten with the latest data, keeping the repository browsable
-  on GitHub without visiting this site.
-
-`docs/_data/plugins.json`
-: A JSON file with metadata for every plugin, including its name,
-  description, stars, category, entry points, topics, and a documentation
-  URL for reviewed repositories. Repository READMEs are not copied into the
-  site. This is the data source for the Sphinx build.
+The script writes `docs/_data/plugins.json`: metadata for every plugin,
+including its name, description, stars, category, entry points, topics, and a
+documentation URL for reviewed repositories. Repository READMEs are not copied
+into the site. That file is the data source for the Sphinx build, and it is also
+published at `/plugins.json` so other sites can consume the list. `README.md` is
+not regenerated -- this site is the index.
 
 The script reads reviewed assignments from `scripts/categories.toml`
-but never modifies them. The read-only render job passes only these two files
-to a separate commit job, which writes any changes to the repository.
+but never modifies them. The read-only render job passes only
+`docs/_data/plugins.json` to a separate commit job, which writes any changes to
+the repository.
 
 ## Site generation
 

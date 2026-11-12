@@ -36,9 +36,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rendered-plugin-index
-          path: |
-            README.md
-            docs/_data/plugins.json
+          path: docs/_data/
           if-no-files-found: error
           retention-days: 1
 
@@ -62,15 +60,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cp "$RUNNER_TEMP/rendered-plugin-index/README.md" README.md
-          cp "$RUNNER_TEMP/rendered-plugin-index/docs/_data/plugins.json" docs/_data/plugins.json
-          if git diff --quiet -- README.md docs/_data/plugins.json; then
+          cp "$RUNNER_TEMP/rendered-plugin-index/plugins.json" docs/_data/plugins.json
+          if git diff --quiet -- docs/_data/plugins.json; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           gh auth setup-git
-          git add README.md docs/_data/plugins.json
+          git add docs/_data/plugins.json
           git commit -m "Rerender plugin index"
           git push
 
