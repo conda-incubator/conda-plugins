@@ -41,6 +41,6 @@ test = { cmd = "python -m pytest -v", description = "Run the test suite" }
 
 [environments]
 render = { features = ["render"], solve-group = "default" }
-render-classify = { features = ["render", "classify"], solve-group = "default" }
+classify = { features = ["render", "classify"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
 test = { features = ["render", "classify", "docs", "test"], solve-group = "default" }

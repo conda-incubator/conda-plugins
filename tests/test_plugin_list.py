@@ -434,6 +434,7 @@ def test_discovery_reuses_unchanged_pyproject_from_snapshot():
             "entry_points": {"example": "example.plugin"},
             "docs": "https://example.com/docs",
             "topics": ["conda-plugin"],
+            "reviewed": True,
             "pyproject_sha": "abc123",
         }
     }
@@ -475,7 +476,7 @@ example = "example.plugin"
     assert plugins[0]["entry_points"] == {"example": "example.plugin"}
 
 
-def test_topics_fetched_only_when_classification_is_needed(mocker):
+def test_metadata_is_refreshed_on_every_run(mocker):
     project = """
 [project]
 name = "conda-example"
@@ -483,22 +484,89 @@ name = "conda-example"
 [project.entry-points.conda]
 example = "example.plugin"
 """
-    reviewed = FakeRepo("owner/reviewed", repo_id=7, content=project)
-    unreviewed = FakeRepo("owner/unreviewed", repo_id=8, content=project)
-    categories = {"owner/reviewed": {"id": 7, "category": "Other"}}
-    reviewed_topics = mocker.spy(reviewed, "get_topics")
-    unreviewed_topics = mocker.spy(unreviewed, "get_topics")
+    repo = FakeRepo("owner/example", stars=42, content=project)
+    topics = mocker.spy(repo, "get_topics")
 
-    plugins = list(
-        plugin_list.discover_plugins(
-            [FakeResult(reviewed, project), FakeResult(unreviewed, project)],
-            categories,
-        )
-    )
+    plugins = list(plugin_list.discover_plugins([FakeResult(repo, project)], {}, {}))
 
-    assert [plugin["topics"] for plugin in plugins] == [[], ["conda-plugin"]]
-    reviewed_topics.assert_not_called()
-    unreviewed_topics.assert_called_once_with()
+    assert plugins[0]["stars"] == 42
+    assert plugins[0]["topics"] == ["conda-plugin"]
+    topics.assert_called_once_with()
+
+
+def test_snapshot_stars_are_not_reused(mocker):
+    """Star counts come from the API, not from the previous snapshot."""
+    project = """
+[project]
+name = "conda-example"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    repo = FakeRepo("owner/example", stars=42, content=project)
+    previous = {
+        "owner/example": {
+            "name": "conda-example",
+            "description": "from the snapshot",
+            "entry_points": {"example": "example.plugin"},
+            "docs": "https://example.com/docs",
+            "reviewed": True,
+            "stars": 7,
+            "topics": ["cached"],
+            "pyproject_sha": "abc123",
+        }
+    }
+    result = type(
+        "Result",
+        (),
+        {"path": "pyproject.toml", "repository": repo, "sha": "abc123", "decoded_content": None},
+    )()
+
+    plugins = list(plugin_list.discover_plugins([result], {}, previous))
+
+    assert plugins[0]["stars"] == 42
+    assert plugins[0]["topics"] == ["conda-plugin"]
+
+
+def test_snapshot_written_before_review_is_reparsed(mocker):
+    """A redacted docs value must not be reused once the plugin is reviewed."""
+    project = """
+[project]
+name = "conda-example"
+
+[project.urls]
+Documentation = "https://example.com/docs"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    repo = FakeRepo("owner/example", content=project)
+    previous = {
+        "owner/example": {
+            "name": "conda-example",
+            "description": "from the snapshot",
+            "entry_points": {"example": "example.plugin"},
+            "docs": None,
+            "reviewed": False,
+            "metadata_checked": plugin_list.datetime.now(plugin_list.UTC).isoformat(),
+            "pyproject_sha": "abc123",
+        }
+    }
+    categories = {"owner/example": {"id": 1, "category": "Other"}}
+    result = FakeResult(repo, project, sha="abc123")
+
+    plugins = list(plugin_list.discover_plugins([result], categories, previous))
+
+    assert plugins[0]["docs"] == "https://example.com/docs"
+
+
+def test_is_reviewed_requires_a_matching_immutable_id():
+    categories = {"owner/repo": {"id": 7, "category": "Other"}}
+
+    assert plugin_list.is_reviewed("owner/repo", 7, categories)
+    assert not plugin_list.is_reviewed("owner/repo", 8, categories)
+    assert not plugin_list.is_reviewed("owner/repo", None, categories)
+    assert not plugin_list.is_reviewed("owner/other", 7, categories)
 
 
 def test_rate_limit_delay_prefers_headers(monkeypatch):
@@ -751,7 +819,7 @@ def test_missing_classifier_dependency_explains_the_environment(tmp_path, monkey
     monkeypatch.setattr(plugin_list, "PluginClassifier", missing)
     monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
 
-    with pytest.raises(SystemExit, match="render-classify"):
+    with pytest.raises(SystemExit, match="classify"):
         plugin_list.main([])
 
 
@@ -768,6 +836,7 @@ def test_search_uses_one_request_per_query(mocker):
     pages = [[f"item{i}" for i in range(100)], ["tail"]]
     results = Results(pages)
     gh = mocker.Mock()
+    gh.per_page = plugin_list.SEARCH_PAGE_SIZE
     gh.search_code.return_value = results
 
     mocker.patch.object(plugin_list, "SEARCH_QUERIES", ("q",))
@@ -778,3 +847,72 @@ def test_search_uses_one_request_per_query(mocker):
     # full page then the short last page, no empty page and no totalCount call
     assert results.requested == [0, 1]
     gh.search_code.assert_called_once_with("q")
+
+
+def _main_with(monkeypatch, tmp_path, previous, discovered):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(plugin_list, "load_previous_plugins", lambda: previous)
+    monkeypatch.setattr(plugin_list, "search_github", lambda gh: [])
+    monkeypatch.setattr(
+        plugin_list, "discover_plugins", lambda *a, **k: iter(discovered)
+    )
+    monkeypatch.setattr(
+        plugin_list, "revalidate_missing_plugins", lambda gh, p, *a: p
+    )
+    monkeypatch.setattr(plugin_list, "deduplicate_plugins", lambda p, c: p)
+    monkeypatch.setattr(plugin_list, "load_categories", lambda: {})
+    monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
+
+
+def _record(name: str) -> dict:
+    return {
+        "name": name,
+        "description": "",
+        "repo_url": f"https://github.com/owner/{name}",
+        "repo_full_name": f"owner/{name}",
+        "repo_id": 1,
+        "stars": 1,
+        "docs": None,
+        "topics": [],
+        "entry_points": {"x": "x.plugin"},
+        "pyproject_sha": "a",
+        "category": "Other",
+    }
+
+
+def test_empty_index_is_refused(tmp_path, monkeypatch):
+    _main_with(monkeypatch, tmp_path, {"owner/old": {}}, [])
+
+    with pytest.raises(RuntimeError, match="empty plugin index"):
+        plugin_list.main(["--no-classify"])
+
+
+def test_index_that_shrinks_too_far_is_refused(tmp_path, monkeypatch):
+    previous = {f"owner/old{i}": {} for i in range(10)}
+    _main_with(monkeypatch, tmp_path, previous, [_record("kept")])
+
+    with pytest.raises(RuntimeError, match="down from 10"):
+        plugin_list.main(["--no-classify"])
+
+
+def test_modest_shrink_is_published(tmp_path, monkeypatch):
+    previous = {f"owner/old{i}": {} for i in range(10)}
+    discovered = [_record(f"kept{i}") for i in range(9)]
+    _main_with(monkeypatch, tmp_path, previous, discovered)
+
+    plugin_list.main(["--no-classify"])
+
+    data = json.loads((tmp_path / "plugins.json").read_text())
+    assert len(data["plugins"]) == 9
+
+
+def test_json_records_review_state():
+    plugin = {**_record("example"), "category": "Other"}
+
+    reviewed = json.loads(
+        plugin_list.generate_json([plugin], {"owner/example": {"id": 1}})
+    )["plugins"][0]
+    unreviewed = json.loads(plugin_list.generate_json([plugin], {}))["plugins"][0]
+
+    assert reviewed["reviewed"] is True
+    assert unreviewed["reviewed"] is False

@@ -54,6 +54,9 @@ SEARCH_CAP_ALERT = 900
 # Requests results 100 at a time, which is the API maximum
 SEARCH_PAGE_SIZE = 100
 
+# Refuse to publish an index that lost this much of the previous snapshot
+MAX_SHRINK = 0.25
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 CATEGORIES_PATH = SCRIPT_DIR / "categories.toml"
 DATA_DIR = SCRIPT_DIR.parent / "docs" / "_data"
@@ -213,6 +216,34 @@ def _rate_limit_delay(headers: Mapping[str, str], attempt: int) -> tuple[float, 
     return wait, datetime.fromtimestamp(now + wait, tz=UTC)
 
 
+def is_reviewed(
+    repo_full_name: str, repo_id: int | None, categories: Mapping[str, dict]
+) -> bool:
+    """True when categories.toml holds a reviewed entry for this repository.
+
+    The immutable repository id is what makes the review durable: a renamed or
+    re-created repository does not inherit it.
+    """
+    if repo_id is None:
+        return False
+    return categories.get(repo_full_name, {}).get("id") == repo_id
+
+
+def _repository_metadata(repo: object, label: str) -> tuple[int, list[str]]:
+    """Stars and topics, which the snapshot deliberately does not cache.
+
+    A run happens weekly, so refreshing them each time keeps the published
+    counts and the sort order current. Reading the star count completes the
+    search result's minimal repository with one request, and that response also
+    carries the topics, so no second request is needed.
+    """
+    stars = _api_call(lambda: repo.stargazers_count, label=f"{label}/stars")
+    topics = getattr(repo, "topics", None)
+    if topics is None:
+        topics = _api_call(lambda: repo.get_topics(), label=f"{label}/topics")
+    return stars, list(topics)
+
+
 def _inaccessible(exc: GithubException) -> bool:
     """True when the token cannot read the repository at all.
 
@@ -278,6 +309,7 @@ def search_github(gh: github.Github) -> Iterator[ContentFile]:
     last page ends the loop instead of asking for an empty one.
     """
     found = False
+    page_size = gh.per_page
     for query in SEARCH_QUERIES:
         results = gh.search_code(query)
         page = 0
@@ -295,7 +327,7 @@ def search_github(gh: github.Github) -> Iterator[ContentFile]:
             found = True
             collected += len(items)
             yield from items
-            if len(items) < SEARCH_PAGE_SIZE:
+            if len(items) < page_size:
                 break
             page += 1
 
@@ -405,26 +437,15 @@ def _plugin_from_result(
     repo_description = field("description") or ""
 
     cached = (previous or {}).get(repo_full_name, {})
-    # The minimal repository in a search result has no star count, and asking
-    # for it completes the object with a GET. Prefer the snapshot, and only pay
-    # for a fresh count when this repository is new.
-    stars = payload.get("stargazers_count")
-    if stars is None:
-        stars = cached.get("stars")
-    if stars is None:
-        stars = _api_call(
-            lambda current_repo=repo: current_repo.stargazers_count,
-            label=f"{repo_full_name}/stars",
-        )
-    # Only a reviewed entry publishes its parsed docs URL, so only those can be
-    # trusted as a complete snapshot; unreviewed ones are re-read.
-    reviewed = (categories or {}).get(repo_full_name, {}).get("id") == repo_id
+    # A snapshot only carries a usable docs value when it was written while the
+    # plugin was reviewed; otherwise generate_json redacted it, so re-read.
     unchanged = (
-        reviewed
+        cached.get("reviewed") is True
         and result.sha == cached.get("pyproject_sha")
         and cached.get("entry_points")
     )
     if unchanged:
+        stars, topics = _repository_metadata(repo, repo_full_name)
         print(f"Processed {repo_full_name} (unchanged)", file=sys.stderr)
         return {
             "name": cached["name"],
@@ -435,7 +456,7 @@ def _plugin_from_result(
             "stars": stars,
             "docs": cached["docs"],
             "entry_points": cached["entry_points"],
-            "topics": cached.get("topics", []),
+            "topics": topics,
             "pyproject_sha": result.sha,
         }
 
@@ -489,16 +510,7 @@ def _plugin_from_result(
     elif (parsed := urlsplit(docs)).scheme not in {"http", "https"} or not parsed.netloc:
         docs = None
 
-    if cached.get("topics"):
-        topics = cached["topics"]
-    elif (categories or {}).get(repo_full_name, {}).get("id") != repo_id:
-        # only a plugin that still needs classifying needs its topics
-        topics = _api_call(
-            lambda current_repo=repo: current_repo.get_topics(),
-            label=f"{repo_full_name}/topics",
-        )
-    else:
-        topics = []
+    stars, topics = _repository_metadata(repo, repo_full_name)
 
     print(f"Processed {repo_full_name}", file=sys.stderr)
     return {
@@ -682,6 +694,7 @@ def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
     """Generate JSON, publishing documentation links only after review."""
     clean = []
     for p in sorted(plugins, key=lambda p: (-p["stars"], p["name"])):
+        reviewed = is_reviewed(p["repo_full_name"], p.get("repo_id"), reviewed_repos)
         clean.append({
             "name": p["name"],
             "description": p["description"],
@@ -689,12 +702,10 @@ def generate_json(plugins: list[dict], reviewed_repos: dict[str, dict]) -> str:
             "repo_full_name": p["repo_full_name"],
             "repo_id": p["repo_id"],
             "stars": p["stars"],
-            "docs": (
-                p.get("docs")
-                if reviewed_repos.get(p["repo_full_name"], {}).get("id")
-                == p["repo_id"]
-                else None
-            ),
+            "docs": p.get("docs") if reviewed else None,
+            # recorded so a later run knows whether the docs value above is the
+            # parsed URL or the redacted placeholder
+            "reviewed": reviewed,
             "topics": p.get("topics", []),
             "entry_points": p.get("entry_points", {}),
             "pyproject_sha": p.get("pyproject_sha"),
@@ -721,7 +732,7 @@ def classify_only(categories: dict[str, dict]) -> int:
     pending = [
         p
         for p in plugins
-        if categories.get(p["repo_full_name"], {}).get("id") != p.get("repo_id")
+        if not is_reviewed(p["repo_full_name"], p.get("repo_id"), categories)
     ]
     if pending:
         classifier = PluginClassifier()
@@ -776,8 +787,9 @@ def main(argv: list[str] | None = None) -> None:
     unreviewed = [
         plugin
         for plugin in plugins
-        if categories.get(plugin["repo_full_name"], {}).get("id")
-        != plugin["repo_id"]
+        if not is_reviewed(
+            plugin["repo_full_name"], plugin.get("repo_id"), categories
+        )
     ]
     needs_model = unreviewed
     classifier = None
@@ -787,7 +799,7 @@ def main(argv: list[str] | None = None) -> None:
             classifier = PluginClassifier()
         except ImportError as exc:
             raise SystemExit(
-                "llama-cpp-python is not installed: use the render-classify "
+                "llama-cpp-python is not installed: use the classify "
                 "environment, or pass --no-classify"
             ) from exc
         print(
@@ -804,16 +816,25 @@ def main(argv: list[str] | None = None) -> None:
     for plugin in plugins:
         plugin["category"] = categorize_plugin(plugin, categories, classifier)
 
+    # A token or permission outage would otherwise publish a silently shrunken
+    # index, commit it, and deploy it
+    if not plugins:
+        raise RuntimeError(
+            "Refusing to publish an empty plugin index; check the token and "
+            "GitHub availability"
+        )
+    if previous and len(plugins) < len(previous) * (1 - MAX_SHRINK):
+        raise RuntimeError(
+            f"Refusing to publish {len(plugins)} plugins, down from "
+            f"{len(previous)}; check the token and GitHub availability"
+        )
+
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     json_path = DATA_DIR / "plugins.json"
     json_path.write_text(generate_json(plugins, categories))
     print(f"Wrote {json_path}", file=sys.stderr)
 
-    pending = sum(
-        1
-        for p in plugins
-        if categories.get(p["repo_full_name"], {}).get("id") != p.get("repo_id")
-    )
+    pending = len(unreviewed)
     report_pending(pending)
     if pending and args.no_classify:
         print(

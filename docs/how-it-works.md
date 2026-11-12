@@ -77,8 +77,9 @@ fills in just those categories.
 
 Runs are incremental: a repository whose `pyproject.toml` has not changed since
 the last snapshot (same blob sha) is rebuilt from that snapshot instead of being
-downloaded again, topics are reused from it, and only plugins that still need a
-category have their topics fetched. `--no-classify` skips the model entirely.
+downloaded again. Stars and topics are repository metadata rather than pyproject
+data, so they are refreshed on every run (one request per repository) instead of
+being cached. `--no-classify` skips the model entirely.
 
 Repositories the token cannot read -- private, SAML-enforced organizations, or
 deleted -- are skipped with a log line rather than failing the run, and they are
@@ -104,9 +105,10 @@ The result is deployed to GitHub Pages.
 The entire pipeline can be run on a developer's machine:
 
 ```bash
-pixi run -e render render    # discover + categorize + generate data
-pixi run -e docs docs        # build the Sphinx site
-pixi run -e docs docs-serve  # serve at http://localhost:8000
+pixi run -e render render --no-classify  # discover + generate data
+pixi run -e classify classify     # categorize unreviewed plugins (optional)
+pixi run -e docs docs                    # build the Sphinx site
+pixi run -e docs docs-serve              # serve at http://localhost:8000
 ```
 
 ## Source code
