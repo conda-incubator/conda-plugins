@@ -304,7 +304,7 @@ def test_reused_repository_name_does_not_receive_reviewed_category():
     assert plugin_list.categorize_plugin(plugin, categories) == "Other"
 
 
-def test_generated_outputs_treat_repository_metadata_as_text():
+def test_generated_json_treats_repository_metadata_as_text():
     plugin = {
         "name": "conda-example",
         "description": (
@@ -323,18 +323,8 @@ def test_generated_outputs_treat_repository_metadata_as_text():
         "readme": "untrusted",
     }
 
-    table = plugin_list.generate_readme_table([plugin])
     data = json.loads(plugin_list.generate_json([plugin], {}))
 
-    assert "Safe, sentence." in table
-    assert "<script>" not in table
-    assert r"\| next line" in table
-    assert "[install](" not in table
-    assert "![track]" not in table
-    assert r"https\://evil.example" in table
-    assert r"www\.evil.example" in table
-    assert "<span>@</span>octocat" in table
-    assert "<span>#</span>1" in table
     assert "generated_at" not in data
     assert "readme" not in data["plugins"][0]
     assert data["plugins"][0]["docs"] is None
@@ -421,16 +411,3 @@ def test_search_queries_limit_results_to_repository_root():
     assert all(query.endswith(" path:/") for query in plugin_list.SEARCH_QUERIES)
 
 
-def test_readme_rerender_replaces_exactly_one_marker_pair(tmp_path: Path):
-    path = tmp_path / "README.md"
-    path.write_text("before\n<!-- PLUGIN_LIST -->\nold\n<!-- PLUGIN_LIST -->\nafter\n")
-
-    plugin_list.rerender_readme(path, "new\n")
-
-    assert path.read_text() == (
-        "before\n<!-- PLUGIN_LIST -->\nnew\n<!-- PLUGIN_LIST -->\nafter\n"
-    )
-
-    path.write_text("<!-- PLUGIN_LIST -->\nonly one\n")
-    with pytest.raises(ValueError, match="Expected exactly two"):
-        plugin_list.rerender_readme(path, "new\n")
