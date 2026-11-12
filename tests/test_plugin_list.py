@@ -596,3 +596,39 @@ def test_revalidation_skips_repositories_it_cannot_read(tmp_path, monkeypatch):
     )()
 
     assert plugin_list.revalidate_missing_plugins(gh, [], set()) == []
+
+
+def test_discovery_reports_a_missing_pyproject_as_not_found(capsys):
+    result = UnreadableResult(
+        FakeRepo("owner/gone"),
+        plugin_list.GithubException(404, {"message": "Not Found"}, {}),
+    )
+
+    assert list(plugin_list.discover_plugins([result])) == []
+
+    err = capsys.readouterr().err
+    assert "not found (404)" in err
+    assert "SAML" not in err
+
+
+def test_revalidation_reports_a_missing_pyproject_separately(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    (tmp_path / "plugins.json").write_text(
+        json.dumps({"plugins": [{"repo_full_name": "owner/no-pyproject"}]})
+    )
+
+    class Repo:
+        private = False
+        fork = False
+        full_name = "owner/no-pyproject"
+
+        def get_contents(self, path: str):
+            raise plugin_list.GithubException(404, {"message": "Not Found"}, {})
+
+    gh = type("Github", (), {"get_repo": lambda self, name: Repo()})()
+
+    assert plugin_list.revalidate_missing_plugins(gh, [], set()) == []
+
+    err = capsys.readouterr().err
+    assert "no pyproject.toml" in err
+    assert "SAML" not in err

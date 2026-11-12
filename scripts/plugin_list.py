@@ -199,10 +199,15 @@ def _retry_wait(headers: Mapping[str, str], attempt: int) -> float:
 def _inaccessible(exc: GithubException) -> bool:
     """True when the token cannot read the repository at all.
 
-    Covers private repos, SAML-enforced organizations, and repositories that no
-    longer exist. Those are skipped rather than failing the whole run.
+    Covers private repos and SAML-enforced organizations. Those are skipped
+    rather than failing the whole run.
     """
-    return exc.status in {401, 403, 404, 451}
+    return exc.status in {401, 403, 451}
+
+
+def _not_found(exc: GithubException) -> bool:
+    """True for a 404, which is either a missing file or a removed repository."""
+    return exc.status == 404
 
 
 def _api_call(fn: Callable[[], T], label: str = "") -> T:
@@ -321,16 +326,23 @@ def discover_plugins(
         try:
             plugin = _plugin_from_result(result, categories, previous)
         except GithubException as exc:
-            if not _inaccessible(exc):
-                # Publishing a partial snapshot would silently remove a plugin.
-                # Let the workflow retry on its next run instead.
-                raise
-            print(
-                f"! Skipping {repo_full_name}: not readable with this token "
-                f"({exc.status}), e.g. private, SAML-enforced, or gone",
-                file=sys.stderr,
-            )
-            continue
+            if _inaccessible(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not readable with this token "
+                    f"({exc.status}), e.g. private or SAML-enforced",
+                    file=sys.stderr,
+                )
+                continue
+            if _not_found(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not found (404), e.g. no "
+                    "root pyproject.toml or the repository was removed",
+                    file=sys.stderr,
+                )
+                continue
+            # Publishing a partial snapshot would silently remove a plugin.
+            # Let the workflow retry on its next run instead.
+            raise
         except (tomllib.TOMLDecodeError, UnicodeError):
             print(f"! Couldn't decode {repo_full_name}", file=sys.stderr)
             continue
@@ -524,6 +536,7 @@ def revalidate_missing_plugins(
         if not isinstance(repo_full_name, str) or repo_full_name in found_repos:
             continue
         # Everything below can request a repository the token cannot see.
+        source = "repository"
         try:
             repo = _api_call(
                 lambda name=repo_full_name: gh.get_repo(name),
@@ -531,6 +544,7 @@ def revalidate_missing_plugins(
             )
             if repo.private or repo.fork or repo.full_name in found_repos:
                 continue
+            source = "pyproject.toml"
             content = _api_call(
                 lambda r=repo: r.get_contents("pyproject.toml"),
                 label=f"{repo_full_name}/pyproject.toml",
@@ -548,11 +562,18 @@ def revalidate_missing_plugins(
                 content=content.decoded_content.decode(),
             )
         except GithubException as exc:
-            if not _inaccessible(exc):
+            if source == "pyproject.toml" and _not_found(exc):
+                print(
+                    f"! Skipping {repo_full_name}: no pyproject.toml, "
+                    "so it is not a plugin",
+                    file=sys.stderr,
+                )
+                continue
+            if not (_inaccessible(exc) or _not_found(exc)):
                 raise
             print(
                 f"! Skipping {repo_full_name}: not readable with this token "
-                f"({exc.status}), e.g. private, SAML-enforced, or gone",
+                f"({exc.status}), e.g. private or SAML-enforced",
                 file=sys.stderr,
             )
             continue
