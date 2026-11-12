@@ -4,17 +4,14 @@
 
 [categories]
 # Solvers
-"conda/conda-classic-solver" = { id = 845943532, category = "Solvers" }
+"conda/conda-pycosat-solver" = { id = 845943532, category = "Solvers" }
 "conda/conda-libmamba-solver" = { id = 449789872, category = "Solvers" }
 "conda/conda-rattler-solver" = { id = 704190015, category = "Solvers" }
 "costrouc/conda-random-solver" = { id = 604354437, category = "Solvers" }
-"jezdez/conda-express" = { id = 1171619517, category = "Solvers" }
 "jezdez/conda-presto" = { id = 1211735623, category = "Solvers" }
 
 # Subcommands
 "anaconda/conda-anaconda-tos" = { id = 869995975, category = "Subcommands" }
-"beeankha/SimplePythonStuff" = { id = 127155774, category = "Subcommands" }
-"conda/conda-plugin-template" = { id = 529314877, category = "Subcommands" }
 "conda-incubator/conda-tree" = { id = 90068685, category = "Subcommands" }
 "costrouc/conda-random-subcomand" = { id = 604644098, category = "Subcommands" }
 "kalawac/simple-bash-plugin" = { id = 618595139, category = "Subcommands" }
@@ -29,7 +26,6 @@
 
 # Authentication
 "anaconda/anaconda-auth" = { id = 924766645, category = "Authentication" }
-"anaconda/docker-examples" = { id = 1117994188, category = "Authentication" }
 "conda-incubator/conda-auth" = { id = 669174359, category = "Authentication" }
 
 # Environment management
@@ -51,15 +47,17 @@
 "jaimergp/conda-declarative" = { id = 975194680, category = "Environment management" }
 "jennan/conda_disable_init" = { id = 832948281, category = "Environment management" }
 "jjhelmus/conda-history-d" = { id = 976183462, category = "Environment management" }
+"m-rossi/conda-pyproject-toml" = { id = 1373556352, category = "Environment management" }
 "peytondmurray/conda-declarative-input-states" = { id = 954920659, category = "Environment management" }
 "peytondmurray/conda-env-spec-v2" = { id = 986634054, category = "Environment management" }
 "peytondmurray/conda-toml-spec" = { id = 1017691518, category = "Environment management" }
+"traversaro/amdgpu-virtual-packages" = { id = 1341111905, category = "Environment management" }
 
 # Build tools
 "conda-forge/conda-smithy" = { id = 33767206, category = "Build tools" }
 "conda/conda-build" = { id = 16008423, category = "Build tools" }
 "conda/conda-index" = { id = 493352300, category = "Build tools" }
-"jezdez/conda-ship" = { id = 1252248288, category = "Build tools" }
+"conda-incubator/conda-ship" = { id = 1252248288, category = "Build tools" }
 
 # UI and display
 "conda-incubator/conda-completion" = { id = 1245837819, category = "UI and display" }
@@ -69,11 +67,15 @@
 
 # Other
 "Adam-D-Lewis/conda-serviceinst" = { id = 1169321315, category = "Other" }
-"anaconda/assistant-sdk" = { id = 897377197, category = "Other" }
+"Anaconda-Labs/anaconda-policy-explainer" = { id = 1451613314, category = "Other" }
 "anaconda/conda-anaconda-telemetry" = { id = 866667154, category = "Other" }
+"conda-incubator/conda-sigstore" = { id = 1331053026, category = "Other" }
 "conda/conda-content-trust" = { id = 213960510, category = "Other" }
+"jezdez/conda-advise" = { id = 1357289777, category = "Other" }
 "jezdez/conda-broker" = { id = 1288434833, category = "Other" }
+"jezdez/conda-cdn-log" = { id = 1438657419, category = "Other" }
+"jezdez/conda-cli-mcp" = { id = 1342888936, category = "Other" }
 "jezdez/conda-dev-request-headers" = { id = 1286991849, category = "Other" }
 "jezdez/conda-restricted" = { id = 816802074, category = "Other" }
-"jezdez/conda-sigstore" = { id = 1331053026, category = "Other" }
+"jezdez/conda-skills" = { id = 1448753526, category = "Other" }
 "regro/conda-forge-conda-plugins" = { id = 808567165, category = "Other" }
