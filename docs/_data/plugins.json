@@ -32,7 +32,7 @@
       "description": "tools for building conda packages",
       "repo_url": "https://github.com/conda/conda-build",
       "repo_full_name": "conda/conda-build",
-      "stars": 402,
+      "stars": 403,
       "docs": "https://docs.conda.io/projects/conda-build/en/stable/",
       "topics": [
         "conda",
@@ -49,7 +49,7 @@
       "description": "The fast mamba solver, now in conda",
       "repo_url": "https://github.com/conda/conda-libmamba-solver",
       "repo_full_name": "conda/conda-libmamba-solver",
-      "stars": 246,
+      "stars": 245,
       "docs": null,
       "topics": [
         "conda",
@@ -67,7 +67,7 @@
       "description": "A package to create repositories for conda recipes, and automate their building with CI tools on Linux, OSX and Windows.",
       "repo_url": "https://github.com/conda-forge/conda-smithy",
       "repo_full_name": "conda-forge/conda-smithy",
-      "stars": 180,
+      "stars": 181,
       "docs": null,
       "topics": [
         "hacktoberfest",
@@ -112,7 +112,7 @@
       "description": "Better PyPI interoperability for the conda ecosystem.",
       "repo_url": "https://github.com/conda/conda-pypi",
       "repo_full_name": "conda/conda-pypi",
-      "stars": 43,
+      "stars": 44,
       "docs": null,
       "topics": [],
       "entry_points": {
@@ -122,11 +122,11 @@
     },
     {
       "name": "conda-rattler-solver",
-      "description": "The fast pixi solver, now in conda",
+      "description": "The fast, Rust-based solver for conda",
       "repo_url": "https://github.com/conda/conda-rattler-solver",
       "repo_full_name": "conda/conda-rattler-solver",
-      "stars": 19,
-      "docs": null,
+      "stars": 20,
+      "docs": "https://conda.github.io/conda-rattler-solver/",
       "topics": [],
       "entry_points": {
         "conda-rattler-solver": "conda_rattler_solver.plugin"
@@ -201,6 +201,19 @@
       "category": "Authentication"
     },
     {
+      "name": "conda-global",
+      "description": "Global tool installation for conda \u2014 install CLI tools into isolated environments and make them available on PATH via trampolines",
+      "repo_url": "https://github.com/conda-incubator/conda-global",
+      "repo_full_name": "conda-incubator/conda-global",
+      "stars": 7,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-global": "conda_global.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
       "name": "conda-lockfiles",
       "description": "Support different lockfiles in conda.",
       "repo_url": "https://github.com/conda/conda-lockfiles",
@@ -245,15 +258,15 @@
       "category": "Environment management"
     },
     {
-      "name": "conda-global",
-      "description": "Global tool installation for conda \u2014 install CLI tools into isolated environments and make them available on PATH via trampolines",
-      "repo_url": "https://github.com/conda-incubator/conda-global",
-      "repo_full_name": "conda-incubator/conda-global",
+      "name": "conda-self",
+      "description": "A self command for conda",
+      "repo_url": "https://github.com/conda/conda-self",
+      "repo_full_name": "conda/conda-self",
       "stars": 6,
-      "docs": null,
+      "docs": "https://conda.github.io/conda-self/",
       "topics": [],
       "entry_points": {
-        "conda-global": "conda_global.plugin"
+        "conda-self": "conda_self.plugin"
       },
       "category": "Environment management"
     },
@@ -267,19 +280,6 @@
       "topics": [],
       "entry_points": {
         "conda-spawn": "conda_spawn.plugin"
-      },
-      "category": "Environment management"
-    },
-    {
-      "name": "conda-self",
-      "description": "A self command for conda",
-      "repo_url": "https://github.com/conda/conda-self",
-      "repo_full_name": "conda/conda-self",
-      "stars": 5,
-      "docs": "https://conda.github.io/conda-self/",
-      "topics": [],
-      "entry_points": {
-        "conda-self": "conda_self.plugin"
       },
       "category": "Environment management"
     },
@@ -352,6 +352,19 @@
       "category": "Environment management"
     },
     {
+      "name": "conda-sboms",
+      "description": "Generate software bills of materials from conda environments",
+      "repo_url": "https://github.com/conda-incubator/conda-sboms",
+      "repo_full_name": "conda-incubator/conda-sboms",
+      "stars": 3,
+      "docs": "https://conda-incubator.github.io/conda-sboms/",
+      "topics": [],
+      "entry_points": {
+        "conda-sboms": "conda_sboms.plugin"
+      },
+      "category": "Environment management"
+    },
+    {
       "name": "conda-tui",
       "description": "A Text User Interface for conda",
       "repo_url": "https://github.com/conda-incubator/conda-tui",
@@ -365,17 +378,19 @@
       "category": "UI and display"
     },
     {
-      "name": "conda-sboms",
-      "description": "Generate software bills of materials from conda environments",
-      "repo_url": "https://github.com/conda-incubator/conda-sboms",
-      "repo_full_name": "conda-incubator/conda-sboms",
+      "name": "conda-completion",
+      "description": "Fast shell tab completion for conda and all its plugins",
+      "repo_url": "https://github.com/conda-incubator/conda-completion",
+      "repo_full_name": "conda-incubator/conda-completion",
       "stars": 2,
-      "docs": "https://conda-incubator.github.io/conda-sboms/",
-      "topics": [],
+      "docs": null,
+      "topics": [
+        "conda"
+      ],
       "entry_points": {
-        "conda-sboms": "conda_sboms.plugin"
+        "conda-completion": "conda_completion.plugin"
       },
-      "category": "Environment management"
+      "category": "UI and display"
     },
     {
       "name": "conda-ship",
@@ -434,21 +449,6 @@
         "conda-checkpoints": "conda_checkpoints.plugin"
       },
       "category": "Environment management"
-    },
-    {
-      "name": "conda-completion",
-      "description": "Fast shell tab completion for conda and all its plugins",
-      "repo_url": "https://github.com/conda-incubator/conda-completion",
-      "repo_full_name": "conda-incubator/conda-completion",
-      "stars": 1,
-      "docs": null,
-      "topics": [
-        "conda"
-      ],
-      "entry_points": {
-        "conda-completion": "conda_completion.plugin"
-      },
-      "category": "UI and display"
     },
     {
       "name": "conda-controlplane",
@@ -542,6 +542,25 @@
       "category": "Channels"
     },
     {
+      "name": "conda-pyproject-toml",
+      "description": "Conda plugin that installs dependencies from a pyproject.toml file.",
+      "repo_url": "https://github.com/m-rossi/conda-pyproject-toml",
+      "repo_full_name": "m-rossi/conda-pyproject-toml",
+      "stars": 1,
+      "docs": null,
+      "topics": [
+        "conda",
+        "conda-plugin",
+        "pyproject",
+        "pyproject-toml",
+        "toml"
+      ],
+      "entry_points": {
+        "conda-pyproject-toml": "conda_pyproject_toml"
+      },
+      "category": "Build tools"
+    },
+    {
       "name": "conda-repodata",
       "description": "Conda plugin to locally manipulate or inspect the repodata.json.",
       "repo_url": "https://github.com/kenodegard/conda-repodata",
@@ -581,6 +600,19 @@
       "category": "Environment management"
     },
     {
+      "name": "anaconda-policy-explainer",
+      "description": "A conda plugin that explains solve failures caused by Anaconda channel policies",
+      "repo_url": "https://github.com/Anaconda-Labs/anaconda-policy-explainer",
+      "repo_full_name": "Anaconda-Labs/anaconda-policy-explainer",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "anaconda-policy-explainer": "anaconda_policy_explainer.plugin"
+      },
+      "category": "Other"
+    },
+    {
       "name": "conda-advise",
       "description": "Conda plugin for advisory reports and post-solve warnings",
       "repo_url": "https://github.com/jezdez/conda-advise",
@@ -609,6 +641,19 @@
       "topics": [],
       "entry_points": {
         "conda-broker": "conda_broker.plugin"
+      },
+      "category": "Other"
+    },
+    {
+      "name": "conda-cdn-log",
+      "description": "Capture conda HTTP diagnostics for CI artifacts and job summaries.",
+      "repo_url": "https://github.com/jezdez/conda-cdn-log",
+      "repo_full_name": "jezdez/conda-cdn-log",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-cdn-log": "conda_cdn_log.plugin"
       },
       "category": "Other"
     },
@@ -691,6 +736,19 @@
       "category": "Environment management"
     },
     {
+      "name": "conda-features",
+      "description": "Discover and configure optional features from installed conda plugins",
+      "repo_url": "https://github.com/jezdez/conda-features",
+      "repo_full_name": "jezdez/conda-features",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-features": "conda_features.plugin"
+      },
+      "category": "Other"
+    },
+    {
       "name": "conda-forge-conda-plugins",
       "description": "conda plugins for the conda-forge ecosystem",
       "repo_url": "https://github.com/regro/conda-forge-conda-plugins",
@@ -702,25 +760,6 @@
         "conda-forge-conda-plugins": "conda_forge_conda_plugins.hooks"
       },
       "category": "Other"
-    },
-    {
-      "name": "conda-pyproject-toml",
-      "description": "Conda plugin that installs dependencies from a pyproject.toml file.",
-      "repo_url": "https://github.com/m-rossi/conda-pyproject-toml",
-      "repo_full_name": "m-rossi/conda-pyproject-toml",
-      "stars": 0,
-      "docs": null,
-      "topics": [
-        "conda",
-        "conda-plugin",
-        "pyproject",
-        "pyproject-toml",
-        "toml"
-      ],
-      "entry_points": {
-        "conda-pyproject-toml": "conda_pyproject_toml"
-      },
-      "category": "Build tools"
     },
     {
       "name": "conda-random-solver",
@@ -799,6 +838,19 @@
         "conda-sigstore": "conda_sigstore.plugin"
       },
       "category": "Authentication"
+    },
+    {
+      "name": "conda-skills",
+      "description": "Link conda-packaged agent skills into client directories",
+      "repo_url": "https://github.com/jezdez/conda-skills",
+      "repo_full_name": "jezdez/conda-skills",
+      "stars": 0,
+      "docs": null,
+      "topics": [],
+      "entry_points": {
+        "conda-skills": "conda_skill.plugin"
+      },
+      "category": "Subcommands"
     },
     {
       "name": "conda-toml-spec",
