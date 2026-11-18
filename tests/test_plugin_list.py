@@ -82,7 +82,6 @@ def test_api_call_does_not_retry_saml_403(mocker):
 
 
 def test_discovery_requires_root_project_with_conda_entry_points(monkeypatch):
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
     valid = """
 [project]
 name = "conda-example"
@@ -186,7 +185,6 @@ def test_deduplication_does_not_trust_reused_repository_name():
 
 def test_missing_search_result_is_revalidated_directly(tmp_path, monkeypatch):
     monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
     project = """
 [project]
 name = "conda-example"
@@ -396,7 +394,6 @@ def test_reviewed_repository_ids_are_unique():
 
 
 def test_discovery_rejects_unsafe_documentation_urls(monkeypatch):
-    monkeypatch.setattr(plugin_list, "DELAY_BETWEEN_RESULTS", 0)
     project = """
 [project]
 name = "conda-example"
@@ -434,3 +431,79 @@ def test_readme_rerender_replaces_exactly_one_marker_pair(tmp_path: Path):
     path.write_text("<!-- PLUGIN_LIST -->\nonly one\n")
     with pytest.raises(ValueError, match="Expected exactly two"):
         plugin_list.rerender_readme(path, "new\n")
+
+def test_rate_limit_delay_prefers_headers(monkeypatch):
+    monkeypatch.setattr(plugin_list.time, "time", lambda: 1000.0)
+
+    wait, resets = plugin_list._rate_limit_delay({"retry-after": "7"}, 0)
+    # one second of cushion so a retry does not land exactly on the reset
+    assert wait == 8.0
+    assert resets.strftime("%H:%M:%SZ") == "00:16:48Z"
+
+    wait, resets = plugin_list._rate_limit_delay({"x-ratelimit-reset": "1060"}, 0)
+    assert wait == 61.0
+    assert resets.strftime("%H:%M:%SZ") == "00:17:40Z"
+
+    # an unparsable retry-after falls back instead of raising mid-run
+    wait, resets = plugin_list._rate_limit_delay(
+        {"retry-after": "Wed, 21 Oct 2015 07:28:00 GMT"}, 1
+    )
+    assert wait == 120.0
+    assert resets.strftime("%H:%M:%SZ") == "00:18:40Z"
+
+
+def test_api_call_fails_instead_of_waiting_out_a_far_limit(mocker):
+    operation = mocker.Mock(
+        side_effect=plugin_list.GithubException(
+            429,
+            {"message": "API rate limit exceeded"},
+            {"Retry-After": "600"},
+        )
+    )
+    sleep = mocker.patch.object(plugin_list.time, "sleep")
+
+    with pytest.raises(RuntimeError, match="until .* longer than"):
+        plugin_list._api_call(operation, "example")
+
+    sleep.assert_not_called()
+
+
+class UnreadableResult:
+    """Search result whose content cannot be fetched with this token."""
+
+    path = "pyproject.toml"
+    sha = "0" * 40
+
+    def __init__(self, repo: FakeRepo, error: Exception):
+        self.repository = repo
+        self.error = error
+
+    @property
+    def decoded_content(self):
+        raise self.error
+
+
+def test_search_uses_one_request_per_query(mocker):
+    class Results:
+        def __init__(self, pages):
+            self.pages = pages
+            self.requested = []
+
+        def get_page(self, page):
+            self.requested.append(page)
+            return self.pages[page]
+
+    pages = [[f"item{i}" for i in range(100)], ["tail"]]
+    results = Results(pages)
+    gh = mocker.Mock()
+    gh.per_page = plugin_list.SEARCH_PAGE_SIZE
+    gh.search_code.return_value = results
+
+    mocker.patch.object(plugin_list, "SEARCH_QUERIES", ("q",))
+    mocker.patch.object(plugin_list.time, "sleep")
+    mocker.patch.object(plugin_list, "_api_call", side_effect=lambda fn, label: fn())
+
+    assert len(list(plugin_list.search_github(gh))) == 101
+    # full page then the short last page, no empty page and no totalCount call
+    assert results.requested == [0, 1]
+    gh.search_code.assert_called_once_with("q")
