@@ -25,9 +25,16 @@ from pathlib import Path
 from types import SimpleNamespace
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
+from typing import TYPE_CHECKING
 
 import github
 from github import GithubException
+
+if TYPE_CHECKING:
+    from typing import Callable, TypeVar, Iterable, Generator
+    from github.ContentFile import ContentFileSearchResult
+
+    T = TypeVar('T')
 
 RETRY_WAIT = 60
 MAX_RETRIES = 5
@@ -221,7 +228,7 @@ def _rate_limit_delay(headers: dict[str, str], attempt: int) -> tuple[float, dat
     return wait, datetime.fromtimestamp(now + wait, tz=UTC)
 
 
-def _api_call(fn, label=""):
+def _api_call(fn: Callable[[], T], label: str = "") -> T:
     """Call *fn* with retries on rate limit (HTTP 429/403) errors."""
     for attempt in range(MAX_RETRIES):
         try:
@@ -291,10 +298,8 @@ def search_github(gh: github.Github):
             if page:
                 # a small gap between pages; _api_call handles any 429
                 time.sleep(SEARCH_DELAY)
-            items = _api_call(
-                lambda p=page, search_results=results: search_results.get_page(p),
-                label=f"search page {page}",
-            )
+            get_page_fn = lambda p=page, search_results=results: search_results.get_page(p)
+            items = _api_call(get_page_fn, label=f"search page {page}")
             if not items:
                 break
             found = True
@@ -321,7 +326,7 @@ def search_github(gh: github.Github):
         raise RuntimeError("Did not find any results")
 
 
-def discover_plugins(search_results):
+def discover_plugins(search_results: Iterable[ContentFileSearchResult | SimpleNamespace]) -> Iterable[dict]:
     """Yield plugin dicts with metadata from root-level projects."""
     seen_repos: set[str] = set()
     for result in search_results:
@@ -339,10 +344,8 @@ def discover_plugins(search_results):
             continue
 
         try:
-            content = _api_call(
-                lambda r=result: r.decoded_content.decode(),
-                label=repo_full_name,
-            )
+            decode_content_fn = lambda r=result: r.decoded_content.decode()
+            content = _api_call(decode_content_fn, label=repo_full_name)
             toml_data = tomllib.loads(content)
         except (tomllib.TOMLDecodeError, UnicodeError):
             print(f"! Couldn't decode {repo_full_name}", file=sys.stderr)
