@@ -528,3 +528,51 @@ def test_rate_limited_run_leaves_the_index_alone(tmp_path, monkeypatch):
     plugin_list.main()
 
     assert published.read_text() == "previous"
+
+
+class BlockedResult:
+    """Search result whose content cannot be fetched with this token."""
+
+    path = "pyproject.toml"
+
+    def __init__(self, repo, error):
+        self.repository = repo
+        self.error = error
+
+    @property
+    def decoded_content(self):
+        raise self.error
+
+
+def test_discovery_skips_repositories_the_token_cannot_read(capsys):
+    project = """
+[project]
+name = "conda-example"
+
+[project.entry-points.conda]
+example = "example.plugin"
+"""
+    blocked = BlockedResult(
+        FakeRepo("anaconda/blocked"),
+        plugin_list.GithubException(
+            403,
+            {
+                "message": (
+                    "Although you appear to have the correct authorization "
+                    "credentials, the `anaconda` organization has an IP allow "
+                    "list enabled, and your IP address is not permitted to "
+                    "access this resource."
+                )
+            },
+            {"X-RateLimit-Remaining": "4999"},
+        ),
+    )
+    readable = FakeRepo("owner/readable", content=project)
+
+    plugins = list(
+        plugin_list.discover_plugins([blocked, FakeResult(readable, project)])
+    )
+
+    assert [plugin["repo_full_name"] for plugin in plugins] == ["owner/readable"]
+    err = capsys.readouterr().err
+    assert "anaconda/blocked" in err and "not readable" in err

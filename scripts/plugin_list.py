@@ -264,6 +264,16 @@ def _api_call(fn, label=""):
     raise RuntimeError(f"Exceeded {MAX_RETRIES} retries for {label}")
 
 
+def _inaccessible(exc: GithubException) -> bool:
+    """True when the token cannot read the repository at all."""
+    return exc.status in {401, 403, 451}
+
+
+def _not_found(exc: GithubException) -> bool:
+    """True for a 404, i.e. a missing file or a removed repository."""
+    return exc.status == 404
+
+
 def search_github(gh: github.Github):
     """Yield code-search results for both valid conda entry-point headers.
 
@@ -337,9 +347,23 @@ def discover_plugins(search_results):
         except (tomllib.TOMLDecodeError, UnicodeError):
             print(f"! Couldn't decode {repo_full_name}", file=sys.stderr)
             continue
-        except (GithubException, RuntimeError):
-            # Publishing a partial snapshot would silently remove a plugin.
-            # Let the workflow retry on its next run instead.
+        except GithubException as exc:
+            # Repositories the token cannot read (private, SAML, or an
+            # organization IP allow list that excludes CI) and ones that are gone
+            # are left out of the index; any other error aborts the run so a
+            # partial snapshot cannot ship silently.
+            if _inaccessible(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not readable with this token "
+                    f"({exc.status})",
+                    file=sys.stderr,
+                )
+                continue
+            if _not_found(exc):
+                print(f"! Skipping {repo_full_name}: not found (404)", file=sys.stderr)
+                continue
+            raise
+        except RuntimeError:
             raise
 
         project = toml_data.get("project")
@@ -441,7 +465,12 @@ def revalidate_missing_plugins(
                 label=f"{repo_full_name}/pyproject.toml",
             )
         except GithubException as exc:
-            if exc.status == 404:
+            if _inaccessible(exc) or _not_found(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not readable with this token "
+                    f"({exc.status})",
+                    file=sys.stderr,
+                )
                 continue
             raise
         if isinstance(content, list):
