@@ -191,7 +191,7 @@ class RateLimited(RuntimeError):
     """A rate limit that outlasts this run."""
 
 
-def _rate_limit_delay(headers, attempt):
+def _rate_limit_delay(headers: dict[str, str], attempt: int) -> tuple[float, datetime]:
     """Seconds to wait before retrying, and the time the limit resets.
 
     GitHub answers a rate limit with ``retry-after`` seconds or with the epoch
@@ -206,8 +206,12 @@ def _rate_limit_delay(headers, attempt):
         else:
             return wait, datetime.fromtimestamp(now + wait, tz=UTC)
     if reset := headers.get("x-ratelimit-reset"):
-        reset_at = float(reset)
-        return max(reset_at - now, 1.0) + 1.0, datetime.fromtimestamp(reset_at, tz=UTC)
+        try:
+            reset_at = float(reset)
+        except ValueError:
+            pass
+        else:
+            return max(reset_at - now, 1.0) + 1.0, datetime.fromtimestamp(reset_at, tz=UTC)
     wait = float(RETRY_WAIT * (attempt + 1))
     return wait, datetime.fromtimestamp(now + wait, tz=UTC)
 
