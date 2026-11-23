@@ -507,3 +507,21 @@ def test_search_uses_one_request_per_query(mocker):
     # full page then the short last page, no empty page and no totalCount call
     assert results.requested == [0, 1]
     gh.search_code.assert_called_once_with("q")
+
+
+def test_rate_limited_run_leaves_the_index_alone(tmp_path, monkeypatch):
+    """A rate limit that outlasts the run skips the update instead of failing."""
+    monkeypatch.setattr(plugin_list, "DATA_DIR", tmp_path)
+    published = tmp_path / "plugins.json"
+    published.write_text("previous")
+    monkeypatch.setattr(plugin_list, "load_categories", lambda: {})
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+
+    def limited(gh):
+        raise plugin_list.RateLimited("Rate limited on search page 0 until 00:00:00Z")
+
+    monkeypatch.setattr(plugin_list, "search_github", limited)
+
+    plugin_list.main()
+
+    assert published.read_text() == "previous"

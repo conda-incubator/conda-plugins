@@ -32,7 +32,7 @@ from github import GithubException
 RETRY_WAIT = 60
 MAX_RETRIES = 5
 # A rate limit that will not clear within this run is not worth sleeping for
-MAX_WAIT = 120
+MAX_WAIT = 300
 
 # Code search allows 10 requests per minute for authenticated callers, so pages
 # are spaced a little; other calls draw on the 5000/hour core budget and need no
@@ -187,6 +187,10 @@ Reply with ONLY the category name."""
         return category
 
 
+class RateLimited(RuntimeError):
+    """A rate limit that outlasts this run."""
+
+
 def _rate_limit_delay(headers, attempt):
     """Seconds to wait before retrying, and the time the limit resets.
 
@@ -235,9 +239,9 @@ def _api_call(fn, label=""):
                 wait, resets = _rate_limit_delay(headers, attempt)
                 moment = resets.strftime("%H:%M:%SZ")
                 if wait > MAX_WAIT:
-                    raise RuntimeError(
+                    raise RateLimited(
                         f"Rate limited on {label} until {moment} ({wait:.0f}s "
-                        "away), longer than this run can wait; try again later"
+                        "away), longer than this run can wait"
                     ) from exc
                 print(
                     f"  Rate limited ({exc.status}) on {label}, resets at "
@@ -601,8 +605,18 @@ def main():
     categories = load_categories()
     print(f"Loaded {len(categories)} category mappings", file=sys.stderr)
 
-    plugins = list(discover_plugins(search_github(gh)))
-    plugins = revalidate_missing_plugins(gh, plugins, set(categories))
+    try:
+        plugins = list(discover_plugins(search_github(gh)))
+        plugins = revalidate_missing_plugins(gh, plugins, set(categories))
+    except RateLimited as exc:
+        # A shared quota can be exhausted for longer than a run can wait. Skip
+        # the update instead of failing: the published index stays as it is and
+        # the next run picks up the change.
+        print(
+            f"! {exc}\n! Leaving the published index unchanged",
+            file=sys.stderr,
+        )
+        return
     plugins = deduplicate_plugins(plugins, categories)
     classifier = (
         PluginClassifier()
