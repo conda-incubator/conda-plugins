@@ -18,18 +18,39 @@ import shutil
 import sys
 import time
 import tomllib
+from collections.abc import Mapping
+from datetime import UTC, datetime
 from itertools import islice
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
+from typing import TYPE_CHECKING
 
 import github
 from github import GithubException
 
+if TYPE_CHECKING:
+    from typing import Callable, TypeVar, Iterable, Generator
+    from github.ContentFile import ContentFileSearchResult
+
+    T = TypeVar('T')
+
 RETRY_WAIT = 60
 MAX_RETRIES = 5
-DELAY_BETWEEN_RESULTS = 2
+# A rate limit that will not clear within this run is not worth sleeping for
+MAX_WAIT = 300
+
+# Code search allows 10 requests per minute for authenticated callers, so pages
+# are spaced a little; other calls draw on the 5000/hour core budget and need no
+# delay at all.
+SEARCH_DELAY = 1
+
+# A single search returns at most 1000 results, silently truncated past that
+SEARCH_CAP_WARN = 500
+SEARCH_CAP_ALERT = 900
+# Requests results 100 at a time, which is the API maximum
+SEARCH_PAGE_SIZE = 100
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 CATEGORIES_PATH = SCRIPT_DIR / "categories.toml"
@@ -43,9 +64,14 @@ MODEL_URL = (
 )
 MODEL_SHA256 = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
 
+# The REST code search endpoint still runs the legacy engine, so the web UI's
+# syntax does not apply: regexes and `path:<filename>` match nothing there,
+# `fork:false` is a 422, and `archived:`/`is:public` silently match nothing.
+# Name the file, the root and the language instead. Legacy `fork:` accepts only
+# `true`/`only`, so forks are excluded by default.
 SEARCH_QUERIES = (
-    '"[project.entry-points.conda]" language:TOML path:/',
-    r'"[project.entry-points.\"conda\"]" language:TOML path:/',
+    '"[project.entry-points.conda]" filename:pyproject.toml path:/ language:TOML',
+    r'"[project.entry-points.\"conda\"]" filename:pyproject.toml path:/ language:TOML',
 )
 
 VALID_CATEGORIES = [
@@ -173,7 +199,36 @@ Reply with ONLY the category name."""
         return category
 
 
-def _api_call(fn, label=""):
+class RateLimited(RuntimeError):
+    """A rate limit that outlasts this run."""
+
+
+def _rate_limit_delay(headers: dict[str, str], attempt: int) -> tuple[float, datetime]:
+    """Seconds to wait before retrying, and the time the limit resets.
+
+    GitHub answers a rate limit with ``retry-after`` seconds or with the epoch
+    of the reset in ``x-ratelimit-reset``; both are preferred over guessing.
+    """
+    now = time.time()
+    if retry_after := headers.get("retry-after"):
+        try:
+            wait = float(retry_after) + 1.0
+        except ValueError:
+            pass
+        else:
+            return wait, datetime.fromtimestamp(now + wait, tz=UTC)
+    if reset := headers.get("x-ratelimit-reset"):
+        try:
+            reset_at = float(reset)
+        except ValueError:
+            pass
+        else:
+            return max(reset_at - now, 1.0) + 1.0, datetime.fromtimestamp(reset_at, tz=UTC)
+    wait = float(RETRY_WAIT * (attempt + 1))
+    return wait, datetime.fromtimestamp(now + wait, tz=UTC)
+
+
+def _api_call(fn: Callable[[], T], label: str = "") -> T:
     """Call *fn* with retries on rate limit (HTTP 429/403) errors."""
     for attempt in range(MAX_RETRIES):
         try:
@@ -197,10 +252,17 @@ def _api_call(fn, label=""):
                 )
             )
             if rate_limited:
-                wait = RETRY_WAIT * (attempt + 1)
+                wait, resets = _rate_limit_delay(headers, attempt)
+                moment = resets.strftime("%H:%M:%SZ")
+                if wait > MAX_WAIT:
+                    raise RateLimited(
+                        f"Rate limited on {label} until {moment} ({wait:.0f}s "
+                        "away), longer than this run can wait"
+                    ) from exc
                 print(
-                    f"  Rate limited ({exc.status}) on {label}, "
-                    f"waiting {wait}s (attempt {attempt + 1}/{MAX_RETRIES})",
+                    f"  Rate limited ({exc.status}) on {label}, resets at "
+                    f"{moment}, waiting {wait:.0f}s "
+                    f"(attempt {attempt + 1}/{MAX_RETRIES})",
                     file=sys.stderr,
                 )
                 time.sleep(wait)
@@ -209,33 +271,62 @@ def _api_call(fn, label=""):
     raise RuntimeError(f"Exceeded {MAX_RETRIES} retries for {label}")
 
 
-def search_github(gh):
-    """Yield code-search results for both valid conda entry-point headers."""
+def _inaccessible(exc: GithubException) -> bool:
+    """True when the token cannot read the repository at all."""
+    return exc.status in {401, 403, 451}
+
+
+def _not_found(exc: GithubException) -> bool:
+    """True for a 404, i.e. a missing file or a removed repository."""
+    return exc.status == 404
+
+
+def search_github(gh: github.Github):
+    """Yield code-search results for both valid conda entry-point headers.
+
+    Code search allows 10 requests per minute for a shared bot identity, so the
+    search spends as few of them as possible: no separate result count, and the
+    last page ends the loop instead of asking for an empty one.
+    """
     found = False
+    page_size = gh.per_page
     for query in SEARCH_QUERIES:
         results = gh.search_code(query)
-        total = _api_call(
-            lambda search_results=results: search_results.totalCount,
-            label=f"search totalCount for {query}",
-        )
-        print(f"Found {total} results for {query}", file=sys.stderr)
         page = 0
+        collected = 0
         while True:
-            items = _api_call(
-                lambda p=page, search_results=results: search_results.get_page(p),
-                label=f"search page {page}",
-            )
+            if page:
+                # a small gap between pages; _api_call handles any 429
+                time.sleep(SEARCH_DELAY)
+            get_page_fn = lambda p=page, search_results=results: search_results.get_page(p)
+            items = _api_call(get_page_fn, label=f"search page {page}")
             if not items:
                 break
             found = True
+            collected += len(items)
             yield from items
+            if len(items) < page_size:
+                break
             page += 1
-            time.sleep(DELAY_BETWEEN_RESULTS)
+
+        print(f"Found {collected} results for {query}", file=sys.stderr)
+        if collected >= SEARCH_CAP_ALERT:
+            print(
+                f"! {query} returned {collected} results, at the 1000-result "
+                "search cap; partition the query before results are dropped",
+                file=sys.stderr,
+            )
+        elif collected >= SEARCH_CAP_WARN:
+            print(
+                f"! {query} returned {collected} results, half way to the search "
+                "cap; plan a partitioned query",
+                file=sys.stderr,
+            )
     if not found:
         raise RuntimeError("Did not find any results")
 
 
-def discover_plugins(search_results):
+def discover_plugins(search_results: Iterable[ContentFileSearchResult | SimpleNamespace]) -> Iterable[dict]:
     """Yield plugin dicts with metadata from root-level projects."""
     seen_repos: set[str] = set()
     for result in search_results:
@@ -253,17 +344,29 @@ def discover_plugins(search_results):
             continue
 
         try:
-            content = _api_call(
-                lambda r=result: r.decoded_content.decode(),
-                label=repo_full_name,
-            )
+            decode_content_fn = lambda r=result: r.decoded_content.decode()
+            content = _api_call(decode_content_fn, label=repo_full_name)
             toml_data = tomllib.loads(content)
         except (tomllib.TOMLDecodeError, UnicodeError):
             print(f"! Couldn't decode {repo_full_name}", file=sys.stderr)
             continue
-        except (GithubException, RuntimeError):
-            # Publishing a partial snapshot would silently remove a plugin.
-            # Let the workflow retry on its next run instead.
+        except GithubException as exc:
+            # Repositories the token cannot read (private, SAML, or an
+            # organization IP allow list that excludes CI) and ones that are gone
+            # are left out of the index; any other error aborts the run so a
+            # partial snapshot cannot ship silently.
+            if _inaccessible(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not readable with this token "
+                    f"({exc.status})",
+                    file=sys.stderr,
+                )
+                continue
+            if _not_found(exc):
+                print(f"! Skipping {repo_full_name}: not found (404)", file=sys.stderr)
+                continue
+            raise
+        except RuntimeError:
             raise
 
         project = toml_data.get("project")
@@ -326,7 +429,6 @@ def discover_plugins(search_results):
             ),
         }
         print(f"Processed {repo_full_name}", file=sys.stderr)
-        time.sleep(DELAY_BETWEEN_RESULTS)
         yield plugin
 
 
@@ -366,7 +468,12 @@ def revalidate_missing_plugins(
                 label=f"{repo_full_name}/pyproject.toml",
             )
         except GithubException as exc:
-            if exc.status == 404:
+            if _inaccessible(exc) or _not_found(exc):
+                print(
+                    f"! Skipping {repo_full_name}: not readable with this token "
+                    f"({exc.status})",
+                    file=sys.stderr,
+                )
                 continue
             raise
         if isinstance(content, list):
@@ -534,13 +641,23 @@ def main():
     readme = sys.argv[1] if len(sys.argv) > 1 else "README.md"
     token = os.environ.get("GITHUB_TOKEN")
     auth = github.Auth.Token(token) if token else None
-    gh = github.Github(auth=auth, per_page=30)
+    gh = github.Github(auth=auth, per_page=SEARCH_PAGE_SIZE, retry=0)
 
     categories = load_categories()
     print(f"Loaded {len(categories)} category mappings", file=sys.stderr)
 
-    plugins = list(discover_plugins(search_github(gh)))
-    plugins = revalidate_missing_plugins(gh, plugins, set(categories))
+    try:
+        plugins = list(discover_plugins(search_github(gh)))
+        plugins = revalidate_missing_plugins(gh, plugins, set(categories))
+    except RateLimited as exc:
+        # A shared quota can be exhausted for longer than a run can wait. Skip
+        # the update instead of failing: the published index stays as it is and
+        # the next run picks up the change.
+        print(
+            f"! {exc}\n! Leaving the published index unchanged",
+            file=sys.stderr,
+        )
+        return
     plugins = deduplicate_plugins(plugins, categories)
     classifier = (
         PluginClassifier()
