@@ -57,9 +57,14 @@ MODEL_URL = (
 )
 MODEL_SHA256 = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
 
+# The REST code search endpoint still runs the legacy engine, so the web UI's
+# syntax does not apply: regexes and `path:<filename>` match nothing there,
+# `fork:false` is a 422, and `archived:`/`is:public` silently match nothing.
+# Name the file, the root and the language instead. Legacy `fork:` accepts only
+# `true`/`only`, so forks are excluded by default.
 SEARCH_QUERIES = (
-    '"[project.entry-points.conda]" language:TOML path:/',
-    r'"[project.entry-points.\"conda\"]" language:TOML path:/',
+    '"[project.entry-points.conda]" filename:pyproject.toml path:/ language:TOML',
+    r'"[project.entry-points.\"conda\"]" filename:pyproject.toml path:/ language:TOML',
 )
 
 VALID_CATEGORIES = [
@@ -259,7 +264,7 @@ def _api_call(fn, label=""):
     raise RuntimeError(f"Exceeded {MAX_RETRIES} retries for {label}")
 
 
-def search_github(gh):
+def search_github(gh: github.Github):
     """Yield code-search results for both valid conda entry-point headers.
 
     Code search allows 10 requests per minute for a shared bot identity, so the

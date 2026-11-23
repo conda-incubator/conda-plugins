@@ -414,8 +414,11 @@ documentation = "javascript:alert(1)"
     assert plugins[0]["docs"] is None
 
 
-def test_search_queries_limit_results_to_repository_root():
-    assert all(query.endswith(" path:/") for query in plugin_list.SEARCH_QUERIES)
+def test_search_queries_name_the_file_the_root_and_the_language():
+    for query in plugin_list.SEARCH_QUERIES:
+        assert "filename:pyproject.toml" in query
+        assert "path:/" in query
+        assert "language:TOML" in query
 
 
 def test_readme_rerender_replaces_exactly_one_marker_pair(tmp_path: Path):
